@@ -1,0 +1,33 @@
+{
+  "name": "markocupic/employee-bundle",
+  "type": "contao-bundle",
+  "description": "Contao 4 employee bundle",
+  "license": "LGPL-3.0+",
+  "authors": [
+    {
+      "name": "Marko Cupic",
+      "homepage": "https://github.com/markocupic"
+    }
+  ],
+  "require": {
+    "contao/core-bundle": ">=4.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Markocupic\\EmployeeBundle\\": "src/"
+    },
+    "classmap": [
+      "src/Resources/contao"
+    ],
+    "exclude-from-classmap": [
+      "src/Resources/contao/assets",
+      "src/Resources/contao/config",
+      "src/Resources/contao/dca",
+      "src/Resources/contao/languages",
+      "src/Resources/contao/templates"
+    ]
+  },
+  "extra": {
+    "contao-manager-plugin": "Markocupic\\EmployeeBundle\\ContaoManager\\Plugin"
+  }
+ }

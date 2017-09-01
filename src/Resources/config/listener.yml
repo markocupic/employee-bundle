@@ -1,0 +1,38 @@
+services:
+    # Sync sac-member-database Bern with tl_member
+    markocupic_sacpilatus.listener.generate_page_sync_sac_member_database:
+            class: Markocupic\SacpilatusBundle\EventListener\SyncSacMemberDatabase
+            arguments:
+                - "@contao.framework"
+                - "%ftp_server_member_db_bern_sections%"
+                - "%ftp_server_member_db_bern_hostname%"
+                - "%ftp_server_member_db_bern_username%"
+                - "%ftp_server_member_db_bern_password%"
+
+    # Validate Forms
+    markocupic_sacpilatus.listener.validate_forms:
+            class: Markocupic\SacpilatusBundle\EventListener\ValidateForms
+            arguments:
+                - "@contao.framework"
+                - "%event_stories_upload_path%"
+
+
+    # Send Newsletter
+    markocupic_sacpilatus.listener.generate_page_send_newsletter:
+            class: Markocupic\SacpilatusBundle\EventListener\SendNewsletter
+            arguments:
+                - "@contao.framework"
+
+
+    # Post Login Hook
+    markocupic_sacpilatus.listener.post_login:
+            class: Markocupic\SacpilatusBundle\EventListener\PostLogin
+            arguments:
+                - "@contao.framework"
+
+    # Post Login Hook
+    markocupic_sacpilatus.listener.initialize_system:
+            class: Markocupic\SacpilatusBundle\EventListener\InitializeSystem
+            arguments:
+                - "@contao.framework"
+

@@ -1,0 +1,47 @@
+/** new_repeat im multicolumn wizard ausblenden**/
+table#ctrl_repeatFixedDates thead tr:first-child{
+    display:none;
+}
+
+#tl_navigation .group-sac_be_modules{
+    background: url(../../markocupicsacpilatus/icons/sun.svg) 3px 2px no-repeat;
+}
+
+
+/** Global operations**/
+#tl_buttons .header_icon.send_email {
+    padding-left: 42px;
+    margin-left: 1px;
+}
+
+#tl_buttons .header_icon.download_registration_list {
+    padding-left: 42px;
+    margin-left: 1px;
+}
+#tl_buttons .header_icon.transform_dates {
+    padding-left: 20px;
+    margin-left: 15px;
+}
+
+
+
+#tl_calendar_events_member #refuseWithEmail{
+    background-color: red;
+    color:white;
+    border-color: red;
+}
+#tl_calendar_events_member #refuseWithoutEmail{
+    background-color: red;
+    color:white;
+    border-color: red;
+}
+#tl_calendar_events_member #acceptWithEmail{
+    background-color: darkgreen;
+    color:white;
+    border-color: darkgreen;
+}
+#tl_calendar_events_member #acceptWithoutEmail{
+    background-color: darkgreen;
+    color:white;
+    border-color: darkgreen;
+}
