@@ -1,7 +1,15 @@
 <?php
 namespace Markocupic\EmployeeBundle;
 
+use Contao\BackendTemplate;
+use Contao\Validator;
+use Patchwork\Utf8;
 
+
+/**
+ * Class ModuleEmployeeDetail
+ * @package Markocupic\EmployeeBundle
+ */
 class ModuleEmployeeDetail extends \ContentElement
 {
 
@@ -22,8 +30,8 @@ class ModuleEmployeeDetail extends \ContentElement
         if (TL_MODE == 'BE')
         {
             /** @var \BackendTemplate|object $objTemplate */
-            $objTemplate = new \BackendTemplate('be_wildcard');
-            $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['CTE']['employeeDetail'][0]) . ' ###';
+            $objTemplate = new BackendTemplate('be_wildcard');
+            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['employeeDetail'][0]) . ' ###';
             return $objTemplate->parse();
         }
         $userId = $this->gmkSelectedMitarbeiter;
@@ -47,7 +55,7 @@ class ModuleEmployeeDetail extends \ContentElement
     protected function compile()
     {
         $row =  $this->objUser->row();
-        if (\Validator::isUuid($row['singleSRC']))
+        if (Validator::isUuid($row['singleSRC']))
         {
             $row['singleSRC'] = \StringUtil::binToUuid($row['singleSRC']);
         }

@@ -1,12 +1,17 @@
 <?php
+
 namespace Markocupic\EmployeeBundle;
 
 use Contao\BackendTemplate;
 use Contao\Validator;
 use Contao\StringUtil;
+use Patchwork\Utf8;
 
 
-
+/**
+ * Class ModuleEmployeeList
+ * @package Markocupic\EmployeeBundle
+ */
 class ModuleEmployeeList extends \ContentElement
 {
 
@@ -29,7 +34,7 @@ class ModuleEmployeeList extends \ContentElement
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
 
-            $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['CTE']['employeeList'][0]) . ' ###';
+            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['employeeList'][0]) . ' ###';
 
             return $objTemplate->parse();
         }
@@ -45,7 +50,7 @@ class ModuleEmployeeList extends \ContentElement
     {
 
         $rows = array();
-        if($this->showAllPublishedEmployees)
+        if ($this->showAllPublishedEmployees)
         {
             $objDb = $this->Database->prepare('SELECT * FROM tl_employee WHERE published=? ORDER BY lastname, firstname')->execute(1);
             $arrEmployees = $objDb->fetchEach('id');
