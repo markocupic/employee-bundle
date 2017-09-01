@@ -1,21 +1,5 @@
 <?php
 
-/**
- * Contao Open Source CMS
- *
- * Copyright (c) 2005-2016 Leo Feyer
- *
- * @package   FondspolicenVergleich
- * @author    Marko Cupic
- * @license   SHAREWARE
- * @copyright Marko Cupic 2016
- */
-
-
-
-
-
-
 
 /**
  * BACK END MODULES
@@ -36,4 +20,10 @@ $GLOBALS['TL_CTE']['employee'] = array(
         'employeeList' => 'Markocupic\EmployeeBundle\ModuleEmployeeList',
         'employeeDetail' => 'Markocupic\EmployeeBundle\ModuleEmployeeDetail',
 );
+
+
+/**
+ * Do not index a page if one of the following parameters is set
+ */
+$GLOBALS['TL_NOINDEX_KEYS'][] = 'downloadVCard';
 
