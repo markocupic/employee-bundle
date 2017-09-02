@@ -89,7 +89,7 @@ $GLOBALS['TL_DCA']['tl_employee'] = array(
     // Palettes
     'palettes' => array(
         '__selector__' => array('addImage'),
-        'default' => '{personal_legend},firstname,lastname,funktion,description,publications,phone,email;{image_legend},addImage;{interview_legend},interview;',
+        'default' => '{personal_legend},gender,title,firstname,lastname;{contact_legend},phone,mobile,email,website;{address_legend},street, postal, city, state, country;{work_legend},company,funktion,description,publications;{image_legend},addImage;{interview_legend},interview;',
     ),
     // Subpalettes
     'subpalettes' => array(
@@ -109,6 +109,26 @@ $GLOBALS['TL_DCA']['tl_employee'] = array(
             'inputType' => 'checkbox',
             'eval' => array('mandatory' => false),
             'sql' => "char(1) NOT NULL default ''",
+        ),
+        'title' => array(
+            'label' => &$GLOBALS['TL_LANG']['tl_employee']['title'],
+            'exclude' => true,
+            'search' => true,
+            'sorting' => true,
+            'flag' => 1,
+            'inputType' => 'text',
+            'eval' => array('mandatory' => true, 'maxlength' => 255, 'tl_class' => 'w50'),
+            'sql' => "varchar(255) NOT NULL default ''",
+        ),
+        'gender' => array
+        (
+            'label' => &$GLOBALS['TL_LANG']['tl_employee']['gender'],
+            'exclude' => true,
+            'inputType' => 'select',
+            'options' => array('male', 'female'),
+            'reference' => &$GLOBALS['TL_LANG']['MSC'],
+            'eval' => array('includeBlankOption' => true, 'tl_class' => 'w50'),
+            'sql' => "varchar(32) NOT NULL default ''"
         ),
         'firstname' => array(
             'label' => &$GLOBALS['TL_LANG']['tl_employee']['firstname'],
@@ -130,6 +150,51 @@ $GLOBALS['TL_DCA']['tl_employee'] = array(
             'eval' => array('mandatory' => true, 'maxlength' => 255, 'tl_class' => 'w50'),
             'sql' => "varchar(255) NOT NULL default ''",
         ),
+        'street' => array(
+            'label' => &$GLOBALS['TL_LANG']['tl_employee']['street'],
+            'exclude' => true,
+            'search' => true,
+            'sorting' => true,
+            'flag' => 1,
+            'inputType' => 'text',
+            'eval' => array('mandatory' => true, 'maxlength' => 255, 'tl_class' => 'w50'),
+            'sql' => "varchar(255) NOT NULL default ''",
+        ),
+        'postal' => array(
+            'label' => &$GLOBALS['TL_LANG']['tl_employee']['postal'],
+            'exclude' => true,
+            'search' => true,
+            'inputType' => 'text',
+            'eval' => array('maxlength' => 32, 'tl_class' => 'w50'),
+            'sql' => "varchar(32) NOT NULL default ''"
+
+        ),
+        'city' => array(
+            'label' => &$GLOBALS['TL_LANG']['tl_employee']['city'],
+            'exclude' => true,
+            'filter' => true,
+            'search' => true,
+            'sorting' => true,
+            'inputType' => 'text',
+            'eval' => array('maxlength' => 255, 'tl_class' => 'w50'),
+            'sql' => "varchar(255) NOT NULL default ''"
+
+        ),
+
+        'country' => array(
+            'label' => &$GLOBALS['TL_LANG']['tl_employee']['country'],
+            'exclude' => true,
+            'filter' => true,
+            'sorting' => true,
+            'inputType' => 'select',
+            'eval' => array('includeBlankOption' => true, 'chosen' => true, 'feEditable' => true, 'feViewable' => true, 'feGroup' => 'address', 'tl_class' => 'w50'),
+            'options_callback' => function ()
+            {
+                return System::getCountries();
+            },
+
+            'sql' => "varchar(2) NOT NULL default ''"
+        ),
         'funktion' => array(
             'label' => &$GLOBALS['TL_LANG']['tl_employee']['funktion'],
             'exclude' => true,
@@ -139,6 +204,17 @@ $GLOBALS['TL_DCA']['tl_employee'] = array(
             'inputType' => 'text',
             'eval' => array('mandatory' => false, 'maxlength' => 255, 'tl_class' => 'w50'),
             'sql' => "varchar(255) NOT NULL default ''",
+        ),
+        'company' => array
+        (
+            'label' => &$GLOBALS['TL_LANG']['tl_employee']['company'],
+            'exclude' => true,
+            'search' => true,
+            'sorting' => true,
+            'flag' => 1,
+            'inputType' => 'text',
+            'eval' => array('maxlength' => 255, 'tl_class' => 'w50'),
+            'sql' => "varchar(255) NOT NULL default ''"
         ),
         'description' => array(
             'label' => &$GLOBALS['TL_LANG']['tl_employee']['description'],
@@ -168,6 +244,14 @@ $GLOBALS['TL_DCA']['tl_employee'] = array(
             'eval' => array('maxlength' => 64, 'rgxp' => 'phone', 'decodeEntities' => true, 'tl_class' => 'w50'),
             'sql' => "varchar(64) NOT NULL default ''",
         ),
+        'mobile' => array(
+            'label' => &$GLOBALS['TL_LANG']['tl_employee']['mobile'],
+            'exclude' => true,
+            'search' => true,
+            'inputType' => 'text',
+            'eval' => array('maxlength' => 64, 'rgxp' => 'phone', 'decodeEntities' => true, 'tl_class' => 'w50'),
+            'sql' => "varchar(64) NOT NULL default ''",
+        ),
         'email' => array(
             'label' => &$GLOBALS['TL_LANG']['tl_employee']['email'],
             'exclude' => true,
@@ -175,6 +259,15 @@ $GLOBALS['TL_DCA']['tl_employee'] = array(
             'inputType' => 'text',
             'eval' => array('mandatory' => true, 'maxlength' => 255, 'rgxp' => 'email', 'decodeEntities' => true, 'tl_class' => 'w50'),
             'sql' => "varchar(255) NOT NULL default ''",
+        ),
+        'website' => array
+        (
+            'label' => &$GLOBALS['TL_LANG']['tl_employee']['website'],
+            'exclude' => true,
+            'search' => true,
+            'inputType' => 'text',
+            'eval' => array('rgxp' => 'url', 'maxlength' => 255, 'tl_class' => 'w50'),
+            'sql' => "varchar(255) NOT NULL default ''"
         ),
         'addImage' => array(
             'label' => &$GLOBALS['TL_LANG']['tl_employee']['addImage'],
@@ -214,6 +307,33 @@ $GLOBALS['TL_DCA']['tl_employee'] = array(
                         'exclude' => true,
                         'inputType' => 'textarea',
                         'eval' => array('style' => 'width:300px')
+                    )
+                )
+            ),
+            'sql' => "blob NULL"
+        ),
+        'businessHours' => array
+        (
+            'label' => &$GLOBALS['TL_LANG']['tl_employee']['businessHours'],
+            'exclude' => true,
+            'inputType' => 'multiColumnWizard',
+            'eval' => array
+            (
+                'columnFields' => array
+                (
+                    'businessHoursWeekday' => array
+                    (
+                        'label' => &$GLOBALS['TL_LANG']['tl_employee']['businessHoursWeekday'],
+                        'exclude' => true,
+                        'inputType' => 'text',
+                        'eval' => array('style' => 'width:180px')
+                    ),
+                    'businessHoursTime' => array
+                    (
+                        'label' => &$GLOBALS['TL_LANG']['tl_employee']['businessHoursTime'],
+                        'exclude' => true,
+                        'inputType' => 'text',
+                        'eval' => array('style' => 'width:180px')
                     )
                 )
             ),

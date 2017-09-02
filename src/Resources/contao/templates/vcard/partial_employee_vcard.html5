@@ -1,0 +1,20 @@
+BEGIN:VCARD
+VERSION:3.0
+N:<?= $this->lastname ?>;<?= $this->firstname ?>;;<?= $this->title ?>;
+FN:<?= $this->fn ?>
+
+ORG:<?= $this->company ?>
+
+ROLE:<?= $this->funktion ?>
+
+TEL;TYPE=WORK,VOICE:<?= $this->phone ?>
+
+TEL;TYPE=HOME,VOICE:<?= $this->phoneHome ?>
+
+ADR;TYPE=WORK:;;<?= $this->street ?>;<?= $this->city ?>;;<?= $this->postal ?>;<?= $this->country ?>
+
+EMAIL;TYPE=PREF,INTERNET:<?= $this->email ?>
+
+URL:<?= $this->website ?>
+
+END:VCARD

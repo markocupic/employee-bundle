@@ -10,7 +10,8 @@
     }
   ],
   "require": {
-    "contao/core-bundle": ">=4.3"
+    "contao/core-bundle": ">=4.3",
+    "menatwork/contao-multicolumnwizard": ">=3.3.10"
   },
   "autoload": {
     "psr-4": {
