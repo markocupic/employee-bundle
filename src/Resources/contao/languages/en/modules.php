@@ -15,6 +15,6 @@
 /**
  * Back end modules
  */
-$GLOBALS['TL_LANG']['MOD']['employee'] = array('Mitarbeiter', 'Mitarbeiter erfassen');
+$GLOBALS['TL_LANG']['MOD']['employee'] = array('Mitarbeiter', 'Mitarbeiter erfassen.');
 
 

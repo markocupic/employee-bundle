@@ -5,6 +5,16 @@
  * Date: 03.12.2016
  * Time: 21:47
  */
+// Global operations
+$GLOBALS['TL_LANG']['tl_employee']['new'] = array('Neu' , 'Neuen Mitarbeiter erstellen');
+
+// Operations
+$GLOBALS['TL_LANG']['tl_employee']['edit'] = array('Bearbeiten' , 'Mitarbeiter ID %s bearbeiten');
+$GLOBALS['TL_LANG']['tl_employee']['delete'] = array('Löschen' , 'Mitarbeiter ID %s löschen');
+$GLOBALS['TL_LANG']['tl_employee']['toggle'] = array('Aktivieren/Deaktivieren' , 'Mitarbeiter aktivieren/deaktivieren');
+$GLOBALS['TL_LANG']['tl_employee']['copy'] = array('Kopieren' , 'Mitarbeiter ID %s kopieren');
+$GLOBALS['TL_LANG']['tl_employee']['show'] = array('Info' , 'Details des Mitarbeiter ID %s anzeigen');
+
 
 // legends
 $GLOBALS['TL_LANG']['tl_employee']['personal_legend'] = 'Benutzer-Einstellungen';
