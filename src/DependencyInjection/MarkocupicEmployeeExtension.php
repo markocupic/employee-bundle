@@ -1,12 +1,5 @@
 <?php
 
-/**
- * SAC Pilatus web plugin
- * Copyright (c) 2008-2017 Marko Cupic
- * @package sacpilatus-bundle
- * @author Marko Cupic m.cupic@gmx.ch, 2017
- * @link    https://sac-kurse.kletterkader.com
- */
 
 namespace Markocupic\EmployeeBundle\DependencyInjection;
 
@@ -17,10 +10,8 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 
 /**
- * Class MarkocupicSacpilatusExtension
- * @package Markocupic\SacpilatusBundle\DependencyInjection
- * How to Load Service Configuration inside a Bundle
- * https://symfony.com/doc/current/bundles/extension.html
+ * Class MarkocupicEmployeeExtension
+ * @package Markocupic\EmployeeBundle\DependencyInjection
  */
 class MarkocupicEmployeeExtension extends Extension
 {
