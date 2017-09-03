@@ -8,7 +8,7 @@
  * @link    https://sac-kurse.kletterkader.com
  */
 
-namespace Markocupic\SacpilatusBundle\DependencyInjection;
+namespace Markocupic\EmployeeBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -22,7 +22,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  * How to Load Service Configuration inside a Bundle
  * https://symfony.com/doc/current/bundles/extension.html
  */
-class MarkocupicSacpilatusExtension extends Extension
+class MarkocupicEmployeeExtension extends Extension
 {
     /**
      * {@inheritdoc}
@@ -31,11 +31,11 @@ class MarkocupicSacpilatusExtension extends Extension
     {
         $loader = new YamlFileLoader(
             $container,
-            new FileLocator(__DIR__.'/../Resources/config')
+            new FileLocator(__DIR__ . '/../Resources/config')
         );
 
         // Load Sensitive outsourced data
-        require_once (__DIR__.'/../../../../../constants.php');
+        //require_once (__DIR__.'/../../../../../constants.php');
 
         $loader->load('parameters.yml');
         $loader->load('listener.yml');

@@ -1,9 +1,0 @@
-parameters:
-    # ftp member database Bern settings
-    ftp_server_member_db_bern_hostname: !php/const:SACP_FTPSERVER_MEMBER_DB_BERN_HOSTNAME
-    ftp_server_member_db_bern_username: !php/const:SACP_FTPSERVER_MEMBER_DB_BERN_USERNAME
-    ftp_server_member_db_bern_password: !php/const:SACP_FTPSERVER_MEMBER_DB_BERN_PASSWORD
-    ftp_server_member_db_bern_sections: ["4250", "4251", "4252", "4253", "4254"]
-
-    # event stories (Tourenberichte)
-    event_stories_upload_path: files/sac_pilatus/events/stories

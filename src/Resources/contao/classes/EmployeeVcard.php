@@ -31,8 +31,8 @@ class EmployeeVcard
         $row = array();
         foreach ($arrData as $k => $v)
         {
-            // Ztf8 decode strings
-            $row[$k] = utf8_decode($v);
+            // utf8 decode strings and html_entity_decode strings f.ex. &#40; => (
+            $row[$k] = utf8_decode(html_entity_decode($v));
         }
 
         $objTemplate->setData($row);

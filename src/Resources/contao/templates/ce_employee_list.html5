@@ -21,6 +21,11 @@
                     </span>
                 </div>
             </figure>
+            <div class="gmk-employee-list-business-hours">
+                <?php foreach($row['businessHours'] as $item => $v): ?>
+                <div><?= $v['businessHoursWeekday'] ?>: <?= $v['businessHoursTime'] ?></div>
+                <?php endforeach; ?>
+            </div>
             <div class="gmk-employee-list-info">
                 <div class="gmk-employee-list-card-function"><?= $row['funktion'] ?>.&nbsp;</div>
                 <div class="gmk-employee-list-card-name" data-toggle="modal" data-target="#gmkEmployeeModal_<?= $row['id'] ?>"><?= $row['firstname'] ?><br><?= $row['lastname'] ?>.</div>

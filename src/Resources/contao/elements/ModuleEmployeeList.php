@@ -80,6 +80,7 @@ class ModuleEmployeeList extends \ContentElement
                     $row['singleSRC'] = StringUtil::binToUuid($row['singleSRC']);
                 }
                 $row['interview'] = deserialize($row['interview'], true);
+                $row['businessHours'] = deserialize($row['businessHours'], true);
 
                 $rows[] = $row;
             }
