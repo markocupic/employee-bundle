@@ -1,6 +1,5 @@
 <?php
-
-// My stlesheet
+// My stylesheet
 //$GLOBALS['TL_CSS'][] = 'files/mcupic/stylesheet.css|static';
 ?>
 
@@ -12,59 +11,30 @@
 <div class="row">
 <?php foreach($this->rows as $row): ?>
     <div class="col-lg-3 col-md-4 col-sm-6">
-        <div class="gmk-employee-list-card">
-            <figure class="gmk-employee-list-card-image-container image_container img-fluid" data-toggle="modal" data-target="#gmkEmployeeModal_<?= $row['id'] ?>">
+        <div class="gmk-employee-introducing-card" data-toggle="modal" data-target="#gmkEmployeeModal_<?= $row['id'] ?>">
+            <figure class="gmk-employee-introducing-card-image-container image_container">
                 {{picture::<?= $row['singleSRC'] ?>?size=2&alt=<?= $row['firstname'] ?> <?= $row['lastname'] ?>}}
-                <div class="portfolio-overlay">
-                    <span>
-                        <!--<img src="files/krea_layout/icons/gmk_icon_brandguide_ho.svg" alt="GMK Brandguide">-->
-                    </span>
-                </div>
             </figure>
-            <div class="gmk-employee-list-business-hours">
-                <?php foreach($row['businessHours'] as $item => $v): ?>
-                <div><?= $v['businessHoursWeekday'] ?>: <?= $v['businessHoursTime'] ?></div>
-                <?php endforeach; ?>
+            <div class="gmk-employee-introducing-card-left">
+                <h4>Kontakt.</h4>
+                <h3><?= $row['firstname'] ?> <?= $row['lastname'] ?>.</h3>
             </div>
-            <div class="gmk-employee-list-info">
-                <div class="gmk-employee-list-card-function"><?= $row['funktion'] ?>.&nbsp;</div>
-                <div class="gmk-employee-list-card-name" data-toggle="modal" data-target="#gmkEmployeeModal_<?= $row['id'] ?>"><?= $row['firstname'] ?><br><?= $row['lastname'] ?>.</div>
-            </div>
-            <div class="gmk-vcard">
-                <a href="{{env::request}}?downloadVCard=true&id=<?= $row['id'] ?>" class="btn btn-primary">VCard</a>
-            </div>
+            <br class="clear">
+            <p><?= $row['phone'] ?><br><a href="mailto:<?= $row['email'] ?>"><?= $row['email'] ?></a></p>
         </div>
     </div>
 <?php endforeach; ?>
 </div><!-- endrow-->
 
-<script>
-// Requires Bootstrap Modal
-(function($) {
-     $(document).ready(function(e) {
-        //Prevent jQuery events from firing multiple times
-        $('#gmkEmployeeModalContainer_<?= $this->id ?> .gmk-employee-modal').each(function( index ) {
-            jQuery(jQuery(this).detach()).appendTo("body");
 
-            $(this).on('shown.bs.modal', function (e) {
-               //
-            });
-
-            $(this).on('hidden.bs.modal', function (e) {
-                $(this).find('.gmkEmployeeModalSlick').css('opacity', 0);
-                $(this).find('.gmkEmployeeModalSlick').slick('unslick');
-            });
-        });
-    });
-})(jQuery);
-</script>
 
 
 
 <!-- Modal Box Container -->
 <div id="gmkEmployeeModalContainer_<?= $this->id ?>">
     <?php foreach($this->rows as $row): ?>
-    <div id="gmkEmployeeModal_<?= $row['id'] ?>" class="gmk-employee-modal modal fade" role="dialog">
+
+        <div id="gmkEmployeeModal_<?= $row['id'] ?>" class="gmk-employee-modal modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
             <!-- Modal content-->
             <div class="modal-content">
@@ -94,24 +64,54 @@
                     </div>
                     <div class="col-md-6 col-two">
                         <?php if($row['description'] != ''): ?>
-                        <div class="gmk-employee-modal-card-slide-item-description-box">
-                            <div class="gmk-employee-modal-card-slide-item-description-box-info">Info.</div>
-                            <div class="gmk-employee-modal-card-slide-item-description-box-person">Zur Person.</div>
-                            <div class="gmk-employee-modal-card-slide-item-description-box-description"><?= nl2br($row['description']) ?></div>
+                        <div class="gmk-employee-modal-card-item-description-box">
+                            <div class="gmk-employee-modal-card-item-description-box-info">Info.</div>
+                            <div class="gmk-employee-modal-card-item-description-box-person">Zur Person.</div>
+                            <div class="gmk-employee-modal-card-item-description-box-description"><?= nl2br($row['description']) ?></div>
                         </div>
                         <?php endif; ?>
 
-                        <?php if($row['publications'] != ''): ?>
-                        <div class="gmk-employee-modal-card-slide-item-description-box">
+                        <!-- Interview -->
+                        <?php if(count($row['interview'])): ?>
+                        <div class="gmk-employee-modal-card-interview-box">
+                            <?php foreach($row['interview'] as $item): ?>
+                            <div class="gmk-employee-modal-card-item-interview">
+                                <div class="gmk-employee-modal-card-item-interview-question"><?= $item['interview_question'] ?></div>
+                                <div class="gmk-employee-modal-card-item-answer"><?= $item['interview_answer'] ?></div>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <?php endif; ?>
 
+                        <!-- Bürozeiten -->
+                        <?php if(count($row['businessHours'])): ?>
+                        <h4>B&uuml;rozeiten:</h4>
+                        <div class="gmk-employee-modal-card-business-hours-box">
+                            <?php foreach($row['businessHours'] as $item => $v): ?>
+                            <div class="gmk-employee-modal-card-list-business-hours-item"><?= $v['businessHoursWeekday'] ?>: <?= $v['businessHoursTime'] ?></div>
+                            <?php endforeach; ?>
+                        </div>
+                        <?php endif; ?>
+
+                        <!-- Publikationen -->
+                        <?php if($row['publications'] != ''): ?>
+                        <h4>Publikationen:</h4>
+                        <div class="gmk-employee-modal-card-publications-box">
                             <div class="gmk-employee-modal-card-slide-item-publication-text"><?= \Controller::replaceInsertTags($row['publications']) ?></div>
                         </div>
                         <?php endif; ?>
+
+                        <div class="gmk-employee-modal-vcard-box">
+                            <a href="{{env::request}}?downloadVCard=true&id=<?= $row['id'] ?>" class="btn btn-primary">VCard</a>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
     <?php endforeach; ?>
 </div>
 <?php $this->endblock(); ?>

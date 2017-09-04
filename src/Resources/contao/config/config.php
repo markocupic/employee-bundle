@@ -17,8 +17,8 @@ $GLOBALS['BE_MOD']['content']['employee'] = array(
  * Content Elements
  */
 $GLOBALS['TL_CTE']['employee'] = array(
-        'employeeList' => 'Markocupic\EmployeeBundle\ModuleEmployeeList',
-        'employeeDetail' => 'Markocupic\EmployeeBundle\ModuleEmployeeDetail',
+        'employeeList' => 'Markocupic\EmployeeBundle\ContentEmployeeList',
+        'employeeDetail' => 'Markocupic\EmployeeBundle\ContentEmployeeDetail',
 );
 
 

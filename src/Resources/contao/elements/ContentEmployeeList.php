@@ -10,17 +10,17 @@ use Patchwork\Utf8;
 use Contao\Input;
 
 /**
- * Class ModuleEmployeeList
+ * Class ContentEmployeeList
  * @package Markocupic\EmployeeBundle
  */
-class ModuleEmployeeList extends \ContentElement
+class ContentEmployeeList extends \ContentElement
 {
 
     /**
      * Template
      * @var string
      */
-    protected $strTemplate = 'ce_employee_list';
+    protected $strTemplate = 'ce_employeeList';
 
 
     /**

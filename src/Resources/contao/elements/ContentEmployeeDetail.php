@@ -3,21 +3,32 @@ namespace Markocupic\EmployeeBundle;
 
 use Contao\BackendTemplate;
 use Contao\Validator;
+use Contao\Input;
+use Contao\StringUtil;
+use Contao\EmployeeModel;
+
 use Patchwork\Utf8;
 
 
 /**
- * Class ModuleEmployeeDetail
+ * Class ContentEmployeeDetail
  * @package Markocupic\EmployeeBundle
  */
-class ModuleEmployeeDetail extends \ContentElement
+class ContentEmployeeDetail extends \ContentElement
 {
 
     /**
      * Template
      * @var string
      */
-    protected $strTemplate = 'ce_gmk_employee_detail';
+    protected $strTemplate = 'ce_employeeDetail';
+
+    /**
+     * Employee object
+     * @var
+     */
+    protected $objEmployee;
+
 
 
     /**
@@ -34,14 +45,26 @@ class ModuleEmployeeDetail extends \ContentElement
             $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['employeeDetail'][0]) . ' ###';
             return $objTemplate->parse();
         }
-        $userId = $this->gmkSelectedMitarbeiter;
 
-        $objDb = $this->Database->prepare('SELECT * FROM tl_employee WHERE id=? AND published=?')->execute($userId, 1);
+        // Download VCard
+        if (Input::get('downloadVCard') && Input::get('id') > 0)
+        {
+            $objEmployee = EmployeeModel::findByPk(Input::get('id'));
+            if ($objEmployee !== null)
+            {
+                EmployeeVcard::sendToBrowser($objEmployee);
+            }
+        }
+
+
+
+        $userId = $this->selectEmployee;
+        $objDb = $this->Database->prepare('SELECT * FROM tl_employee WHERE id=? AND published=?')->limit(1)->execute($userId, 1);
         if(!$objDb->numRows)
         {
             return '';
         }
-        $this->objUser = $objDb;
+        $this->objEmployee = $objDb;
 
 
         return parent::generate();
@@ -54,12 +77,14 @@ class ModuleEmployeeDetail extends \ContentElement
      */
     protected function compile()
     {
-        $row =  $this->objUser->row();
+        $row =  $this->objEmployee->row();
         if (Validator::isUuid($row['singleSRC']))
         {
-            $row['singleSRC'] = \StringUtil::binToUuid($row['singleSRC']);
+            $row['singleSRC'] = StringUtil::binToUuid($row['singleSRC']);
         }
         $row['interview'] = deserialize($row['interview'], true);
+        $row['businessHours'] = deserialize($row['businessHours'], true);
+
 
         $this->Template->row = $row;
     }
