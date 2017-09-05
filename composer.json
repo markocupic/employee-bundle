@@ -10,8 +10,9 @@
     }
   ],
   "require": {
-    "contao/core-bundle": ">=4.3",
-    "menatwork/contao-multicolumnwizard": ">=3.3.10"
+    "symfony/framework-bundle": "^3.3",
+    "contao/core-bundle": "^4.4",
+    "menatwork/contao-multicolumnwizard": "^3.3"
   },
   "autoload": {
     "psr-4": {
@@ -31,4 +32,4 @@
   "extra": {
     "contao-manager-plugin": "Markocupic\\EmployeeBundle\\ContaoManager\\Plugin"
   }
- }
+}
