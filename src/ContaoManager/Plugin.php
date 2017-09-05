@@ -27,10 +27,7 @@ class Plugin implements BundlePluginInterface
     {
         return [
             BundleConfig::create('Markocupic\EmployeeBundle\MarkocupicEmployeeBundle')
-                ->setLoadAfter([
-                  'Contao\CoreBundle\ContaoCoreBundle',
-                  'Contao\CalendarBundle\ContaoCalendarBundle'
-                ])
+                ->setLoadAfter(['Contao\CoreBundle\ContaoCoreBundle'])
         ];
     }
 }
