@@ -117,7 +117,7 @@ $GLOBALS['TL_DCA']['tl_employee'] = array(
             'sorting' => true,
             'flag' => 1,
             'inputType' => 'text',
-            'eval' => array('mandatory' => true, 'maxlength' => 255, 'tl_class' => 'w50'),
+            'eval' => array('maxlength' => 255, 'tl_class' => 'w50'),
             'sql' => "varchar(255) NOT NULL default ''",
         ),
         'gender' => array
@@ -157,7 +157,7 @@ $GLOBALS['TL_DCA']['tl_employee'] = array(
             'sorting' => true,
             'flag' => 1,
             'inputType' => 'text',
-            'eval' => array('mandatory' => true, 'maxlength' => 255, 'tl_class' => 'w50'),
+            'eval' => array('maxlength' => 255, 'tl_class' => 'w50'),
             'sql' => "varchar(255) NOT NULL default ''",
         ),
         'postal' => array(
@@ -202,7 +202,7 @@ $GLOBALS['TL_DCA']['tl_employee'] = array(
             'sorting' => false,
             'flag' => 1,
             'inputType' => 'text',
-            'eval' => array('mandatory' => false, 'maxlength' => 255, 'tl_class' => 'w50'),
+            'eval' => array('maxlength' => 255, 'tl_class' => 'w50'),
             'sql' => "varchar(255) NOT NULL default ''",
         ),
         'company' => array
@@ -223,7 +223,7 @@ $GLOBALS['TL_DCA']['tl_employee'] = array(
             'sorting' => false,
             'flag' => 1,
             'inputType' => 'textarea',
-            'eval' => array('mandatory' => false, 'tl_class' => 'clr'),
+            'eval' => array('tl_class' => 'clr'),
             'sql' => "varchar(255) NOT NULL default ''",
         ),
         'publications' => array
@@ -232,7 +232,7 @@ $GLOBALS['TL_DCA']['tl_employee'] = array(
             'exclude' => true,
             'search' => true,
             'inputType' => 'textarea',
-            'eval' => array('mandatory' => false, 'rte' => 'tinyMCE', 'helpwizard' => true),
+            'eval' => array('rte' => 'tinyMCE', 'helpwizard' => true),
             'explanation' => 'insertTags',
             'sql' => "mediumtext NULL"
         ),
