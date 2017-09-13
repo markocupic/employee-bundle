@@ -89,7 +89,7 @@ $GLOBALS['TL_DCA']['tl_employee'] = array(
     // Palettes
     'palettes' => array(
         '__selector__' => array('addImage'),
-        'default' => '{personal_legend},gender,title,firstname,lastname;{contact_legend},phone,mobile,email,website,businessHours;{address_legend},street, postal, city, state, country;{work_legend},company,funktion,description,publications;{image_legend},addImage;{interview_legend},interview;',
+        'default' => '{personal_legend},gender,title,firstname,lastname;{contact_legend},phone,mobile,email,fax,skype,website,businessHours;{address_legend},street, postal, city, state, country;{work_legend},company,funktion,description,publications;{image_legend},addImage;{interview_legend},interview;',
     ),
     // Subpalettes
     'subpalettes' => array(
@@ -242,6 +242,22 @@ $GLOBALS['TL_DCA']['tl_employee'] = array(
             'search' => true,
             'inputType' => 'text',
             'eval' => array('maxlength' => 64, 'rgxp' => 'phone', 'decodeEntities' => true, 'tl_class' => 'w50'),
+            'sql' => "varchar(64) NOT NULL default ''",
+        ),
+        'fax' => array(
+            'label' => &$GLOBALS['TL_LANG']['tl_employee']['fax'],
+            'exclude' => true,
+            'search' => true,
+            'inputType' => 'text',
+            'eval' => array('maxlength' => 64, 'rgxp' => 'phone', 'decodeEntities' => true, 'tl_class' => 'w50'),
+            'sql' => "varchar(64) NOT NULL default ''",
+        ),
+        'skype' => array(
+            'label' => &$GLOBALS['TL_LANG']['tl_employee']['skype'],
+            'exclude' => true,
+            'search' => true,
+            'inputType' => 'text',
+            'eval' => array('maxlength' => 64, 'decodeEntities' => true, 'tl_class' => 'w50'),
             'sql' => "varchar(64) NOT NULL default ''",
         ),
         'mobile' => array(
