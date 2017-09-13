@@ -27,13 +27,13 @@ $GLOBALS['TL_LANG']['tl_employee']['interview_legend'] = 'Interview-Einstellunge
 
 // fields
 $GLOBALS['TL_LANG']['tl_employee']['gender'] = array('Geschlecht', 'Bitte geben Sie ein Geschlecht ein.');
-
 $GLOBALS['TL_LANG']['tl_employee']['firstname'] = array('Vorname', 'Bitte geben Sie einen Vornamen ein.');
 $GLOBALS['TL_LANG']['tl_employee']['lastname'] = array('Nachname', 'Bitte geben Sie einen Nachnamen ein.');
 $GLOBALS['TL_LANG']['tl_employee']['title'] = array('Titel', 'Bitte geben Sie einen Titel ein. z.B. Dr.');
 $GLOBALS['TL_LANG']['tl_employee']['street'] = array('Strasse', 'Bitte geben Sie einen Strassennamen ein.');
 $GLOBALS['TL_LANG']['tl_employee']['postal'] = array('Postleitzahl', 'Bitte geben Sie eine Postleitzahl ein.');
 $GLOBALS['TL_LANG']['tl_employee']['city'] = array('Ort', 'Bitte geben Sie eine Ortsbezeichnung ein.');
+$GLOBALS['TL_LANG']['tl_employee']['country'] = array('Nationalität', 'Bitte geben Sie eine Nationalität ein.');
 $GLOBALS['TL_LANG']['tl_employee']['phone'] = array('Telefon', 'Bitte geben Sie eine Telefonnummer ein.');
 $GLOBALS['TL_LANG']['tl_employee']['mobile'] = array('Mobiltelefon', 'Bitte geben Sie eine Mobilnummer ein.');
 $GLOBALS['TL_LANG']['tl_employee']['email'] = array('E-Mail-Adresse', 'Bitte geben Sie eine E-Mail-Adresse ein.');
