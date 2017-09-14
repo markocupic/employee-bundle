@@ -23,6 +23,16 @@ $GLOBALS['TL_CTE']['employee'] = array(
 
 
 /**
+ * Hooks
+ */
+// Return VCard url from {{vcard_download_url::*}}   => * tl_employee.id
+$GLOBALS['TL_HOOKS']['replaceInsertTags'][] = array('Markocupic\EmployeeBundle\ReplaceInsertTags', 'replaceInsertTags');
+
+// Trigger VCard Download
+$GLOBALS['TL_HOOKS']['generatePage'][] = array('Markocupic\EmployeeBundle\GeneratePage', 'generatePage');
+
+
+/**
  * Do not index a page if one of the following parameters is set
  */
 $GLOBALS['TL_NOINDEX_KEYS'][] = 'downloadVCard';
