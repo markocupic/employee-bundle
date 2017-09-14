@@ -14,7 +14,7 @@ class ReplaceInsertTags
      */
     public function replaceInsertTags($strTag)
     {
-        if (preg_match('/vcard_download_url::([\d])/', $strTag, $match))
+        if (preg_match('/^vcard_download_url::([\d]+)$/', $strTag, $match))
         {
             return Environment::get('request') . '?downloadVCard=true&amp;id=' . $match[1];
         }
