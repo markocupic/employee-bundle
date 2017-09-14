@@ -3,9 +3,7 @@ namespace Markocupic\EmployeeBundle;
 
 use Contao\BackendTemplate;
 use Contao\Validator;
-use Contao\Input;
 use Contao\StringUtil;
-use Contao\EmployeeModel;
 
 use Patchwork\Utf8;
 
@@ -45,18 +43,6 @@ class ContentEmployeeDetail extends \ContentElement
             $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['employeeDetail'][0]) . ' ###';
             return $objTemplate->parse();
         }
-
-        // Download VCard
-        if (Input::get('downloadVCard') && Input::get('id') > 0)
-        {
-            $objEmployee = EmployeeModel::findByPk(Input::get('id'));
-            if ($objEmployee !== null)
-            {
-                EmployeeVcard::sendToBrowser($objEmployee);
-            }
-        }
-
-
 
         $userId = $this->selectEmployee;
         $objDb = $this->Database->prepare('SELECT * FROM tl_employee WHERE id=? AND published=?')->limit(1)->execute($userId, 1);

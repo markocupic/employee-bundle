@@ -2,12 +2,10 @@
 
 namespace Markocupic\EmployeeBundle;
 
-use Contao\EmployeeModel;
 use Contao\BackendTemplate;
 use Contao\Validator;
 use Contao\StringUtil;
 use Patchwork\Utf8;
-use Contao\Input;
 
 /**
  * Class ContentEmployeeList
@@ -40,14 +38,6 @@ class ContentEmployeeList extends \ContentElement
             return $objTemplate->parse();
         }
 
-        if (Input::get('downloadVCard') && Input::get('id') > 0)
-        {
-            $objEmployee = EmployeeModel::findByPk(Input::get('id'));
-            if ($objEmployee !== null)
-            {
-                EmployeeVcard::sendToBrowser($objEmployee);
-            }
-        }
         return parent::generate();
 
     }
