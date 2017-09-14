@@ -102,7 +102,7 @@
                         <?php endif; ?>
 
                         <div class="gmk-employee-modal-vcard-box">
-                            <a href="{{env::request}}?downloadVCard=true&id=<?= $row['id'] ?>" class="btn btn-primary">VCard</a>
+                            <a href="{{vcard_download_url::<?= $row['id'] ?>}}" class="btn btn-primary">VCard</a>
                         </div>
 
                     </div>
