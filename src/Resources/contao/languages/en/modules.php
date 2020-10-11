@@ -1,20 +1,16 @@
 <?php
 
-/**
- * Contao Open Source CMS
+/*
+ * This file is part of markocupic employee bundle.
  *
- * Copyright (c) 2005-2016 Leo Feyer
+ * (c) Marko Cupic
  *
- * @package   FondspolicenVergleich
- * @author    Marko Cupic
- * @license   SHAREWARE
- * @copyright Marko Cupic 2016
+ * @license LGPL-3.0-or-later
  */
-
 
 /**
  * Back end modules
  */
-$GLOBALS['TL_LANG']['MOD']['employee'] = array('Mitarbeiter', 'Mitarbeiter erfassen.');
+$GLOBALS['TL_LANG']['MOD']['employee'] = ['Mitarbeiter', 'Mitarbeiter erfassen.'];
 
 

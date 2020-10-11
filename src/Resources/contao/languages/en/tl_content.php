@@ -1,15 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Marko
- * Date: 06.12.2016
- * Time: 17:31
+
+/*
+ * This file is part of markocupic employee bundle.
+ *
+ * (c) Marko Cupic
+ *
+ * @license LGPL-3.0-or-later
  */
 
 // Legends
 $GLOBALS['TL_LANG']['tl_content']['employee_legend'] = 'Mitarbeiterauswahl';
 
-
 // Fields
-$GLOBALS['TL_LANG']['tl_content']['showAllPublishedEmployees'] = array('Alle Mitarbeiter auswählen.');
-$GLOBALS['TL_LANG']['tl_content']['selectEmployee'] = array('Wählen Sie den/die Mitarbeiter aus.','Wàhlen Sie den/die Mitarbeiter aus.');
+$GLOBALS['TL_LANG']['tl_content']['showAllPublishedEmployees'] = ['Alle Mitarbeiter auswählen.'];
+$GLOBALS['TL_LANG']['tl_content']['selectEmployee'] = ['Wählen Sie den/die Mitarbeiter aus.', 'Wàhlen Sie den/die Mitarbeiter aus.'];
