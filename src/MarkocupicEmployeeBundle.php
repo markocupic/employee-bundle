@@ -17,9 +17,7 @@ namespace Markocupic\EmployeeBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Configures the employee bundle.
- *
- * @author Marko Cupic <https://github.com/markocupic>
+ * Class MarkocupicEmployeeBundle.
  */
 class MarkocupicEmployeeBundle extends Bundle
 {

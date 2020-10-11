@@ -14,11 +14,14 @@ namespace Markocupic\EmployeeBundle;
 
 use Contao\Environment;
 
+/**
+ * Class ReplaceInsertTags
+ */
 class ReplaceInsertTags
 {
 	/**
 	 * @param $strTag
-	 * @return bool|string
+	 * @return false|string
 	 */
 	public function replaceInsertTags($strTag)
 	{

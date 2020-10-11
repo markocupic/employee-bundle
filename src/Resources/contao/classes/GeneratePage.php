@@ -23,6 +23,11 @@ use Contao\PageRegular;
  */
 class GeneratePage
 {
+	/**
+	 * @param PageModel   $objPage
+	 * @param LayoutModel $objLayout
+	 * @param PageRegular $objPageRegular
+	 */
 	public function generatePage(PageModel $objPage, LayoutModel $objLayout, PageRegular $objPageRegular)
 	{
 		// Trigger VCard download

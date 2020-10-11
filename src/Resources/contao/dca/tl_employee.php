@@ -345,6 +345,9 @@ $GLOBALS['TL_DCA']['tl_employee'] = array(
 	),
 );
 
+/**
+ * Class tl_employee
+ */
 class tl_employee extends Backend
 {
 	/**
