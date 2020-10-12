@@ -3,11 +3,13 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Test Bundle.
+ * This file is part of Employee Bundle.
  *
  * (c) Marko Cupic 2020 <m.cupic@gmx.ch>
  * @license MIT
- * @link https://github.com/markocupic/a
+ * For the full copyright and license information,
+ * please view the LICENSE file that was distributed with this source code.
+ * @link https://github.com/markocupic/employee-bundle
  */
 
 namespace Markocupic\EmployeeBundle\Controller\ContentElement;
@@ -16,7 +18,6 @@ use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\Routing\ScopeMatcher;
 use Contao\Database;
-use Contao\ModuleModel;
 use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\Template;
@@ -30,24 +31,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class EmployeeReaderElementController extends AbstractContentElementController
 {
-    protected $objEmployee = null;
+    protected $objEmployee;
 
-    /**
-     * @param Request $request
-     * @param ModuleModel $model
-     * @param string $section
-     * @param array|null $classes
-     * @param PageModel|null $page
-     * @return Response
-     */
-    public function __invoke(Request $request, ModuleModel $model, string $section, array $classes = null, PageModel $page = null): Response
+    public function __invoke(Request $request, ContentModel $model, string $section, array $classes = null): Response
     {
         if ($this->page instanceof PageModel && $this->get('contao.routing.scope_matcher')->isFrontendRequest($request)) {
             $userId = $this->selectEmployee;
             $objDb = Database::getInstance()
                 ->prepare('SELECT * FROM tl_employee WHERE id=? AND published=?')
                 ->limit(1)
-                ->execute($userId, 1);
+                ->execute($userId, 1)
+            ;
 
             if (!$objDb->numRows) {
                 return new Response('', Response::HTTP_NO_CONTENT);
@@ -58,9 +52,6 @@ class EmployeeReaderElementController extends AbstractContentElementController
         return parent::__invoke($request, $model, $section, $classes);
     }
 
-    /**
-     * @return array
-     */
     public static function getSubscribedServices(): array
     {
         $services = parent::getSubscribedServices();
@@ -73,11 +64,6 @@ class EmployeeReaderElementController extends AbstractContentElementController
 
     /**
      * Generate the content element.
-     *
-     * @param Template $template
-     * @param ContentModel $model
-     * @param Request $request
-     * @return Response|null
      */
     protected function getResponse(Template $template, ContentModel $model, Request $request): ?Response
     {

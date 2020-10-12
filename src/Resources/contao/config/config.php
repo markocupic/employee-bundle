@@ -12,8 +12,6 @@
 
 use Markocupic\EmployeeBundle\ContentEmployeeDetail;
 use Markocupic\EmployeeBundle\ContentEmployeeList;
-use Markocupic\EmployeeBundle\GeneratePage;
-use Markocupic\EmployeeBundle\ReplaceInsertTags;
 use Markocupic\EmployeeBundle\Model\EmployeeModel;
 
 /**

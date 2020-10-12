@@ -1,10 +1,3 @@
-<?php
-// My stylesheet
-//$GLOBALS['TL_CSS'][] = 'files/mcupic/stylesheet.css|static';
-?>
-
-
-
 <?php $this->extend('block_searchable'); ?>
 <?php $this->block('content'); ?>
 
@@ -25,10 +18,6 @@
     </div>
 <?php endforeach; ?>
 </div><!-- endrow-->
-
-
-
-
 
 <!-- Modal Box Container -->
 <div id="gmkEmployeeModalContainer_<?= $this->id ?>">

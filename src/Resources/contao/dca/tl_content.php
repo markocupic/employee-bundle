@@ -12,8 +12,8 @@
 
 use Contao\Backend;
 use Contao\ContentModel;
-use Contao\Input;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
+use Contao\Input;
 
 /**
  * Onload callbacks
@@ -78,9 +78,9 @@ class tl_content_employee extends Backend
 				{
 					if ($objContent->showAllPublishedEmployees)
 					{
-                        PaletteManipulator::create()
-                            ->removeField('selectEmployee','employee_legend')
-                            ->applyToPalette('employee_list_element', 'tl_content');
+						PaletteManipulator::create()
+							->removeField('selectEmployee', 'employee_legend')
+							->applyToPalette('employee_list_element', 'tl_content');
 					}
 				}
 			}
@@ -94,9 +94,9 @@ class tl_content_employee extends Backend
 	{
 		$return = array();
 		$objDb = $this->Database
-            ->prepare('SELECT * FROM tl_employee WHERE published=?')
-            ->execute('1')
-        ;
+			->prepare('SELECT * FROM tl_employee WHERE published=?')
+			->execute('1')
+		;
 
 		while ($objDb->next())
 		{

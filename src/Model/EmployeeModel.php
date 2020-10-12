@@ -3,11 +3,13 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Test Bundle.
+ * This file is part of Employee Bundle.
  *
  * (c) Marko Cupic 2020 <m.cupic@gmx.ch>
  * @license MIT
- * @link https://github.com/markocupic/a
+ * For the full copyright and license information,
+ * please view the LICENSE file that was distributed with this source code.
+ * @link https://github.com/markocupic/employee-bundle
  */
 
 namespace Markocupic\EmployeeBundle\Model;
@@ -15,8 +17,7 @@ namespace Markocupic\EmployeeBundle\Model;
 use Contao\Model;
 
 /**
- * Class EmployeeModel
- * @package Markocupic\EmployeeBundle\Model
+ * Class EmployeeModel.
  */
 class EmployeeModel extends Model
 {
