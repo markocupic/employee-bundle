@@ -16,15 +16,12 @@ namespace Markocupic\EmployeeBundle\Controller\ContentElement;
 
 use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
-use Contao\CoreBundle\Routing\ScopeMatcher;
-use Contao\Database;
-use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\Template;
 use Contao\Validator;
+use Markocupic\EmployeeBundle\Model\EmployeeModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class EmployeeReaderElementController.
@@ -35,31 +32,11 @@ class EmployeeReaderElementController extends AbstractContentElementController
 
     public function __invoke(Request $request, ContentModel $model, string $section, array $classes = null): Response
     {
-        if ($this->page instanceof PageModel && $this->get('contao.routing.scope_matcher')->isFrontendRequest($request)) {
-            $userId = $this->selectEmployee;
-            $objDb = Database::getInstance()
-                ->prepare('SELECT * FROM tl_employee WHERE id=? AND published=?')
-                ->limit(1)
-                ->execute($userId, 1)
-            ;
-
-            if (!$objDb->numRows) {
-                return new Response('', Response::HTTP_NO_CONTENT);
-            }
-            $this->objEmployee = $objDb;
+        if (null === ($this->objEmployee = EmployeeModel::findPublishedById($model->selectEmployee))) {
+            return new Response('', Response::HTTP_NO_CONTENT);
         }
 
         return parent::__invoke($request, $model, $section, $classes);
-    }
-
-    public static function getSubscribedServices(): array
-    {
-        $services = parent::getSubscribedServices();
-
-        $services['translator'] = TranslatorInterface::class;
-        $services['contao.routing.scope_matcher'] = ScopeMatcher::class;
-
-        return $services;
     }
 
     /**

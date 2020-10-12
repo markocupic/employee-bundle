@@ -301,19 +301,19 @@ $GLOBALS['TL_DCA']['tl_employee'] = array(
 			'exclude'   => true,
 			'inputType' => 'multiColumnWizard',
 			'eval'      => array(
-				'tl_class'     => 'clr m12',
+				'tl_class'     => 'clr',
 				'columnFields' => array(
 					'interview_question' => array(
 						'label'     => &$GLOBALS['TL_LANG']['tl_employee']['interview_question'],
 						'exclude'   => true,
 						'inputType' => 'text',
-						'eval'      => array('style' => 'width:180px'),
+						'eval'      => array('style' => 'width:200px'),
 					),
 					'interview_answer'   => array(
 						'label'     => &$GLOBALS['TL_LANG']['tl_employee']['interview_answer'],
 						'exclude'   => true,
 						'inputType' => 'textarea',
-						'eval'      => array('style' => 'width:300px'),
+						'eval'      => array('style' => 'width:200px'),
 					),
 				),
 			),
@@ -324,19 +324,19 @@ $GLOBALS['TL_DCA']['tl_employee'] = array(
 			'exclude'   => true,
 			'inputType' => 'multiColumnWizard',
 			'eval'      => array(
-				'tl_class'     => 'clr m12',
+				'tl_class'     => 'clr',
 				'columnFields' => array(
 					'businessHoursWeekday' => array(
 						'label'     => &$GLOBALS['TL_LANG']['tl_employee']['businessHoursWeekday'],
 						'exclude'   => true,
 						'inputType' => 'text',
-						'eval'      => array('style' => 'width:180px'),
+						'eval'      => array('style' => 'width:200px'),
 					),
 					'businessHoursTime'    => array(
 						'label'     => &$GLOBALS['TL_LANG']['tl_employee']['businessHoursTime'],
 						'exclude'   => true,
 						'inputType' => 'text',
-						'eval'      => array('style' => 'width:180px'),
+						'eval'      => array('style' => 'width:200px'),
 					),
 				),
 			),

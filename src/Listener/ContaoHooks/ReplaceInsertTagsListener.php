@@ -14,11 +14,10 @@ declare(strict_types=1);
 
 namespace Markocupic\EmployeeBundle\Listener\ContaoHooks;
 
-use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Contao\Environment;
 
 /**
- * @Hook("replaceInsertTags")
+ * Class ReplaceInsertTagsListener.
  */
 class ReplaceInsertTagsListener
 {

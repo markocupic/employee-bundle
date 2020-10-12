@@ -22,14 +22,6 @@ $GLOBALS['BE_MOD']['content']['employee'] = array(
 );
 
 /**
- * Content elements
- */
-$GLOBALS['TL_CTE']['employee'] = array(
-	//'employeeList'   => ContentEmployeeList::class,
-	//'employeeDetail' => ContentEmployeeDetail::class,
-);
-
-/**
  * Do not index a page if one of the following parameters is set
  */
 $GLOBALS['TL_NOINDEX_KEYS'][] = 'downloadVCard';

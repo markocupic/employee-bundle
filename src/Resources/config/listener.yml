@@ -1,0 +1,9 @@
+services:
+
+  Markocupic\EmployeeBundle\Listener\ContaoHooks\GeneratePageListener:
+    tags:
+      - { name: contao.hook, hook: generatePage, method: generatePage, priority: 0 }
+
+  Markocupic\EmployeeBundle\Listener\ContaoHooks\ReplaceInsertTagsListener:
+    tags:
+      - { name: contao.hook, hook: replaceInsertTags, method: replaceInsertTags, priority: 0 }

@@ -41,7 +41,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['selectEmployee'] = array(
 	'label'            => &$GLOBALS['TL_LANG']['tl_content']['selectEmployee'],
 	'exclude'          => true,
 	'inputType'        => 'checkboxWizard',
-	'eval'             => array('multiple' => true, 'orderField' => 'orderSelectedEmployee', 'mandatory' => false),
+	'eval'             => array('mandatory' => true, 'multiple' => true, 'orderField' => 'orderSelectedEmployee'),
 	'sql'              => "blob NULL",
 	'options_callback' => array('tl_content_employee', 'getPublishedMitarbeiter'),
 );
@@ -67,14 +67,14 @@ class tl_content_employee extends Backend
 
 			if ($objContent !== null)
 			{
-				if ($objContent->type === 'employeeDetail')
+				if ($objContent->type === 'employee_reader_element')
 				{
 					$GLOBALS['TL_DCA']['tl_content']['fields']['selectEmployee']['inputType'] = 'radio';
 					$GLOBALS['TL_DCA']['tl_content']['fields']['selectEmployee']['eval']['fieldType'] = 'radio';
 					$GLOBALS['TL_DCA']['tl_content']['fields']['selectEmployee']['eval']['multiple'] = 'false';
 				}
 
-				if ($objContent->type === 'employeeList')
+				if ($objContent->type === 'employee_list_element')
 				{
 					if ($objContent->showAllPublishedEmployees)
 					{

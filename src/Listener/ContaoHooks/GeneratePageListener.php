@@ -14,16 +14,15 @@ declare(strict_types=1);
 
 namespace Markocupic\EmployeeBundle\Listener\ContaoHooks;
 
-use Contao\CoreBundle\ServiceAnnotation\Hook;
-use Contao\EmployeeModel;
 use Contao\Input;
 use Contao\LayoutModel;
 use Contao\PageModel;
 use Contao\PageRegular;
-use Markocupic\Vcard\VcardGenerator;
+use Markocupic\EmployeeBundle\Model\EmployeeModel;
+use Markocupic\EmployeeBundle\Vcard\VcardGenerator;
 
 /**
- * @Hook("generatePage")
+ * Class GeneratePageListener.
  */
 class GeneratePageListener
 {

@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Markocupic\EmployeeBundle\Vcard;
 
-use Contao\EmployeeModel;
+use Markocupic\EmployeeBundle\Model\EmployeeModel;
 use Contao\File;
 use Contao\FrontendTemplate;
 

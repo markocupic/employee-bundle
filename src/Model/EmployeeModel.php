@@ -22,4 +22,15 @@ use Contao\Model;
 class EmployeeModel extends Model
 {
     protected static $strTable = 'tl_employee';
+
+    public static function findPublishedById($intId, array $arrOptions=array())
+    {
+        $t = static::$strTable;
+        $arrColumns = array(
+            "$t.id=?",
+            "published='1'"
+        );
+
+        return static::findOneBy($arrColumns, $intId, $arrOptions);
+    }
 }
