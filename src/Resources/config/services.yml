@@ -1,0 +1,15 @@
+services:
+
+  # Contao content element Markocupic\EmployeeBundle\Controller\ContentElement\EmployeeListElementController
+  Markocupic\EmployeeBundle\Controller\ContentElement\EmployeeListElementController:
+    tags:
+      - { name: contao.content_element, category: employee_elements, template: ce_employee_list_element, type: employee_list_element }
+      - { name: container.service_subscriber }
+    public: true
+
+  # Contao content element Markocupic\EmployeeBundle\Controller\ContentElement\EmployeeReaderElementController
+  Markocupic\EmployeeBundle\Controller\ContentElement\EmployeeReaderElementController:
+    tags:
+      - { name: contao.content_element, category: employee_elements, template: ce_employee_reader_element, type: employee_reader_element }
+      - { name: container.service_subscriber }
+    public: true

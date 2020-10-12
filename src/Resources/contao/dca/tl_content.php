@@ -13,15 +13,22 @@
 use Contao\Backend;
 use Contao\ContentModel;
 use Contao\Input;
+use Contao\CoreBundle\DataContainer\PaletteManipulator;
 
-// Onload callback
+/**
+ * Onload callbacks
+ */
 $GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array('tl_content_employee', 'setPalette');
 
-// Palette
-$GLOBALS['TL_DCA']['tl_content']['palettes']['employeeList'] = '{type_legend},type;{employee_legend},showAllPublishedEmployees,selectEmployee;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['employeeDetail'] = '{type_legend},type;{employee_legend},selectEmployee;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+/**
+ * Palettes
+ */
+$GLOBALS['TL_DCA']['tl_content']['palettes']['employee_list_element'] = '{type_legend},type;{employee_legend},showAllPublishedEmployees,selectEmployee;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['employee_reader_element'] = '{type_legend},type;{employee_legend},selectEmployee;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 
-// Fields
+/**
+ * Fields
+ */
 $GLOBALS['TL_DCA']['tl_content']['fields']['showAllPublishedEmployees'] = array(
 	'label'     => &$GLOBALS['TL_LANG']['tl_content']['showAllPublishedEmployees'],
 	'exclude'   => true,
@@ -50,37 +57,30 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['orderSelectedEmployee'] = array(
 class tl_content_employee extends Backend
 {
 	/**
-	 * Import the back end user object
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-		$this->import('BackendUser', 'User');
-	}
-
-	/**
 	 * Set palette
 	 */
 	public function setPalette()
 	{
-		if (Input::get('act') == 'edit' && Input::get('id') != '')
+		if (Input::get('act') === 'edit' && Input::get('id') != '')
 		{
 			$objContent = ContentModel::findByPk(Input::get('id'));
 
 			if ($objContent !== null)
 			{
-				if ($objContent->type == 'employeeDetail')
+				if ($objContent->type === 'employeeDetail')
 				{
 					$GLOBALS['TL_DCA']['tl_content']['fields']['selectEmployee']['inputType'] = 'radio';
 					$GLOBALS['TL_DCA']['tl_content']['fields']['selectEmployee']['eval']['fieldType'] = 'radio';
 					$GLOBALS['TL_DCA']['tl_content']['fields']['selectEmployee']['eval']['multiple'] = 'false';
 				}
 
-				if ($objContent->type == 'employeeList')
+				if ($objContent->type === 'employeeList')
 				{
 					if ($objContent->showAllPublishedEmployees)
 					{
-						$GLOBALS['TL_DCA']['tl_content']['palettes']['employeeList'] = str_replace(',selectEmployee', '', $GLOBALS['TL_DCA']['tl_content']['palettes']['employeeList']);
+                        PaletteManipulator::create()
+                            ->removeField('selectEmployee','employee_legend')
+                            ->applyToPalette('employee_list_element', 'tl_content');
 					}
 				}
 			}
@@ -93,7 +93,10 @@ class tl_content_employee extends Backend
 	public function getPublishedMitarbeiter()
 	{
 		$return = array();
-		$objDb = $this->Database->prepare('SELECT * FROM tl_employee WHERE published=?')->execute(1);
+		$objDb = $this->Database
+            ->prepare('SELECT * FROM tl_employee WHERE published=?')
+            ->execute('1')
+        ;
 
 		while ($objDb->next())
 		{

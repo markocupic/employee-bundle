@@ -10,7 +10,7 @@
  * @link https://github.com/markocupic/employee-bundle
  */
 
-namespace Markocupic\EmployeeBundle;
+namespace Markocupic\EmployeeBundle\Listener\ContaoHooks;
 
 use Contao\EmployeeModel;
 use Contao\Input;
@@ -18,11 +18,12 @@ use Contao\LayoutModel;
 use Contao\PageModel;
 use Contao\PageRegular;
 use Markocupic\Vcard\VcardGenerator;
+use Contao\CoreBundle\ServiceAnnotation\Hook;
 
 /**
- * Class GeneratePage
+ * @Hook("generatePage")
  */
-class GeneratePage
+class GeneratePageListener
 {
 	/**
 	 * @param PageModel   $objPage

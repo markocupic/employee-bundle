@@ -8,7 +8,9 @@
  * @license LGPL-3.0-or-later
  */
 
-// FE-Modules
-$GLOBALS['TL_LANG']['CTE']['employee'] = 'Mitarbeiter Module';
-$GLOBALS['TL_LANG']['CTE']['employeeList'] = ['Mitarbeiter-Liste', 'Fügen Sie dem Layout eine Mitarbeiter-Liste hinzu.'];
-$GLOBALS['TL_LANG']['CTE']['employeeDetail'] = ['Mitarbeiter-Detailansicht', 'Fügen Sie dem Layout eine Detailansicht des Mitarbeiters hinzu.'];
+/**
+ * Content elements
+ */
+$GLOBALS['TL_LANG']['CTE']['employee_elements'] = 'Mitarbeiter Inhaltselemente';
+$GLOBALS['TL_LANG']['CTE']['employee_list_element'] = ['Mitarbeiter-Liste', 'Fügen Sie dem Layout eine Mitarbeiter-Liste hinzu.'];
+$GLOBALS['TL_LANG']['CTE']['employee_reader_element'] = ['Mitarbeiter-Detailansicht', 'Fügen Sie dem Layout eine Detailansicht des Mitarbeiters hinzu.'];

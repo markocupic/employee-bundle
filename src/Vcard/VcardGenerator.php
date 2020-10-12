@@ -10,29 +10,29 @@
  * @link https://github.com/markocupic/employee-bundle
  */
 
-namespace Markocupic\EmployeeBundle;
+namespace Markocupic\EmployeeBundle\Vcard;
 
 use Contao\EmployeeModel;
 use Contao\File;
 use Contao\FrontendTemplate;
 
 /**
- * Class EmployeeVcard
+ * Class VcardGenerator
+ * @package Markocupic\EmployeeBundle\Vcard
  */
-class EmployeeVcard
+class VcardGenerator
 {
-	/**
-	 * Template
-	 * @var string
-	 */
-	protected static $strTemplate = 'partial_employee_vcard';
 
-	/**
-	 * @param EmployeeModel $objEmployee
-	 */
+	const VCARD_TEMPLATE = 'partial_employee_vcard';
+
+    /**
+     * @param EmployeeModel $objEmployee
+     * @throws \Exception
+     */
 	public static function sendToBrowser(EmployeeModel $objEmployee)
 	{
-		$objTemplate = new FrontendTemplate(static::$strTemplate);
+		$objTemplate = new FrontendTemplate(static::VCARD_TEMPLATE);
+
 		// Set data from object
 		$arrData = $objEmployee->row();
 		$row = array();
