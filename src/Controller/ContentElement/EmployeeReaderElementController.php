@@ -28,6 +28,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class EmployeeReaderElementController extends AbstractContentElementController
 {
+    /**
+     * @var EmployeeModel|null
+     */
     protected $objEmployee;
 
     public function __invoke(Request $request, ContentModel $model, string $section, array $classes = null): Response
@@ -41,6 +44,11 @@ class EmployeeReaderElementController extends AbstractContentElementController
 
     /**
      * Generate the content element.
+     *
+     * @param Template $template
+     * @param ContentModel $model
+     * @param Request $request
+     * @return Response|null
      */
     protected function getResponse(Template $template, ContentModel $model, Request $request): ?Response
     {
