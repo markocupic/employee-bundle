@@ -14,9 +14,9 @@ declare(strict_types=1);
 
 namespace Markocupic\EmployeeBundle\Vcard;
 
-use Markocupic\EmployeeBundle\Model\EmployeeModel;
 use Contao\File;
 use Contao\FrontendTemplate;
+use Markocupic\EmployeeBundle\Model\EmployeeModel;
 
 /**
  * Class VcardGenerator.
@@ -34,24 +34,18 @@ class VcardGenerator
 
         // Set data from object
         $arrData = $objEmployee->row();
-        $row = [];
+        $arrData = array_map('html_entity_decode', $arrData);
+        $arrData = array_map('utf8_decode', $arrData);
+        $arrData = array_map('trim', $arrData);
 
-        foreach ($arrData as $k => $v) {
-            // utf8 decode strings and html_entity_decode strings f.ex. &#40; => (
-            $row[$k] = utf8_decode(html_entity_decode($v));
-        }
-
-        $objTemplate->setData($row);
+        $objTemplate->setData($arrData);
 
         // Set fname
-        $objTemplate->fn = trim(implode(' ', [$row['title'], $row['firstname'], $row['lastname']]));
-
-        // Parse template
-        $vcard = $objTemplate->parse();
+        $objTemplate->fn = sprintf('%s %s %s',$row['title'], $row['firstname'], $row['lastname']);
 
         // Create tmp-file
         $objFile = new File('system/tmp/'.time().'.vcf', true);
-        $objFile->append($vcard);
+        $objFile->append($objTemplate->parse());
         $objFile->close();
         $objFile->sendToBrowser(sprintf('vcard-%s-%s.vcf', $objEmployee->firstname, $objEmployee->lastname));
     }

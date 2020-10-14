@@ -34,33 +34,36 @@ class EmployeeListElementController extends AbstractContentElementController
     protected function getResponse(Template $template, ContentModel $model, Request $request): ?Response
     {
         $rows = [];
+        $template->hasItems = false;
 
         if ($model->showAllPublishedEmployees) {
             $objDb = Database::getInstance()
-                ->prepare('SELECT * FROM tl_employee WHERE published=? ORDER BY lastname, firstname')
+                ->prepare('SELECT * FROM tl_employee WHERE id>1000 && published=? ORDER BY lastname, firstname')
                 ->execute(1)
             ;
-            $arrEmployees = $objDb->fetchEach('id');
+            $arrIds = $objDb->fetchEach('id');
         } else {
-            $arrEmployees = StringUtil::deserialize($model->selectEmployee, true);
+            $arrIds = StringUtil::deserialize($model->selectEmployee, true);
         }
 
-        foreach ($arrEmployees as $userId) {
-            $objDb = Database::getInstance()
-                ->prepare('SELECT * FROM tl_employee WHERE id=? AND published=?')
-                ->execute($userId, 1)
-            ;
+        if(count($arrIds)) {
+            $template->hasItems = true;
+            foreach ($arrIds as $userId) {
+                $objDb = Database::getInstance()
+                    ->prepare('SELECT * FROM tl_employee WHERE id=? AND published=?')
+                    ->execute($userId, 1);
 
-            while ($objDb->next()) {
-                $row = $objDb->row();
+                while ($objDb->next()) {
+                    $row = $objDb->row();
 
-                if (Validator::isUuid($row['singleSRC'])) {
-                    $row['singleSRC'] = StringUtil::binToUuid($row['singleSRC']);
+                    if (Validator::isUuid($row['singleSRC'])) {
+                        $row['singleSRC'] = StringUtil::binToUuid($row['singleSRC']);
+                    }
+                    $row['interview'] = StringUtil::deserialize($row['interview'], true);
+                    $row['businessHours'] = StringUtil::deserialize($row['businessHours'], true);
+
+                    $rows[] = $row;
                 }
-                $row['interview'] = StringUtil::deserialize($row['interview'], true);
-                $row['businessHours'] = StringUtil::deserialize($row['businessHours'], true);
-
-                $rows[] = $row;
             }
         }
         $template->rows = $rows;

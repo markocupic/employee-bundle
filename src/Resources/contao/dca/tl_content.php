@@ -23,8 +23,8 @@ $GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array('tl_cont
 /**
  * Palettes
  */
-$GLOBALS['TL_DCA']['tl_content']['palettes']['employee_list_element'] = '{type_legend},type;{employee_legend},showAllPublishedEmployees,selectEmployee;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['employee_reader_element'] = '{type_legend},type;{employee_legend},selectEmployee;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['employee_list_element'] = '{type_legend},type;{employee_legend},showAllPublishedEmployees,selectEmployee;{source_legend},size,imagemargin,fullsize;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['employee_reader_element'] = '{type_legend},type;{employee_legend},selectEmployee;{source_legend},size,imagemargin,fullsize,overwriteMeta;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 
 /**
  * Fields
@@ -43,7 +43,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['selectEmployee'] = array(
 	'inputType'        => 'checkboxWizard',
 	'eval'             => array('mandatory' => true, 'multiple' => true, 'orderField' => 'orderSelectedEmployee'),
 	'sql'              => "blob NULL",
-	'options_callback' => array('tl_content_employee', 'getPublishedMitarbeiter'),
+	'options_callback' => array('tl_content_employee', 'getPublishedEmployees'),
 );
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['orderSelectedEmployee'] = array(
@@ -70,7 +70,6 @@ class tl_content_employee extends Backend
 				if ($objContent->type === 'employee_reader_element')
 				{
 					$GLOBALS['TL_DCA']['tl_content']['fields']['selectEmployee']['inputType'] = 'radio';
-					$GLOBALS['TL_DCA']['tl_content']['fields']['selectEmployee']['eval']['fieldType'] = 'radio';
 					$GLOBALS['TL_DCA']['tl_content']['fields']['selectEmployee']['eval']['multiple'] = 'false';
 				}
 
@@ -90,7 +89,7 @@ class tl_content_employee extends Backend
 	/**
 	 * @return array
 	 */
-	public function getPublishedMitarbeiter()
+	public function getPublishedEmployees(): array
 	{
 		$return = array();
 		$objDb = $this->Database

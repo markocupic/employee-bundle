@@ -15,8 +15,11 @@ declare(strict_types=1);
 namespace Markocupic\EmployeeBundle\Controller\ContentElement;
 
 use Contao\ContentModel;
+use Contao\Controller;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
+use Contao\FilesModel;
 use Contao\StringUtil;
+use Contao\System;
 use Contao\Template;
 use Contao\Validator;
 use Markocupic\EmployeeBundle\Model\EmployeeModel;
@@ -44,23 +47,23 @@ class EmployeeReaderElementController extends AbstractContentElementController
 
     /**
      * Generate the content element.
-     *
-     * @param Template $template
-     * @param ContentModel $model
-     * @param Request $request
-     * @return Response|null
      */
     protected function getResponse(Template $template, ContentModel $model, Request $request): ?Response
     {
-        $row = $this->objEmployee->row();
+        if (Validator::isUuid($this->objEmployee->singleSRC)) {
+            $objFile = FilesModel::findByUuid($this->objEmployee->singleSRC);
 
-        if (Validator::isUuid($row['singleSRC'])) {
-            $row['singleSRC'] = StringUtil::binToUuid($row['singleSRC']);
+            if (null !== $objFile && is_file(System::getContainer()->getParameter('kernel.project_dir').'/'.$objFile->path)) {
+                $model->singleSRC = $objFile->path;
+                Controller::addImageToTemplate($template, $model->row(), null, null, $objFile);
+                $template->addImage = true;
+            }
         }
-        $row['interview'] = StringUtil::deserialize($row['interview'], true);
-        $row['businessHours'] = StringUtil::deserialize($row['businessHours'], true);
 
-        $template->row = $row;
+        $this->objEmployee->publications = Controller::replaceInsertTags($this->objEmployee->publications);
+        $this->objEmployee->interview = StringUtil::deserialize($this->objEmployee->interview, true);
+        $this->objEmployee->businessHours = StringUtil::deserialize($this->objEmployee->businessHours, true);
+        $template->employee = $this->objEmployee;
 
         return $template->getResponse();
     }
