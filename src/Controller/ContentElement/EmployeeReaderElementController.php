@@ -55,8 +55,9 @@ class EmployeeReaderElementController extends AbstractContentElementController
 
             if (null !== $objFile && is_file(System::getContainer()->getParameter('kernel.project_dir').'/'.$objFile->path)) {
                 $model->singleSRC = $objFile->path;
+
                 Controller::addImageToTemplate($template, $model->row(), null, null, $objFile);
-                $template->addImage = true;
+                $template->hasImage = true;
             }
         }
 

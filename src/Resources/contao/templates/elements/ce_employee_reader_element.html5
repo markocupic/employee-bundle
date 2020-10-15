@@ -2,7 +2,7 @@
 <?php $this->block('content'); ?>
 
 <div class="employee-introducing-card" data-toggle="modal" data-target="#employeeModal_<?= $this->employee->id ?>">
-    <?php if ($this->addImage): ?>
+    <?php if ($this->hasImage): ?>
         <?php $this->insert('image', $this->arrData); ?>
     <?php endif; ?>
     <div class="employee-introducing-card-left">
@@ -10,7 +10,7 @@
         <h3><?= $this->employee->firstname ?> <?= $this->employee->lastname ?>.</h3>
     </div>
     <br class="clear">
-    <p><?= $this->employee->phone ?><br><a href="mailto:<?= $this->employee->email ?>"><?= $this->employee->email ?></a></p>   
+    <p><?= $this->employee->phone ?>{{br}}<a href="mailto:<?= $this->employee->email ?>"><?= $this->employee->email ?></a></p>
 </div>
 
 <!-- Bootstrap modal box container -->
@@ -19,7 +19,6 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <!--<h5 class="modal-title">Modal title</h5>-->
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -28,16 +27,16 @@
                     <div class="row">
                         <div class="col-md-6 col-one">
                             <div class="employee-modal-card">
-                                <?php if ($this->addImage): ?>
+                                <?php if ($this->hasImage): ?>
                                 <?php $this->insert('image', $this->arrData); ?>
                                 <?php endif; ?>
                                 <div class="employee-modal-left">
                                     <?php if ('' != $this->employee->funktion): ?>
-                                    <span><?= $this->employee->funktion ?>.</span>
+                                    <span><?= $this->employee->funktion ?></span>
                                     <?php endif; ?>
-                                    <h3 class="employee-modal-card-name"><?= $this->employee->firstname ?> <?= $this->employee->lastname ?>.</h3>
+                                    <h3 class="employee-modal-card-name"><?= $this->employee->firstname ?> <?= $this->employee->lastname ?></h3>
                                     <?php if ('' != $this->employee->phone || '' != $this->employee->email): ?>
-                                    <div class="employee-modal-card-contact-info"><?= $this->trans('MSC.eb_contactInfo') ?> <?= $this->employee->firstname ?> <?= $this->employee->lastname ?>!</div>
+                                    <div class="employee-modal-card-contact-info"><?= $this->trans('MSC.eb_contactInfo') ?> <?= $this->employee->firstname ?> <?= $this->employee->lastname ?></div>
                                     <?php endif; ?>
                                     <?php if ('' != $this->employee->phone): ?>
                                     <div class="employee-modal-card-phone"><i class="btr bt-phone"></i><?= $this->employee->phone ?></div>
@@ -56,13 +55,13 @@
                             </div>
                             <?php endif; ?>
 
-                            <!-- Interview -->
+                            <!-- interview -->
                             <?php if (count($this->employee->interview)): ?>
                             <div class="employee-modal-card-interview-box">
-                                <?php foreach ($this->employee->interview as $item): ?>
+                                <?php foreach ($this->employee->interview as $int): ?>
                                 <div class="employee-modal-card-item-interview">
-                                    <div class="employee-modal-card-item-interview-question"><?= $item['interview_question'] ?></div>
-                                    <div class="employee-modal-card-item-answer"><?= $item['interview_answer'] ?></div>
+                                    <div class="employee-modal-card-item-interview-question"><?= $int['interview_question'] ?></div>
+                                    <div class="employee-modal-card-item-answer"><?= $int['interview_answer'] ?></div>
                                 </div>
                                 <?php endforeach; ?>
                             </div>
@@ -72,13 +71,13 @@
                             <?php if (count($this->employee->businessHours)): ?>
                             <h4><?= $this->trans('MSC.eb_officeHours') ?>:</h4>
                             <div class="employee-modal-card-business-hours-box">
-                                <?php foreach ($this->employee->businessHours as $item): ?>
-                                <div class="employee-modal-card-list-business-hours-item"><?= $item['businessHoursWeekday'] ?>: <?= $item['businessHoursTime'] ?></div>
+                                <?php foreach ($this->employee->businessHours as $bh): ?>
+                                <div class="employee-modal-card-list-business-hours-item"><?= $bh['businessHoursWeekday'] ?>: <?= $bh['businessHoursTime'] ?></div>
                                 <?php endforeach; ?>
                             </div>
                             <?php endif; ?>
 
-                            <!-- Publikationen -->
+                            <!-- publications -->
                             <?php if ('' != $this->employee->publications): ?>
                             <h4><?= $this->trans('MSC.eb_publications') ?>:</h4>
                             <div class="employee-modal-card-publications-box">
@@ -92,19 +91,12 @@
                         </div>
                     </div>
                 </div>
-                <!--
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><?= $this->trans('MSC.eb_close') ?></button>
                 </div>
-                -->
             </div>
         </div>
     </div>
 </div>
-
-
-
-
 
 <?php $this->endblock(); ?>

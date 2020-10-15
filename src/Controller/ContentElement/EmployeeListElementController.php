@@ -15,11 +15,15 @@ declare(strict_types=1);
 namespace Markocupic\EmployeeBundle\Controller\ContentElement;
 
 use Contao\ContentModel;
+use Contao\Controller;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\Database;
+use Contao\FilesModel;
 use Contao\StringUtil;
+use Contao\System;
 use Contao\Template;
 use Contao\Validator;
+use Markocupic\EmployeeBundle\Model\EmployeeModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -33,12 +37,15 @@ class EmployeeListElementController extends AbstractContentElementController
      */
     protected function getResponse(Template $template, ContentModel $model, Request $request): ?Response
     {
-        $rows = [];
+        $arrItems = [];
+        $i = 0;
         $template->hasItems = false;
+        $strLightboxId = 'lb' . $model->id;
+
 
         if ($model->showAllPublishedEmployees) {
             $objDb = Database::getInstance()
-                ->prepare('SELECT * FROM tl_employee WHERE id>1000 && published=? ORDER BY lastname, firstname')
+                ->prepare('SELECT * FROM tl_employee WHERE published=? ORDER BY lastname, firstname')
                 ->execute(1)
             ;
             $arrIds = $objDb->fetchEach('id');
@@ -46,27 +53,39 @@ class EmployeeListElementController extends AbstractContentElementController
             $arrIds = StringUtil::deserialize($model->selectEmployee, true);
         }
 
-        if(count($arrIds)) {
-            $template->hasItems = true;
-            foreach ($arrIds as $userId) {
-                $objDb = Database::getInstance()
-                    ->prepare('SELECT * FROM tl_employee WHERE id=? AND published=?')
-                    ->execute($userId, 1);
+        if (\count($arrIds)) {
+                if (null !== ($objEmployee = EmployeeModel::findMultipleByIds($arrIds))) {
+                    while($objEmployee->next()) {
+                        $template->hasItems = true;
 
-                while ($objDb->next()) {
-                    $row = $objDb->row();
+                        $arrItems[$i]['employee'] = $objEmployee->row();
+                        $arrItems[$i]['employee']['interview'] = StringUtil::deserialize($arrItems[$i]['employee']['interview'], true);
+                        $arrItems[$i]['employee']['businessHours'] = StringUtil::deserialize($arrItems[$i]['employee']['interview']['businessHours'], true);
 
-                    if (Validator::isUuid($row['singleSRC'])) {
-                        $row['singleSRC'] = StringUtil::binToUuid($row['singleSRC']);
+                        if (Validator::isUuid($arrItems[$i]['employee']['singleSRC'])) {
+                            $objFile = FilesModel::findByUuid($arrItems[$i]['employee']['singleSRC']);
+
+                            if (null !== $objFile && is_file(System::getContainer()->getParameter('kernel.project_dir').'/'.$objFile->path)) {
+                                $arrItems[$i]['employee']['hasImage'] = true;
+                                $arrItems[$i]['singleSRC'] = $objFile->path;
+                                // Add size and margin
+                                $arrItems[$i]['size'] = $model->size;
+                                $arrItems[$i]['imagemargin'] = $model->imagemargin;
+                                $arrItems[$i]['fullsize'] = $model->fullsize;
+                                $arrItems[$i]['filesModel'] = $objFile;
+
+                                $objImageTempl = new \stdClass();
+
+                                Controller::addImageToTemplate($objImageTempl, $arrItems[$i], null, $strLightboxId, $arrItems[$i]['filesModel']);
+                                $arrItems[$i]['arrImgData'] = (array)$objImageTempl;
+                            }
+                        }
+                        ++$i;
                     }
-                    $row['interview'] = StringUtil::deserialize($row['interview'], true);
-                    $row['businessHours'] = StringUtil::deserialize($row['businessHours'], true);
-
-                    $rows[] = $row;
                 }
-            }
+
         }
-        $template->rows = $rows;
+        $template->items = $arrItems;
 
         return $template->getResponse();
     }

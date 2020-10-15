@@ -23,3 +23,4 @@ $GLOBALS['TL_LANG']['MSC']['eb_contactInfo'] = 'Bitte kontaktieren Sie';
 $GLOBALS['TL_LANG']['MSC']['eb_emplyeeInfo'] = 'Infos zur Person';
 $GLOBALS['TL_LANG']['MSC']['eb_officeHours'] = 'Bürozeiten';
 $GLOBALS['TL_LANG']['MSC']['eb_publications'] = 'Publikationen';
+$GLOBALS['TL_LANG']['MSC']['eb_close'] = 'Schliessen';
