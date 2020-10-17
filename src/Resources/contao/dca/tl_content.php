@@ -24,7 +24,7 @@ $GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array('tl_cont
  * Palettes
  */
 $GLOBALS['TL_DCA']['tl_content']['palettes']['employee_list_element'] = '{type_legend},type;{employee_legend},showAllPublishedEmployees,selectEmployee;{source_legend},size,imagemargin,fullsize;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['employee_reader_element'] = '{type_legend},type;{employee_legend},selectEmployee;{source_legend},size,imagemargin,fullsize,overwriteMeta;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['employee_single_element'] = '{type_legend},type;{employee_legend},selectEmployee;{source_legend},size,imagemargin,fullsize,overwriteMeta;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 
 /**
  * Fields
@@ -67,7 +67,7 @@ class tl_content_employee extends Backend
 
 			if ($objContent !== null)
 			{
-				if ($objContent->type === 'employee_reader_element')
+				if ($objContent->type === 'employee_single_element')
 				{
 					$GLOBALS['TL_DCA']['tl_content']['fields']['selectEmployee']['inputType'] = 'radio';
 					$GLOBALS['TL_DCA']['tl_content']['fields']['selectEmployee']['eval']['multiple'] = 'false';

@@ -27,9 +27,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class EmployeeReaderElementController.
+ * Class EmployeeSingleElementController.
  */
-class EmployeeReaderElementController extends AbstractContentElementController
+class EmployeeSingleElementController extends AbstractContentElementController
 {
     /**
      * @var EmployeeModel|null

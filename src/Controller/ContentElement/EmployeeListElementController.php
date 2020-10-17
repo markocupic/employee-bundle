@@ -33,58 +33,66 @@ use Symfony\Component\HttpFoundation\Response;
 class EmployeeListElementController extends AbstractContentElementController
 {
     /**
-     * Generate the content element.
+     * @var EmployeeModel|null
      */
-    protected function getResponse(Template $template, ContentModel $model, Request $request): ?Response
+    protected $objEmployee;
+
+    public function __invoke(Request $request, ContentModel $model, string $section, array $classes = null): Response
     {
-        $arrItems = [];
-        $i = 0;
-        $template->hasItems = false;
-        $strLightboxId = 'lb' . $model->id;
-
-
         if ($model->showAllPublishedEmployees) {
             $objDb = Database::getInstance()
-                ->prepare('SELECT * FROM tl_employee WHERE published=? ORDER BY lastname, firstname')
-                ->execute(1)
+                ->execute('SELECT id FROM tl_employee')
             ;
             $arrIds = $objDb->fetchEach('id');
         } else {
             $arrIds = StringUtil::deserialize($model->selectEmployee, true);
         }
+        $arrOptions = [
+            'order' => 'tl_employee.lastname, tl_employee.firstname'
+        ];
 
-        if (\count($arrIds)) {
-                if (null !== ($objEmployee = EmployeeModel::findMultipleByIds($arrIds))) {
-                    while($objEmployee->next()) {
-                        $template->hasItems = true;
-
-                        $arrItems[$i]['employee'] = $objEmployee->row();
-                        $arrItems[$i]['employee']['interview'] = StringUtil::deserialize($arrItems[$i]['employee']['interview'], true);
-                        $arrItems[$i]['employee']['businessHours'] = StringUtil::deserialize($arrItems[$i]['employee']['interview']['businessHours'], true);
-
-                        if (Validator::isUuid($arrItems[$i]['employee']['singleSRC'])) {
-                            $objFile = FilesModel::findByUuid($arrItems[$i]['employee']['singleSRC']);
-
-                            if (null !== $objFile && is_file(System::getContainer()->getParameter('kernel.project_dir').'/'.$objFile->path)) {
-                                $arrItems[$i]['employee']['hasImage'] = true;
-                                $arrItems[$i]['singleSRC'] = $objFile->path;
-                                // Add size and margin
-                                $arrItems[$i]['size'] = $model->size;
-                                $arrItems[$i]['imagemargin'] = $model->imagemargin;
-                                $arrItems[$i]['fullsize'] = $model->fullsize;
-                                $arrItems[$i]['filesModel'] = $objFile;
-
-                                $objImageTempl = new \stdClass();
-
-                                Controller::addImageToTemplate($objImageTempl, $arrItems[$i], null, $strLightboxId, $arrItems[$i]['filesModel']);
-                                $arrItems[$i]['arrImgData'] = (array)$objImageTempl;
-                            }
-                        }
-                        ++$i;
-                    }
-                }
-
+        if (null === ($this->objEmployee = EmployeeModel::findMultipleAndPublishedByIds($arrIds, $arrOptions))) {
+            return new Response('', Response::HTTP_NO_CONTENT);
         }
+
+        return parent::__invoke($request, $model, $section, $classes);
+    }
+
+    /**
+     * Generate the content element.
+     */
+    protected function getResponse(Template $template, ContentModel $model, Request $request): ?Response
+    {
+        $arrItems = [];
+        $strLightboxId = 'lb'.$model->id;
+        $i = 0;
+
+        while ($this->objEmployee->next()) {
+            $arrItems[$i]['employee'] = $this->objEmployee->row();
+            $arrItems[$i]['employee']['interview'] = StringUtil::deserialize($arrItems[$i]['employee']['interview'], true);
+            $arrItems[$i]['employee']['businessHours'] = StringUtil::deserialize($arrItems[$i]['employee']['interview']['businessHours'], true);
+
+            // Add image to template
+            if (Validator::isUuid($arrItems[$i]['employee']['singleSRC'])) {
+                $objFile = FilesModel::findByUuid($arrItems[$i]['employee']['singleSRC']);
+
+                if (null !== $objFile && is_file(System::getContainer()->getParameter('kernel.project_dir').'/'.$objFile->path)) {
+                    $arrItems[$i]['employee']['hasImage'] = true;
+                    $arrItems[$i]['singleSRC'] = $objFile->path;
+                    // Add size and margin
+                    $arrItems[$i]['size'] = $model->size;
+                    $arrItems[$i]['imagemargin'] = $model->imagemargin;
+                    $arrItems[$i]['fullsize'] = $model->fullsize;
+                    $arrItems[$i]['filesModel'] = $objFile;
+
+                    $objImageTempl = new \stdClass();
+                    Controller::addImageToTemplate($objImageTempl, $arrItems[$i], null, $strLightboxId, $arrItems[$i]['filesModel']);
+                    $arrItems[$i]['arrImgData'] = (array) $objImageTempl;
+                }
+            }
+            ++$i;
+        }
+
         $template->items = $arrItems;
 
         return $template->getResponse();

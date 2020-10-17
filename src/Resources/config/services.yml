@@ -7,9 +7,9 @@ services:
       - { name: container.service_subscriber }
     public: true
 
-  # Contao content element Markocupic\EmployeeBundle\Controller\ContentElement\EmployeeReaderElementController
-  Markocupic\EmployeeBundle\Controller\ContentElement\EmployeeReaderElementController:
+  # Contao content element Markocupic\EmployeeBundle\Controller\ContentElement\EmployeeSingleElementController
+  Markocupic\EmployeeBundle\Controller\ContentElement\EmployeeSingleElementController:
     tags:
-      - { name: contao.content_element, category: employee_elements, template: ce_employee_reader_element, type: employee_reader_element }
+      - { name: contao.content_element, category: employee_elements, template: ce_employee_single_element, type: employee_single_element }
       - { name: container.service_subscriber }
     public: true
