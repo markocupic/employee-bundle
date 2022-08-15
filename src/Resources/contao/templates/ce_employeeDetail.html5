@@ -1,0 +1,97 @@
+<?php $this->extend('block_searchable'); ?>
+<?php $this->block('content'); ?>
+
+<div class="gmk-employee-introducing-card" data-toggle="modal" data-target="#gmkEmployeeModal_<?= $this->row['id'] ?>">
+    <figure class="gmk-employee-introducing-card-image-container image_container">
+        {{picture::<?= $this->row['singleSRC'] ?>?size=2&alt=<?= $this->row['firstname'] ?> <?= $this->row['lastname'] ?>}}
+    </figure>
+    <div class="gmk-employee-introducing-card-left">
+        <h4>Kontakt.</h4>
+        <h3><?= $this->row['firstname'] ?> <?= $this->row['lastname'] ?>.</h3>
+    </div>
+    <br class="clear">
+    <p><?= $this->row['phone'] ?><br><a href="mailto:<?= $this->row['email'] ?>"><?= $this->row['email'] ?></a></p>   
+</div>
+
+<!-- Modal Box Container -->
+<div id="gmkEmployeeModalContainer_<?= $this->id ?>">
+    <div id="gmkEmployeeModal_<?= $this->row['id'] ?>" class="gmk-employee-modal modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="gmk-modal-close" onclick="jQuery(this).closest('.modal').modal('toggle');"><i class="btr bt-times"></i></div>
+                <div class="row">
+                    <div class="col-md-6 col-one">
+                        <div class="gmk-employee-modal-card">
+                            <figure class="gmk-employee-modal-card-image-container image_container">
+                                {{picture::<?= $this->row['singleSRC'] ?>?size=2&alt=<?= $this->row['firstname'] ?> <?= $this->row['lastname'] ?>}}
+                            </figure>
+                            <div class="gmk-employee-modal-left">
+                                <?php if($this->row['funktion'] != ''): ?>
+                                <span><?= $this->row['funktion'] ?>.</span>
+                                <?php endif; ?>
+                                <h3 class="gmk-employee-modal-card-name"><?= $this->row['firstname'] ?> <?= $this->row['lastname'] ?>.</h3>
+                                <?php if($this->row['phone'] != '' || $this->row['email'] != ''): ?>
+                                <div class="gmk-employee-modal-card-contact-info">Kontaktieren Sie unseren Brand Guide <?= $this->row['firstname'] ?> <?= $this->row['lastname'] ?> pers&ouml;nlich!</div>
+                                <?php endif; ?>
+                                <?php if($this->row['phone'] != ''): ?>
+                                <div class="gmk-employee-modal-card-phone"><i class="btr bt-phone"></i><?= $this->row['phone'] ?></div>
+                                <?php endif; ?>
+                                <?php if($this->row['email'] != ''): ?>
+                                <div class="gmk-employee-modal-card-contact-email"><i class="btr bt-envelope"></i><?= $this->row['email'] ?></div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-two">
+                        <?php if($this->row['description'] != ''): ?>
+                            <div class="gmk-employee-modal-card-item-description-box">
+                                <div class="gmk-employee-modal-card-item-description-box-info">Info.</div>
+                                <div class="gmk-employee-modal-card-item-description-box-person">Zur Person.</div>
+                                <div class="gmk-employee-modal-card-item-description-box-description"><?= nl2br($this->row['description']) ?></div>
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Interview -->
+                        <?php if(count($this->row['interview'])): ?>
+                            <div class="gmk-employee-modal-card-interview-box">
+                                <?php foreach($this->row['interview'] as $item): ?>
+                                    <div class="gmk-employee-modal-card-item-interview">
+                                        <div class="gmk-employee-modal-card-item-interview-question"><?= $item['interview_question'] ?></div>
+                                        <div class="gmk-employee-modal-card-item-answer"><?= $item['interview_answer'] ?></div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Bürozeiten -->
+                        <?php if(count($this->row['businessHours'])): ?>
+                            <h4>B&uuml;rozeiten:</h4>
+                            <div class="gmk-employee-modal-card-business-hours-box">
+                                <?php foreach($this->row['businessHours'] as $item => $v): ?>
+                                <div class="gmk-employee-modal-card-list-business-hours-item"><?= $v['businessHoursWeekday'] ?>: <?= $v['businessHoursTime'] ?></div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Publikationen -->
+                        <?php if($this->row['publications'] != ''): ?>
+                            <h4>Publikationen:</h4>
+                            <div class="gmk-employee-modal-card-publications-box">
+                                <div class="gmk-employee-modal-card-slide-item-publication-text"><?= \Controller::replaceInsertTags($this->row['publications']) ?></div>
+                            </div>
+                        <?php endif; ?>
+
+                        <div class="gmk-employee-modal-vcard-box">
+                            <a href="{{vcard_download_url::<?= $this->row['id'] ?>}}" class="btn btn-primary">VCard</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<?php $this->endblock(); ?>

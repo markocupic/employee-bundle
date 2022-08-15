@@ -8,19 +8,7 @@
  * @license LGPL-3.0-or-later
  */
 
-/**
- * Content elements
- */
-$GLOBALS['TL_LANG']['CTE']['employee_elements'] = 'Mitarbeiter Inhaltselemente';
-$GLOBALS['TL_LANG']['CTE']['employee_list_element'] = ['Mitarbeiter-Liste', 'Fügen Sie dem Layout eine Mitarbeiter-Liste hinzu.'];
-$GLOBALS['TL_LANG']['CTE']['employee_single_element'] = ['Mitarbeiter-Einzelelement', 'Fügen Sie dem Layout einen Mitarbeiter hinzu.'];
-
-/**
- * MSC
- */
-$GLOBALS['TL_LANG']['MSC']['eb_contact'] = 'Kontakt';
-$GLOBALS['TL_LANG']['MSC']['eb_contactInfo'] = 'Bitte kontaktieren Sie';
-$GLOBALS['TL_LANG']['MSC']['eb_emplyeeInfo'] = 'Infos zur Person';
-$GLOBALS['TL_LANG']['MSC']['eb_officeHours'] = 'Bürozeiten';
-$GLOBALS['TL_LANG']['MSC']['eb_publications'] = 'Publikationen';
-$GLOBALS['TL_LANG']['MSC']['eb_close'] = 'Schliessen';
+// FE-Modules
+$GLOBALS['TL_LANG']['CTE']['employee'] = 'Mitarbeiter Module';
+$GLOBALS['TL_LANG']['CTE']['employeeList'] = ['Mitarbeiter-Liste', 'Fügen Sie dem Layout eine Mitarbeiter-Liste hinzu.'];
+$GLOBALS['TL_LANG']['CTE']['employeeDetail'] = ['Mitarbeiter-Detailansicht', 'Fügen Sie dem Layout eine Detailansicht des Mitarbeiters hinzu.'];

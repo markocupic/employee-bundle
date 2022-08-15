@@ -67,7 +67,7 @@ $GLOBALS['TL_DCA']['tl_employee'] = array(
 				'label'      => &$GLOBALS['TL_LANG']['tl_employee']['delete'],
 				'href'       => 'act=delete',
 				'icon'       => 'delete.gif',
-				'attributes' => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"',
+				'attributes' => 'onclick="if(!confirm(\'' . ($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? '') . '\'))return false;Backend.getScrollOffset()"',
 			),
 			'toggle' => array(
 				'label'           => &$GLOBALS['TL_LANG']['tl_employee']['toggle'],
@@ -301,19 +301,19 @@ $GLOBALS['TL_DCA']['tl_employee'] = array(
 			'exclude'   => true,
 			'inputType' => 'multiColumnWizard',
 			'eval'      => array(
-				'tl_class'     => 'clr',
+				'tl_class'     => 'clr m12',
 				'columnFields' => array(
 					'interview_question' => array(
 						'label'     => &$GLOBALS['TL_LANG']['tl_employee']['interview_question'],
 						'exclude'   => true,
 						'inputType' => 'text',
-						'eval'      => array('style' => 'width:200px'),
+						'eval'      => array('style' => 'width:180px'),
 					),
 					'interview_answer'   => array(
 						'label'     => &$GLOBALS['TL_LANG']['tl_employee']['interview_answer'],
 						'exclude'   => true,
 						'inputType' => 'textarea',
-						'eval'      => array('style' => 'width:200px'),
+						'eval'      => array('style' => 'width:300px'),
 					),
 				),
 			),
@@ -324,19 +324,19 @@ $GLOBALS['TL_DCA']['tl_employee'] = array(
 			'exclude'   => true,
 			'inputType' => 'multiColumnWizard',
 			'eval'      => array(
-				'tl_class'     => 'clr',
+				'tl_class'     => 'clr m12',
 				'columnFields' => array(
 					'businessHoursWeekday' => array(
 						'label'     => &$GLOBALS['TL_LANG']['tl_employee']['businessHoursWeekday'],
 						'exclude'   => true,
 						'inputType' => 'text',
-						'eval'      => array('style' => 'width:200px'),
+						'eval'      => array('style' => 'width:180px'),
 					),
 					'businessHoursTime'    => array(
 						'label'     => &$GLOBALS['TL_LANG']['tl_employee']['businessHoursTime'],
 						'exclude'   => true,
 						'inputType' => 'text',
-						'eval'      => array('style' => 'width:200px'),
+						'eval'      => array('style' => 'width:180px'),
 					),
 				),
 			),

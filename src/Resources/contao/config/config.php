@@ -12,7 +12,8 @@
 
 use Markocupic\EmployeeBundle\ContentEmployeeDetail;
 use Markocupic\EmployeeBundle\ContentEmployeeList;
-use Markocupic\EmployeeBundle\Model\EmployeeModel;
+use Markocupic\EmployeeBundle\GeneratePage;
+use Markocupic\EmployeeBundle\ReplaceInsertTags;
 
 /**
  * Backend modules
@@ -22,11 +23,25 @@ $GLOBALS['BE_MOD']['content']['employee'] = array(
 );
 
 /**
+ * Content elements
+ */
+$GLOBALS['TL_CTE']['employee'] = array(
+	'employeeList'   => ContentEmployeeList::class,
+	'employeeDetail' => ContentEmployeeDetail::class,
+);
+
+/**
+ * Hooks
+ */
+// Return VCard url from {{vcard_download_url::*}}   => * tl_employee.id
+$GLOBALS['TL_HOOKS']['replaceInsertTags'][] = array(ReplaceInsertTags::class, 'replaceInsertTags');
+
+/**
+ * Trigger VCard Download
+ */
+$GLOBALS['TL_HOOKS']['generatePage'][] = array(GeneratePage::class, 'generatePage');
+
+/**
  * Do not index a page if one of the following parameters is set
  */
 $GLOBALS['TL_NOINDEX_KEYS'][] = 'downloadVCard';
-
-/**
- * Models
- */
-$GLOBALS['TL_MODELS']['tl_employee'] = EmployeeModel::class;

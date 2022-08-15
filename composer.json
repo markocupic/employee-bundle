@@ -11,7 +11,7 @@
   ],
   "require": {
     "contao/core-bundle": "^4.9",
-    "menatwork/contao-multicolumnwizard": "^3.3"
+    "menatwork/contao-multicolumnwizard-bundle": "^3.5"
   },
   "autoload": {
     "psr-4": {
@@ -21,6 +21,7 @@
       "src/Resources/contao"
     ],
     "exclude-from-classmap": [
+      "src/Resources/contao/assets",
       "src/Resources/contao/config",
       "src/Resources/contao/dca",
       "src/Resources/contao/languages",
