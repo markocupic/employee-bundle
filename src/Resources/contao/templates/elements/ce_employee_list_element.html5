@@ -2,108 +2,108 @@
 <?php $this->block('content'); ?>
 
 <div class="row">
-<?php foreach ($this->items as $item): ?>
-    <div class="col-lg-3 col-md-4 col-sm-6">
-        <div class="employee-introducing-card" data-toggle="modal" data-target="#employeeModal_<?= $item['employee']['id'] ?>">
-            <?php $this->addImage = true; ?>
-            <?php if ($this->addImage): ?>
-            <?php $this->insert('image', $item['arrImgData']); ?>
-            <?php endif; ?>
-            <div class="employee-introducing-card-left">
-                <h4><?= $this->trans('MSC.eb_contact') ?></h4>
-                <h3><?= $item['employee']['firstname'] ?> <?= $item['employee']['lastname'] ?></h3>
-            </div>
-            <p><?= $item['employee']['phone'] ?>{{br}}<a href="mailto:<?= $item['employee']['email'] ?>"><?= $item['employee']['email'] ?></a></p>
-        </div>
+  <?php foreach ($this->items as $item): ?>
+  <div class="col-lg-3 col-md-4 col-sm-6">
+    <div class="employee-introducing-card" data-toggle="modal" data-target="#employeeModal_<?= $item['employee']['id'] ?>">
+      <?php $this->addImage = true; ?>
+      <?php if ($this->addImage): ?>
+      <?php $this->insert('image', $item['arrImgData']); ?>
+      <?php endif; ?>
+      <div class="employee-introducing-card-left">
+        <h4><?= $this->trans('MSC.eb_contact') ?></h4>
+        <h3><?= $item['employee']['firstname'] ?> <?= $item['employee']['lastname'] ?></h3>
+      </div>
+      <p><?= $item['employee']['phone'] ?>{{br}}<a href="mailto:<?= $item['employee']['email'] ?>"><?= $item['employee']['email'] ?></a></p>
     </div>
-<?php endforeach; ?>
+  </div>
+  <?php endforeach; ?>
 </div>
 
 <?php foreach ($this->items as $item): ?>
 <!-- Bootstrap modal box container -->
 <div id="employeeModalContainer_<?= $item['employee']['id'] ?>">
-    <div id="employeeModal_<?= $item['employee']['id'] ?>" class="employee-modal modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6 col-one">
-                            <div class="employee-modal-card">
-                                <?php if ($item['employee']['hasImage']): ?>
-                                <?php $this->insert('image', $item['arrImgData']); ?>
-                                <?php endif; ?>
-                                <div class="employee-modal-left">
-                                    <?php if ('' != $item['employee']['funktion']): ?>
-                                    <span><?= $item['employee']['funktion'] ?></span>
-                                    <?php endif; ?>
-                                    <h3 class="employee-modal-card-name"><?= $item['employee']['firstname'] ?> <?= $item['employee']['lastname'] ?>.</h3>
-                                    <?php if ('' != $item['employee']['phone'] || '' != $item['employee']['email']): ?>
-                                    <div class="employee-modal-card-contact-info"><?= $this->trans('MSC.eb_contactInfo') ?> <?= $item['employee']['firstname'] ?> <?= $item['employee']['lastname'] ?>!</div>
-                                    <?php endif; ?>
-                                    <?php if ('' != $item['employee']['phone']): ?>
-                                    <div class="employee-modal-card-phone"><?= $item['employee']['phone'] ?></div>
-                                    <?php endif; ?>
-                                    <?php if ('' != $item['employee']['email']): ?>
-                                    <div class="employee-modal-card-contact-email"><?= $item['employee']['email'] ?></div>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-two">
-                            <?php if ('' != $item['employee']['description']): ?>
-                            <div class="employee-modal-card-item-description-box">
-                                <h4><?= $this->trans('MSC.eb_emplyeeInfo') ?></h4>
-                                <div class="employee-modal-card-item-description-box-description"><?= nl2br($item['employee']['description']) ?></div>
-                            </div>
-                            <?php endif; ?>
-
-                            <!-- interview -->
-                            <?php if (count($item['employee']['interview'])): ?>
-                            <div class="employee-modal-card-interview-box">
-                                <?php foreach ($item['employee']['interview'] as $int): ?>
-                                <div class="employee-modal-card-item-interview">
-                                    <div class="employee-modal-card-item-interview-question"><?= $int['interview_question'] ?></div>
-                                    <div class="employee-modal-card-item-answer"><?= $int['interview_answer'] ?></div>
-                                </div>
-                                <?php endforeach; ?>
-                            </div>
-                            <?php endif; ?>
-
-                            <!-- office hours -->
-                            <?php if (count($item['employee']['businessHours'])): ?>
-                            <h4><?= $this->trans('MSC.eb_officeHours') ?>:</h4>
-                            <div class="employee-modal-card-business-hours-box">
-                                <?php foreach ($item['employee']['businessHours'] as $bh): ?>
-                                <div class="employee-modal-card-list-business-hours-item"><?= $bh['businessHoursWeekday'] ?>: <?= $bh['businessHoursTime'] ?></div>
-                                <?php endforeach; ?>
-                            </div>
-                            <?php endif; ?>
-
-                            <!-- publications -->
-                            <?php if ('' != $item['employee']['publications']): ?>
-                            <h4><?= $this->trans('MSC.eb_publications') ?>:</h4>
-                            <div class="employee-modal-card-publications-box">
-                                <div class="employee-modal-card-slide-item-publication-text"><?= $item['employee']['publications'] ?></div>
-                            </div>
-                            <?php endif; ?>
-
-                            <div class="employee-modal-vcard-box">
-                                <a href="{{vcard_download_url::<?= $item['employee']['id'] ?>}}" class="btn btn-primary">VCard</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><?= $this->trans('MSC.eb_close') ?></button>
-                </div>
-            </div>
+  <div id="employeeModal_<?= $item['employee']['id'] ?>" class="employee-modal modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6 col-one">
+              <div class="employee-modal-card">
+                <?php if ($item['employee']['hasImage']): ?>
+                <?php $this->insert('image', $item['arrImgData']); ?>
+                <?php endif; ?>
+                <div class="employee-modal-left">
+                  <?php if ('' != $item['employee']['funktion']): ?>
+                  <span><?= $item['employee']['funktion'] ?></span>
+                  <?php endif; ?>
+                  <h3 class="employee-modal-card-name"><?= $item['employee']['firstname'] ?> <?= $item['employee']['lastname'] ?>.</h3>
+                  <?php if ('' != $item['employee']['phone'] || '' != $item['employee']['email']): ?>
+                  <div class="employee-modal-card-contact-info"><?= $this->trans('MSC.eb_contactInfo') ?> <?= $item['employee']['firstname'] ?> <?= $item['employee']['lastname'] ?>!</div>
+                  <?php endif; ?>
+                  <?php if ('' != $item['employee']['phone']): ?>
+                  <div class="employee-modal-card-phone"><?= $item['employee']['phone'] ?></div>
+                  <?php endif; ?>
+                  <?php if ('' != $item['employee']['email']): ?>
+                  <div class="employee-modal-card-contact-email"><?= $item['employee']['email'] ?></div>
+                  <?php endif; ?>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-two">
+              <?php if ('' != $item['employee']['description']): ?>
+              <div class="employee-modal-card-item-description-box">
+                <h4><?= $this->trans('MSC.eb_emplyeeInfo') ?></h4>
+                <div class="employee-modal-card-item-description-box-description"><?= nl2br($item['employee']['description']) ?></div>
+              </div>
+              <?php endif; ?>
+
+              <!-- interview -->
+              <?php if (count($item['employee']['interview'])): ?>
+              <div class="employee-modal-card-interview-box">
+                <?php foreach ($item['employee']['interview'] as $int): ?>
+                <div class="employee-modal-card-item-interview">
+                  <div class="employee-modal-card-item-interview-question"><?= $int['interview_question'] ?></div>
+                  <div class="employee-modal-card-item-answer"><?= $int['interview_answer'] ?></div>
+                </div>
+                <?php endforeach; ?>
+              </div>
+              <?php endif; ?>
+
+              <!-- office hours -->
+              <?php if (count($item['employee']['businessHours'])): ?>
+              <h4><?= $this->trans('MSC.eb_officeHours') ?>:</h4>
+              <div class="employee-modal-card-business-hours-box">
+                <?php foreach ($item['employee']['businessHours'] as $bh): ?>
+                <div class="employee-modal-card-list-business-hours-item"><?= $bh['businessHoursWeekday'] ?>: <?= $bh['businessHoursTime'] ?></div>
+                <?php endforeach; ?>
+              </div>
+              <?php endif; ?>
+
+              <!-- publications -->
+              <?php if ('' != $item['employee']['publications']): ?>
+              <h4><?= $this->trans('MSC.eb_publications') ?>:</h4>
+              <div class="employee-modal-card-publications-box">
+                <div class="employee-modal-card-slide-item-publication-text"><?= $item['employee']['publications'] ?></div>
+              </div>
+              <?php endif; ?>
+
+              <div class="employee-modal-vcard-box">
+                <a href="{{vcard_download_url::<?= $item['employee']['id'] ?>}}" class="btn btn-primary">VCard</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"><?= $this->trans('MSC.eb_close') ?></button>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 <?php endforeach; ?>
 
