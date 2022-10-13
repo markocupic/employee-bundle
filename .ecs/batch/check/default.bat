@@ -6,9 +6,5 @@ cd..
 cd..
 cd..
 cd..
-:: src
 vendor\bin\ecs check vendor/markocupic/employee-bundle/src --config vendor/markocupic/employee-bundle/.ecs/config/default.php
-:: tests
-vendor\bin\ecs check vendor/markocupic/employee-bundle/tests --config vendor/markocupic/employee-bundle/.ecs/config/default.php
-::
 cd vendor/markocupic/employee-bundle/.ecs./batch/check
