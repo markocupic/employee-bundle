@@ -74,9 +74,10 @@ $GLOBALS['TL_DCA']['tl_employee'] = [
         '__selector__' => ['addImage', 'addGallery'],
         'default'      => '
             {personal_legend},gender,title,firstname,lastname,alias;
-            {contact_legend},phone,mobile,email,fax,skype,website,businessHours;
+            {contact_legend},phone,mobile,email,fax,skype,businessHours;
+            {social_media_legend},linkedIn,xing,website;
             {address_legend},street, postal, city, state, country;
-            {work_legend},company,funktion,description,publications;
+            {work_legend},company,role,roleDetail,publications;
             {image_legend},addImage;{interview_legend};
             {gallery_legend},addGallery;
             {interview_legend},interview
@@ -173,17 +174,13 @@ $GLOBALS['TL_DCA']['tl_employee'] = [
             'sorting'          => true,
             'inputType'        => 'select',
             'eval'             => ['includeBlankOption' => true, 'chosen' => true, 'feEditable' => true, 'feViewable' => true, 'feGroup' => 'address', 'tl_class' => 'w50'],
-            'options_callback' => static fn() => System::getCountries(),
+            'options_callback' => static function () {
+                $countries = System::getContainer()->get('contao.intl.countries')->getCountries();
+
+                // Convert to lower case for backwards compatibility, to be changed in Contao 5.0
+                return array_combine(array_map('strtolower', array_keys($countries)), $countries);
+            },
             'sql'              => "varchar(2) NOT NULL default ''",
-        ],
-        'funktion'      => [
-            'exclude'   => true,
-            'search'    => true,
-            'sorting'   => false,
-            'flag'      => DataContainer::SORT_INITIAL_LETTER_ASC,
-            'inputType' => 'text',
-            'eval'      => ['maxlength' => 255, 'tl_class' => 'w50'],
-            'sql'       => "varchar(255) NOT NULL default ''",
         ],
         'company'       => [
             'exclude'   => true,
@@ -194,20 +191,28 @@ $GLOBALS['TL_DCA']['tl_employee'] = [
             'eval'      => ['maxlength' => 255, 'tl_class' => 'w50'],
             'sql'       => "varchar(255) NOT NULL default ''",
         ],
-        'description'   => [
+        'role'          => [
             'exclude'   => true,
             'search'    => true,
             'sorting'   => false,
             'flag'      => DataContainer::SORT_INITIAL_LETTER_ASC,
-            'inputType' => 'textarea',
-            'eval'      => ['tl_class' => 'clr', 'rte' => null],
+            'inputType' => 'text',
+            'eval'      => ['maxlength' => 255, 'tl_class' => 'w50'],
             'sql'       => "varchar(255) NOT NULL default ''",
+        ],
+        'roleDetail'    => [
+            'exclude'     => true,
+            'search'      => true,
+            'inputType'   => 'textarea',
+            'eval'        => ['rte' => 'tinyMCE', 'helpwizard' => true, 'tl_class' => 'clr'],
+            'explanation' => 'insertTags',
+            'sql'         => 'mediumtext NULL',
         ],
         'publications'  => [
             'exclude'     => true,
             'search'      => true,
             'inputType'   => 'textarea',
-            'eval'        => ['rte' => 'tinyMCE', 'helpwizard' => true],
+            'eval'        => ['rte' => 'tinyMCE', 'helpwizard' => true, 'tl_class' => 'clr'],
             'explanation' => 'insertTags',
             'sql'         => 'mediumtext NULL',
         ],
@@ -253,6 +258,20 @@ $GLOBALS['TL_DCA']['tl_employee'] = [
             'eval'      => ['rgxp' => 'url', 'maxlength' => 255, 'tl_class' => 'w50'],
             'sql'       => "varchar(255) NOT NULL default ''",
         ],
+        'linkedIn'      => [
+            'exclude'   => true,
+            'search'    => true,
+            'inputType' => 'text',
+            'eval'      => ['rgxp' => 'url', 'maxlength' => 255, 'tl_class' => 'w50'],
+            'sql'       => "varchar(255) NOT NULL default ''",
+        ],
+        'xing'          => [
+            'exclude'   => true,
+            'search'    => true,
+            'inputType' => 'text',
+            'eval'      => ['rgxp' => 'url', 'maxlength' => 255, 'tl_class' => 'w50'],
+            'sql'       => "varchar(255) NOT NULL default ''",
+        ],
         'addImage'      => [
             'exclude'   => true,
             'filter'    => true,
@@ -289,14 +308,14 @@ $GLOBALS['TL_DCA']['tl_employee'] = [
             'eval'      => [
                 'tl_class'     => 'clr',
                 'columnFields' => [
-                    'interview_question' => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_employee']['interview_question'],
+                    'question' => [
+                        'label'     => &$GLOBALS['TL_LANG']['tl_employee']['question'],
                         'exclude'   => true,
                         'inputType' => 'text',
                         'eval'      => ['style' => 'width:200px'],
                     ],
-                    'interview_answer'   => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_employee']['interview_answer'],
+                    'answer'   => [
+                        'label'     => &$GLOBALS['TL_LANG']['tl_employee']['answer'],
                         'exclude'   => true,
                         'inputType' => 'textarea',
                         'eval'      => ['style' => 'width:200px', 'rte' => null],
@@ -309,15 +328,15 @@ $GLOBALS['TL_DCA']['tl_employee'] = [
             'exclude'   => true,
             'inputType' => 'multiColumnWizard',
             'eval'      => [
-                'tl_class'     => 'w50',
+                'tl_class'     => 'clr',
                 'columnFields' => [
-                    'businessHoursWeekday' => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_employee']['businessHoursWeekday'],
+                    'weekday' => [
+                        'label'     => &$GLOBALS['TL_LANG']['tl_employee']['weekday'],
                         'exclude'   => true,
                         'inputType' => 'text',
                     ],
-                    'businessHoursTime'    => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_employee']['businessHoursTime'],
+                    'time'    => [
+                        'label'     => &$GLOBALS['TL_LANG']['tl_employee']['time'],
                         'exclude'   => true,
                         'inputType' => 'text',
                     ],

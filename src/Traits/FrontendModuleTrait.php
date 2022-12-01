@@ -29,31 +29,11 @@ trait FrontendModuleTrait
 {
     protected ?FigureBuilder $figureBuilder = null;
 
-    public function getFigureBuilder(ModuleModel $moduleModel, Studio $studio): FigureBuilder
-    {
-        if ($this->figureBuilder) {
-            return $this->figureBuilder;
-        }
-
-        $figureBuilder = $studio->createFigureBuilder();
-
-        $figureBuilder->setSize(StringUtil::deserialize($moduleModel->size));
-
-        if ($moduleModel->fullsize) {
-            $figureBuilder->setLightboxGroupIdentifier('lb_employee_list_'.$moduleModel->id);
-            $figureBuilder->enableLightbox();
-        }
-
-        return $figureBuilder;
-    }
-
-    public function getEmployeeDetails(EmployeeModel $employeeModel, ModuleModel $moduleModel, AbstractFrontendModuleController $module): array
+    public function getEmployeeDetails(EmployeeModel $employeeModel, ModuleModel $moduleModel, AbstractFrontendModuleController $frontendModuleInstance): array
     {
         $arrData = $employeeModel->row();
 
-        $arrData['hasImage'] = false;
-        $arrData['publications'] = $module->insertTagParser->replaceInline($arrData['publications']);
-
+        $arrData['publications'] = $frontendModuleInstance->insertTagParser->replaceInline($arrData['publications']);
         $arrData['interview'] = StringUtil::deserialize($arrData['interview'] ?? null, true);
         $arrData['businessHours'] = StringUtil::deserialize($arrData['businessHours'] ?? null, true);
         $arrData['href'] = false;
@@ -65,18 +45,20 @@ trait FrontendModuleTrait
             $arrData['href'] = StringUtil::ampersand($objJumpToPage->getFrontendUrl($params));
         }
 
-        // Add figure to the template
-        if ($moduleModel->addPortraitImage && Validator::isUuid($arrData['singleSRC'] ?? '')) {
+        // Add image to the template
+        $arrData['hasImage'] = false;
+
+        if ($moduleModel->addEmployeeImage && $arrData['addImage'] && Validator::isUuid($arrData['singleSRC'] ?? '')) {
             $objFile = FilesModel::findByUuid($arrData['singleSRC']);
 
-            if (null !== $objFile && is_file($module->projectDir.'/'.$objFile->path)) {
+            if (null !== $objFile && is_file($frontendModuleInstance->projectDir.'/'.$objFile->path)) {
                 $arrData['hasImage'] = true;
                 $arrData['singleSRC'] = StringUtil::binToUuid($objFile->uuid);
 
-                $figureBuilder = $this->getFigureBuilder($moduleModel, $module->studio);
+                $figureBuilder = $this->getFigureBuilder($moduleModel, $frontendModuleInstance->studio, $moduleModel->imgSize, (bool) $moduleModel->imgFullsize);
                 $figure = $figureBuilder->fromUuid($objFile->uuid)->build();
 
-                $arrData['figure'] = $module->twig->render(
+                $arrData['figure'] = $frontendModuleInstance->twig->render(
                     '@ContaoCore/Image/Studio/figure.html.twig',
                     [
                         'figure' => $figure,
@@ -85,11 +67,11 @@ trait FrontendModuleTrait
             }
         }
 
-        // Add figure to the template
+        // Add gallery to the template
         $arrData['hasGallery'] = false;
         $arrData['gallery'] = [];
 
-        if ($moduleModel->addGallery && Validator::isUuid($arrData['singleSRC'] ?? '')) {
+        if ($moduleModel->addEmployeeGallery && $arrData['addGallery'] && Validator::isUuid($arrData['singleSRC'] ?? '')) {
             $arrMultiSrc = StringUtil::deserialize($arrData['multiSRC']);
 
             if (!empty($arrMultiSrc)) {
@@ -97,15 +79,15 @@ trait FrontendModuleTrait
                     if (Validator::isBinaryUuid($uuid)) {
                         $objFile = FilesModel::findByUuid($arrData['singleSRC']);
 
-                        if (null !== $objFile && is_file($module->projectDir.'/'.$objFile->path)) {
+                        if (null !== $objFile && is_file($frontendModuleInstance->projectDir.'/'.$objFile->path)) {
                             $arrData['hasImage'] = true;
                             $arrData['singleSRC'] = StringUtil::binToUuid($objFile->uuid);
 
-                            $figureBuilder = $this->getFigureBuilder($moduleModel, $module->studio);
+                            $figureBuilder = $this->getFigureBuilder($moduleModel, $frontendModuleInstance->studio, $moduleModel->galSize, (bool) $moduleModel->galFullsize);
                             $figure = $figureBuilder->fromUuid($objFile->uuid)->build();
 
                             $arrData['hasGallery'] = true;
-                            $arrData['gallery'][] = $module->twig->render(
+                            $arrData['gallery'][] = $frontendModuleInstance->twig->render(
                                 '@ContaoCore/Image/Studio/figure.html.twig',
                                 [
                                     'figure' => $figure,
@@ -118,6 +100,24 @@ trait FrontendModuleTrait
         }
 
         return $arrData;
+    }
+
+    public function getFigureBuilder(ModuleModel $moduleModel, Studio $studio, mixed $size, bool $fullsize): FigureBuilder
+    {
+        if ($this->figureBuilder) {
+            return $this->figureBuilder;
+        }
+
+        $figureBuilder = $studio->createFigureBuilder();
+
+        $figureBuilder->setSize(StringUtil::deserialize($size));
+
+        if ($fullsize) {
+            $figureBuilder->setLightboxGroupIdentifier('lb_employee_list_'.$moduleModel->id);
+            $figureBuilder->enableLightbox();
+        }
+
+        return $figureBuilder;
     }
 
     protected function getJumpToPage(ModuleModel $moduleModel): ?PageModel

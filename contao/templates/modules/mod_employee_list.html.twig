@@ -4,25 +4,18 @@
 
     <div class="row">
         {% for employee in employees %}
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="card employee-introducing-card">
-                    {% if employee.hasPortraitImage %}{{ employee.figure|raw }}{% endif %}
+            <div class="employee-list-item col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="card">
+                    {% if employee.hasImage %}{{ employee.figure|raw }}{% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ employee.firstname }} {{ employee.lastname }}</h5>
                         <p class="card-text">{{ employee.email }}</p>
                         <p class="card-text">{{ employee.phone }}</p>
                         {% if employee.href %}
-                            <p class="card-text"><a href="{{ employee.href }}">Internet</a></p>
+                            <p class="card-text"><a href="{{ employee.href }}">Mehr</a></p>
                         {% endif %}
                     </div>
                 </div>
-                {% if employee.hasGallery %}
-                    <div class="card employee-introducing-gallery">
-                        {% for image in employee.gallery %}
-                            {{ image|raw }}
-                        {% endfor %}
-                    </div>
-                {% endif %}
             </div>
         {% endfor %}
     </div>

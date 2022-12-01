@@ -24,6 +24,7 @@ use Contao\StringUtil;
 use Contao\Template;
 use Markocupic\EmployeeBundle\Model\EmployeeModel;
 use Markocupic\EmployeeBundle\Traits\FrontendModuleTrait;
+use Model\Collection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment as TwigEnvironment;
@@ -42,6 +43,7 @@ class EmployeeListController extends AbstractFrontendModuleController
     public InsertTagParser $insertTagParser;
     public TwigEnvironment $twig;
     public string $projectDir;
+    protected ?Collection $employees = null;
 
     public function __construct(InsertTagParser $insertTagParser, Studio $studio, TwigEnvironment $twig, string $projectDir)
     {
@@ -59,7 +61,7 @@ class EmployeeListController extends AbstractFrontendModuleController
             'order' => 'tl_employee.lastname, tl_employee.firstname',
         ];
 
-        if (null === ($this->employee = EmployeeModel::findMultipleAndPublishedByIds($arrIds, $arrOptions))) {
+        if (null === ($this->employees = EmployeeModel::findMultipleAndPublishedByIds($arrIds, $arrOptions))) {
             return new Response('', Response::HTTP_NO_CONTENT);
         }
 
@@ -75,8 +77,8 @@ class EmployeeListController extends AbstractFrontendModuleController
     {
         $arrItems = [];
 
-        while ($this->employee->next()) {
-            $arrData = $this->getEmployeeDetails($this->employee->current(), $model, $this);
+        while ($this->employees->next()) {
+            $arrData = $this->getEmployeeDetails($this->employees->current(), $model, $this);
 
             $arrItems[] = $arrData;
         }

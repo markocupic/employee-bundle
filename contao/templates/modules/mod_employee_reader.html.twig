@@ -2,24 +2,178 @@
 
 {% block content %}
 
-    <div class="card employee-introducing-card">
-        {% if employee.hasPortraitImage %}{{ employee.figure|raw }}{% endif %}
-        <div class="card-body">
-            <h5 class="card-title">{{ employee.firstname }} {{ employee.lastname }}</h5>
-            <p class="card-text">{{ employee.email }}</p>
-            <p class="card-text">{{ employee.phone }}</p>
-            {% if employee.href %}
-                <p class="card-text"><a href="{{ employee.href }}">Internet</a></p>
-            {% endif %}
-        </div>
-        {% if employee.hasGallery %}
-            <div class="card employee-introducing-gallery">
-                {% for image in employee.gallery %}
-                    {{ image|raw }}
-                {% endfor %}
+    <div class="employee-introducing">
+
+        {% if employee.gender %}
+            <div class="employee-gender">
+                {{ employee.gender }}
             </div>
         {% endif %}
+
+        {% if employee.title %}
+            <div class="employee-title">
+                {{ employee.title }}
+            </div>
+        {% endif %}
+
+        {% if employee.firstname %}
+            <div class="employee-firstname">
+                {{ employee.firstname }}
+            </div>
+        {% endif %}
+
+        {% if employee.lastname %}
+            <div class="employee-lastname">
+                {{ employee.lastname }}
+            </div>
+        {% endif %}
+
+        {% if employee.alias %}
+            <div class="employee-alias">
+                {{ employee.alias }}
+            </div>
+        {% endif %}
+
+        {% if employee.businessHours %}
+            <div class="employee-businessHours">
+                <ul>
+                    {% for item in employee.businessHours %}
+                        <li>
+                            <span class="employee-businessHours-weekday">{{ item.weekday }}</span>
+                            <span class="employee-businessHours-time">{{ item.time }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if employee.phone %}
+            <div class="employee-phone">
+                {{ employee.phone }}
+            </div>
+        {% endif %}
+
+        {% if employee.mobile %}
+            <div class="employee-mobile">
+                {{ employee.mobile }}
+            </div>
+        {% endif %}
+
+        {% if employee.email %}
+            <div class="employee-email">
+                {{ employee.email }}
+            </div>
+        {% endif %}
+
+        {% if employee.fax %}
+            <div class="employee-fax">
+                {{ employee.fax }}
+            </div>
+        {% endif %}
+
+        {% if employee.skype %}
+            <div class="employee-skype">
+                {{ employee.skype }}
+            </div>
+        {% endif %}
+
+        {% if employee.linkedIn %}
+            <div class="employee-linkedIn">
+                {{ employee.linkedIn }}
+            </div>
+        {% endif %}
+
+        {% if employee.xing %}
+            <div class="employee-xing">
+                {{ employee.xing }}
+            </div>
+        {% endif %}
+
+        {% if employee.website %}
+            <div class="employee-website">
+                {{ employee.website }}
+            </div>
+        {% endif %}
+
+        {% if employee.street %}
+            <div class="employee-street">
+                {{ employee.street }}
+            </div>
+        {% endif %}
+
+        {% if employee.postal %}
+            <div class="employee-postal">
+                {{ employee.postal }}
+            </div>
+        {% endif %}
+
+        {% if employee.city %}
+            <div class="employee-city">
+                {{ employee.city }}
+            </div>
+        {% endif %}
+
+        {% if employee.country %}
+            <div class="employee-country">
+                {{ employee.country }}
+            </div>
+        {% endif %}
+
+        {% if employee.company %}
+            <div class="employee-company">
+                {{ employee.company }}
+            </div>
+        {% endif %}
+
+        {% if employee.role %}
+            <div class="employee-role">
+                {{ employee.role }}
+            </div>
+        {% endif %}
+
+        {% if employee.roleDetail %}
+            <div class="employee-roleDetail">
+                {{ employee.roleDetail|raw }}
+            </div>
+        {% endif %}
+
+        {% if employee.publications %}
+            <div class="employee-publications">
+                {{ employee.publications|raw }}
+            </div>
+        {% endif %}
+
+        {% if employee.interview %}
+            <div class="employee-interview">
+                <ul>
+                    {% for item in employee.interview %}
+                        <li>
+                            <span class="employee-interview-question">{{ item.question }}</span>
+                            <span class="employee-interview-answer">{{ item.answer }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if employee.hasImage %}
+            <div class="employee-image">
+                {{ employee.figure|raw }}
+            </div>
+        {% endif %}
+
+        {% if employee.hasGallery %}
+            <div class="employee-gallery">
+                <ul>
+                    {% for image in employee.gallery %}
+                        <li>{{ image|raw }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
     </div>
 
     {{ parent() }}
 {% endblock %}
+
