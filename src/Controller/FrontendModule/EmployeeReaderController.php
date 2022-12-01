@@ -23,7 +23,7 @@ use Contao\Input;
 use Contao\ModuleModel;
 use Contao\Template;
 use Markocupic\EmployeeBundle\Model\EmployeeModel;
-use Markocupic\EmployeeBundle\Traits\EmployeeTrait;
+use Markocupic\EmployeeBundle\Traits\FrontendModuleTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment as TwigEnvironment;
@@ -31,7 +31,7 @@ use Twig\Environment as TwigEnvironment;
 #[AsFrontendModule(EmployeeReaderController::TYPE, category: 'employee_modules')]
 class EmployeeReaderController extends AbstractFrontendModuleController
 {
-    use EmployeeTrait;
+    use FrontendModuleTrait;
 
     public const TYPE = 'employee_reader';
 

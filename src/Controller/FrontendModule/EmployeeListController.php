@@ -23,7 +23,7 @@ use Contao\ModuleModel;
 use Contao\StringUtil;
 use Contao\Template;
 use Markocupic\EmployeeBundle\Model\EmployeeModel;
-use Markocupic\EmployeeBundle\Traits\EmployeeTrait;
+use Markocupic\EmployeeBundle\Traits\FrontendModuleTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment as TwigEnvironment;
@@ -34,7 +34,7 @@ use Twig\Error\SyntaxError;
 #[AsFrontendModule(EmployeeListController::TYPE, category: 'employee_modules')]
 class EmployeeListController extends AbstractFrontendModuleController
 {
-    use EmployeeTrait;
+    use FrontendModuleTrait;
 
     public const TYPE = 'employee_list';
 

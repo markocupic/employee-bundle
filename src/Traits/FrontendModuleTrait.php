@@ -25,7 +25,7 @@ use Contao\StringUtil;
 use Contao\Validator;
 use Markocupic\EmployeeBundle\Model\EmployeeModel;
 
-trait EmployeeTrait
+trait FrontendModuleTrait
 {
     protected ?FigureBuilder $figureBuilder = null;
 
