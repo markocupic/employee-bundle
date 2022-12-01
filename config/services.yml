@@ -1,0 +1,13 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+        bind:
+            $studio: '@contao.image.studio'
+            $slug: '@contao.slug'
+            $projectDir: '%kernel.project_dir%'
+
+    Markocupic\EmployeeBundle\:
+        resource: ../src/
+        exclude: ../src/{DependencyInjection,Model}

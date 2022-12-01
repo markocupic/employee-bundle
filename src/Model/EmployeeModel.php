@@ -5,8 +5,8 @@ declare(strict_types=1);
 /*
  * This file is part of Employee Bundle.
  *
- * (c) Marko Cupic 2020 <m.cupic@gmx.ch>
- * @license MIT
+ * (c) Marko Cupic 2022 <m.cupic@gmx.ch>
+ * @license LGPL-3.0+
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
  * @link https://github.com/markocupic/employee-bundle
@@ -18,9 +18,6 @@ use Contao\Database;
 use Contao\Model;
 use Contao\Model\Collection;
 
-/**
- * Class EmployeeModel.
- */
 class EmployeeModel extends Model
 {
     protected static $strTable = 'tl_employee';
@@ -56,5 +53,33 @@ class EmployeeModel extends Model
         $arrIds = $objDb->fetchEach('id');
 
         return static::findMultipleByIds($arrIds, $arrOptions);
+    }
+
+    /**
+     * Find published employee by ID or alias.
+     *
+     * @param string $idOrAlias
+     *
+     * @return EmployeeModel|null
+     */
+    public static function findPublishedByIdOrAlias($idOrAlias)
+    {
+        $values = [];
+        $columns = [];
+        $t = static::$strTable;
+
+        // Determine the alias condition
+        if (is_numeric($idOrAlias)) {
+            $columns[] = "$t.id=?";
+            $values[] = (int) $idOrAlias;
+        } else {
+            $columns[] = "$t.alias=?";
+            $values[] = $idOrAlias;
+        }
+
+        $columns[] = "$t.published=?";
+        $values[] = 1;
+
+        return static::findOneBy($columns, $values);
     }
 }

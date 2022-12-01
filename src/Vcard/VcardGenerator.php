@@ -12,43 +12,43 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/employee-bundle
  */
 
-namespace Markocupic\EmployeeBundle\Vcard;
+namespace Markocupic\EmployeeBundle\VCard;
 
 use Contao\File;
-use Contao\FrontendTemplate;
 use Markocupic\EmployeeBundle\Model\EmployeeModel;
+use Twig\Environment as TwigEnvironment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
-class VcardGenerator
+class VCardGenerator
 {
     public const VCARD_TEMPLATE = 'partial_employee_vcard';
 
-    /**
-     * @throws \Exception
-     */
-    public static function sendToBrowser(EmployeeModel $objEmployee): void
+    private TwigEnvironment $twig;
+
+    public function __construct(TwigEnvironment $twig)
     {
-        $objTemplate = new FrontendTemplate(static::VCARD_TEMPLATE);
+        $this->twig = $twig;
+    }
 
-        // Set data from object
-        $arrData = $objEmployee->row();
+    /**
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    public function sendToBrowser(EmployeeModel $objEmployee): void
+    {
+        $arrData = array_map(static fn ($value) => trim(utf8_decode(html_entity_decode((string) $value))), $objEmployee->row());
 
-        foreach (array_keys($arrData) as $k) {
-            if (\is_string($arrData[$k])) {
-                $arrData[$k] = html_entity_decode($arrData[$k]);
-                $arrData[$k] = utf8_decode($arrData[$k]);
-                $arrData[$k] = trim($arrData[$k]);
-            }
-        }
+        // Add the file name
+        $arrData['file_name'] = sprintf('%s %s %s', $arrData['title'], $arrData['firstname'], $arrData['lastname']);
 
-        $objTemplate->setData($arrData);
-
-        // Set fname
-        $objTemplate->fn = sprintf('%s %s %s', $arrData['title'], $arrData['firstname'], $arrData['lastname']);
-
-        // Create tmp-file
-        $objFile = new File('system/tmp/'.time().'.vcf', true);
-        $objFile->append($objTemplate->parse());
+        // Create temp file
+        $objFile = new File('system/tmp/'.time().'.vcf');
+        $objFile->append($this->twig->render('@MarkocupicEmployee/vcard/vcard.twig', $arrData));
         $objFile->close();
+
         $objFile->sendToBrowser(sprintf('vcard-%s-%s.vcf', $arrData['firstname'], $arrData['lastname']));
     }
 }
