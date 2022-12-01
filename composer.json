@@ -1,7 +1,7 @@
 {
   "name": "markocupic/employee-bundle",
   "type": "contao-bundle",
-  "description": "Contao 4 employee bundle",
+  "roleDetail": "Contao 4 employee bundle",
   "license": "LGPL-3.0+",
   "authors": [
     {

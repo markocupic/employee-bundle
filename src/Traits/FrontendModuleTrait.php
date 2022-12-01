@@ -51,7 +51,7 @@ trait FrontendModuleTrait
     {
         $arrData = $employeeModel->row();
 
-        $arrData['hasPortraitImage'] = false;
+        $arrData['hasImage'] = false;
         $arrData['publications'] = $module->insertTagParser->replaceInline($arrData['publications']);
 
         $arrData['interview'] = StringUtil::deserialize($arrData['interview'] ?? null, true);
@@ -70,7 +70,7 @@ trait FrontendModuleTrait
             $objFile = FilesModel::findByUuid($arrData['singleSRC']);
 
             if (null !== $objFile && is_file($module->projectDir.'/'.$objFile->path)) {
-                $arrData['hasPortraitImage'] = true;
+                $arrData['hasImage'] = true;
                 $arrData['singleSRC'] = StringUtil::binToUuid($objFile->uuid);
 
                 $figureBuilder = $this->getFigureBuilder($moduleModel, $module->studio);
@@ -98,7 +98,7 @@ trait FrontendModuleTrait
                         $objFile = FilesModel::findByUuid($arrData['singleSRC']);
 
                         if (null !== $objFile && is_file($module->projectDir.'/'.$objFile->path)) {
-                            $arrData['hasPortraitImage'] = true;
+                            $arrData['hasImage'] = true;
                             $arrData['singleSRC'] = StringUtil::binToUuid($objFile->uuid);
 
                             $figureBuilder = $this->getFigureBuilder($moduleModel, $module->studio);

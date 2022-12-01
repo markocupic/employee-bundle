@@ -63,7 +63,7 @@ class Module
         $result = $this->connection->executeQuery('SELECT * FROM tl_employee WHERE published = ?', ['1']);
 
         while (false !== ($row = $result->fetchAssociative())) {
-            $function = '' !== $row['funktion'] ? ' ('.$row['funktion'].')' : '';
+            $function = '' !== $row['role'] ? ' ('.$row['role'].')' : '';
             $return[$row['id']] = $row['firstname'].' '.$row['lastname'].$function;
         }
 
