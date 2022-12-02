@@ -72,7 +72,7 @@ trait FrontendModuleTrait
         $arrData['gallery'] = [];
 
         if ($moduleModel->addEmployeeGallery && $arrData['addGallery']) {
-            $arrMultiSrc = StringUtil::deserialize($arrData['multiSRC']);
+            $arrMultiSrc = StringUtil::deserialize($arrData['multiSRC'],true);
 
             if (!empty($arrMultiSrc)) {
                 foreach ($arrMultiSrc as $uuid) {
@@ -102,7 +102,7 @@ trait FrontendModuleTrait
         return $arrData;
     }
 
-    public function getFigureBuilder(ModuleModel $moduleModel, Studio $studio, mixed $size, bool $fullsize): FigureBuilder
+    protected function getFigureBuilder(ModuleModel $moduleModel, Studio $studio, mixed $size, bool $fullsize): FigureBuilder
     {
         if ($this->figureBuilder) {
             return $this->figureBuilder;

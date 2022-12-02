@@ -19,6 +19,7 @@ use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController
 use Contao\CoreBundle\DependencyInjection\Attribute\AsFrontendModule;
 use Contao\CoreBundle\Image\Studio\Studio;
 use Contao\CoreBundle\InsertTag\InsertTagParser;
+use Contao\CoreBundle\Routing\ScopeMatcher;
 use Contao\Input;
 use Contao\ModuleModel;
 use Contao\Template;
@@ -38,32 +39,37 @@ class EmployeeReaderController extends AbstractFrontendModuleController
     public Studio $studio;
     public InsertTagParser $insertTagParser;
     public TwigEnvironment $twig;
+    private ScopeMatcher $scopeMatcher;
     public string $projectDir;
 
-    public function __construct(InsertTagParser $insertTagParser, Studio $studio, TwigEnvironment $twig, string $projectDir)
+    public function __construct(InsertTagParser $insertTagParser, Studio $studio, TwigEnvironment $twig, ScopeMatcher $scopeMatcher, string $projectDir)
     {
         $this->insertTagParser = $insertTagParser;
         $this->studio = $studio;
         $this->twig = $twig;
+        $this->scopeMatcher = $scopeMatcher;
         $this->projectDir = $projectDir;
     }
 
     public function __invoke(Request $request, ModuleModel $model, string $section, array $classes = null): Response
     {
-        // Set the item from the auto_item parameter
-        if (!isset($_GET['items']) && isset($_GET['auto_item']) && Config::get('useAutoItem')) {
-            Input::setGet('items', Input::get('auto_item'));
-        }
 
-        // Return an empty string if "items" is not set (to combine list and reader on same page)
-        $alias = Input::get('items');
+        if($this->scopeMatcher->isFrontendRequest($request)){
+            // Set the item from the auto_item parameter
+            if (!isset($_GET['items']) && isset($_GET['auto_item']) && Config::get('useAutoItem')) {
+                Input::setGet('items', Input::get('auto_item'));
+            }
 
-        if (!$alias) {
-            return new Response('', Response::HTTP_NO_CONTENT);
-        }
+            // Return an empty string if "items" is not set (to combine list and reader on same page)
+            $alias = Input::get('items');
 
-        if (null === ($this->employee = EmployeeModel::findPublishedByIdOrAlias($alias))) {
-            return new Response('', Response::HTTP_NO_CONTENT);
+            if (!$alias) {
+                return new Response('', Response::HTTP_NO_CONTENT);
+            }
+
+            if (null === ($this->employee = EmployeeModel::findPublishedByIdOrAlias($alias))) {
+                return new Response('', Response::HTTP_NO_CONTENT);
+            }
         }
 
         return parent::__invoke($request, $model, $section, $classes);
