@@ -33,7 +33,7 @@ trait FrontendModuleTrait
     {
         $arrData = $employeeModel->row();
 
-        $arrData['publications'] = $frontendModuleInstance->insertTagParser->replaceInline($arrData['publications']);
+        $arrData['publications'] = $frontendModuleInstance->insertTagParser->replaceInline((string) $arrData['publications']);
         $arrData['interview'] = StringUtil::deserialize($arrData['interview'] ?? null, true);
         $arrData['businessHours'] = StringUtil::deserialize($arrData['businessHours'] ?? null, true);
         $arrData['href'] = false;
@@ -71,13 +71,13 @@ trait FrontendModuleTrait
         $arrData['hasGallery'] = false;
         $arrData['gallery'] = [];
 
-        if ($moduleModel->addEmployeeGallery && $arrData['addGallery'] && Validator::isUuid($arrData['singleSRC'] ?? '')) {
+        if ($moduleModel->addEmployeeGallery && $arrData['addGallery']) {
             $arrMultiSrc = StringUtil::deserialize($arrData['multiSRC']);
 
             if (!empty($arrMultiSrc)) {
                 foreach ($arrMultiSrc as $uuid) {
                     if (Validator::isBinaryUuid($uuid)) {
-                        $objFile = FilesModel::findByUuid($arrData['singleSRC']);
+                        $objFile = FilesModel::findByUuid($uuid);
 
                         if (null !== $objFile && is_file($frontendModuleInstance->projectDir.'/'.$objFile->path)) {
                             $arrData['hasImage'] = true;
