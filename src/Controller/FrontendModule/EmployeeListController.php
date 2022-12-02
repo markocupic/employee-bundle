@@ -18,13 +18,12 @@ use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController
 use Contao\CoreBundle\DependencyInjection\Attribute\AsFrontendModule;
 use Contao\CoreBundle\Image\Studio\Studio;
 use Contao\CoreBundle\InsertTag\InsertTagParser;
-use Contao\Database;
+use Contao\Model\Collection;
 use Contao\ModuleModel;
 use Contao\StringUtil;
 use Contao\Template;
 use Markocupic\EmployeeBundle\Model\EmployeeModel;
 use Markocupic\EmployeeBundle\Traits\FrontendModuleTrait;
-use Model\Collection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment as TwigEnvironment;
@@ -55,13 +54,7 @@ class EmployeeListController extends AbstractFrontendModuleController
 
     public function __invoke(Request $request, ModuleModel $model, string $section, array $classes = null): Response
     {
-        $arrIds = $this->getEmployees($model);
-
-        $arrOptions = [
-            'order' => 'tl_employee.lastname, tl_employee.firstname',
-        ];
-
-        if (null === ($this->employees = EmployeeModel::findMultipleAndPublishedByIds($arrIds, $arrOptions))) {
+        if (null === ($this->employees = $this->getEmployees($model))) {
             return new Response('', Response::HTTP_NO_CONTENT);
         }
 
@@ -88,16 +81,21 @@ class EmployeeListController extends AbstractFrontendModuleController
         return $template->getResponse();
     }
 
-    protected function getEmployees(ModuleModel $model): array
+    protected function getEmployees(ModuleModel $model): ?Collection
     {
         if ($model->showAllPublishedEmployees) {
-            $objDb = Database::getInstance()
-                ->execute('SELECT id FROM tl_employee')
-            ;
-            $arrIds = $objDb->fetchEach('id');
-        } else {
-            $arrIds = StringUtil::deserialize($model->selectEmployee, true);
+            return EmployeeModel::findAllPublished();
         }
+        $arrModels = [];
+        $arrIds = StringUtil::deserialize($model->selectEmployee, true);
+
+        foreach ($arrIds as $id) {
+            if (null !== ($objModel = EmployeeModel::findPublishedById($id))) {
+                $arrModels[] = $objModel;
+            }
+        }
+
+        return new Collection($arrModels, 'tl_employee');
 
         return $arrIds;
     }

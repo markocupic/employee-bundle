@@ -73,12 +73,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['showAllPublishedEmployees'] = [
 $GLOBALS['TL_DCA']['tl_module']['fields']['selectEmployee'] = [
     'exclude'   => true,
     'inputType' => 'checkboxWizard',
-    'eval'      => ['mandatory' => true, 'multiple' => true, 'orderField' => 'orderSelectedEmployee'],
+    'eval'      => ['mandatory' => true, 'multiple' => true],
     'sql'       => 'blob NULL',
-];
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['orderSelectedEmployee'] = [
-    'sql' => 'blob NULL',
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['galSize'] = [
@@ -106,4 +102,3 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['galFullsize'] = [
     'eval'      => ['tl_class' => 'w50 m12'],
     'sql'       => "char(1) COLLATE ascii_bin NOT NULL default ''",
 ];
-

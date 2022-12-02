@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Markocupic\EmployeeBundle\Migration\Version300;
 
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Migration\AbstractMigration;
 use Contao\CoreBundle\Migration\MigrationResult;
 use Contao\StringUtil;
@@ -24,20 +25,29 @@ class RenameColumnsMigration extends AbstractMigration
 {
     private const ALTERATION_TYPE_RENAME_COLUMN = 'alteration_type_rename_column';
 
+    private ContaoFramework $framework;
     private Connection $connection;
 
-    public function __construct(Connection $connection)
+    public function __construct(ContaoFramework $framework, Connection $connection)
     {
         $this->connection = $connection;
+        $this->framework = $framework;
     }
 
     public function getName(): string
     {
-        return 'Employee Bundle version 3.0.0 update';
+        return 'Employee Bundle version 3.0.0 update: Rename columns
+
+
+
+
+           ';
     }
 
     public function shouldRun(): bool
     {
+        $this->framework->initialize();
+
         $doMigration = false;
         $schemaManager = $this->connection->getSchemaManager();
         $arrAlterations = $this->getAlterationData();
@@ -84,6 +94,8 @@ class RenameColumnsMigration extends AbstractMigration
      */
     public function run(): MigrationResult
     {
+        $this->framework->initialize();
+
         $resultMessages = [];
 
         $schemaManager = $this->connection->getSchemaManager();

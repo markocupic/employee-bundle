@@ -39,8 +39,8 @@ class EmployeeReaderController extends AbstractFrontendModuleController
     public Studio $studio;
     public InsertTagParser $insertTagParser;
     public TwigEnvironment $twig;
-    private ScopeMatcher $scopeMatcher;
     public string $projectDir;
+    private ScopeMatcher $scopeMatcher;
 
     public function __construct(InsertTagParser $insertTagParser, Studio $studio, TwigEnvironment $twig, ScopeMatcher $scopeMatcher, string $projectDir)
     {
@@ -53,8 +53,7 @@ class EmployeeReaderController extends AbstractFrontendModuleController
 
     public function __invoke(Request $request, ModuleModel $model, string $section, array $classes = null): Response
     {
-
-        if($this->scopeMatcher->isFrontendRequest($request)){
+        if ($this->scopeMatcher->isFrontendRequest($request)) {
             // Set the item from the auto_item parameter
             if (!isset($_GET['items']) && isset($_GET['auto_item']) && Config::get('useAutoItem')) {
                 Input::setGet('items', Input::get('auto_item'));

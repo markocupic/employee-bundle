@@ -26,5 +26,5 @@ $GLOBALS['TL_LANG']['tl_module']['addEmployeeImage'] = ['Mitarbeiter-Bild anzeig
 $GLOBALS['TL_LANG']['tl_module']['addEmployeeGallery'] = ['Mitarbeiter-Galerie anzeigen.'];
 $GLOBALS['TL_LANG']['tl_module']['imgFullsize'] = ['Großansicht/Neues Fenster', 'Großansicht des Bildes in einer Lightbox bzw. den Link in einem neuem Browserfenster öffnen.'];
 $GLOBALS['TL_LANG']['tl_module']['galFullsize'] = ['Großansicht/Neues Fenster', 'Großansicht des Bildes in einer Lightbox bzw. den Link in einem neuem Browserfenster öffnen.'];
-$GLOBALS['TL_LANG']['tl_module']['showAllPublishedEmployees'] = ['Alle Mitarbeiter auswählen.', 'Aktivieren Sie die Checkbox, wenn alle Mitarbeiter angezeigt werden sollen.'];
-$GLOBALS['TL_LANG']['tl_module']['selectEmployee'] = ['Mitarbeiter auswählen.', 'Wählen Sie einen oder mehrere Mitarbeiter aus.'];
+$GLOBALS['TL_LANG']['tl_module']['showAllPublishedEmployees'] = ['Alle veröffentlichte Mitarbeiter auswählen.', 'Aktivieren Sie die Checkbox, wenn alle veröffentlichte Mitarbeiter angezeigt werden sollen.'];
+$GLOBALS['TL_LANG']['tl_module']['selectEmployee'] = ['Mitarbeiter & Reihenfolge auswählen.', 'Wählen Sie einen oder mehrere Mitarbeiter aus und legen Sie die Reihenfolge der Ausgabe im Frontend fest.'];

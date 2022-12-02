@@ -72,7 +72,7 @@ trait FrontendModuleTrait
         $arrData['gallery'] = [];
 
         if ($moduleModel->addEmployeeGallery && $arrData['addGallery']) {
-            $arrMultiSrc = StringUtil::deserialize($arrData['multiSRC'],true);
+            $arrMultiSrc = StringUtil::deserialize($arrData['multiSRC'], true);
 
             if (!empty($arrMultiSrc)) {
                 foreach ($arrMultiSrc as $uuid) {

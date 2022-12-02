@@ -24,10 +24,8 @@ class EmployeeModel extends Model
 
     /**
      * @param $intId
-     *
-     * @return static|null
      */
-    public static function findPublishedById($intId, array $arrOptions = []): ?self
+    public static function findPublishedById($intId, array $arrOptions = []): ?static
     {
         $t = static::$strTable;
         $arrColumns = [
@@ -62,7 +60,7 @@ class EmployeeModel extends Model
      *
      * @return EmployeeModel|null
      */
-    public static function findPublishedByIdOrAlias($idOrAlias)
+    public static function findPublishedByIdOrAlias($idOrAlias): ?static
     {
         $values = [];
         $columns = [];
@@ -81,5 +79,19 @@ class EmployeeModel extends Model
         $values[] = 1;
 
         return static::findOneBy($columns, $values);
+    }
+
+    /**
+     * @return Model|array<Model>|Collection|EmployeeModel|null
+     */
+    public static function findAllPublished(): ?Collection
+    {
+        $values = [];
+        $columns = [];
+        $t = static::$strTable;
+        $columns[] = "$t.published=?";
+        $values[] = 1;
+
+        return static::findBy($columns, $values);
     }
 }
