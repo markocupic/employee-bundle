@@ -28,3 +28,7 @@ $GLOBALS['TL_LANG']['tl_module']['imgFullsize'] = ['Großansicht/Neues Fenster',
 $GLOBALS['TL_LANG']['tl_module']['galFullsize'] = ['Großansicht/Neues Fenster', 'Großansicht des Bildes in einer Lightbox bzw. den Link in einem neuem Browserfenster öffnen.'];
 $GLOBALS['TL_LANG']['tl_module']['showAllPublishedEmployees'] = ['Alle veröffentlichte Mitarbeiter auswählen.', 'Aktivieren Sie die Checkbox, wenn alle veröffentlichte Mitarbeiter angezeigt werden sollen.'];
 $GLOBALS['TL_LANG']['tl_module']['selectEmployee'] = ['Mitarbeiter & Reihenfolge auswählen.', 'Wählen Sie einen oder mehrere Mitarbeiter aus und legen Sie die Reihenfolge der Ausgabe im Frontend fest.'];
+$GLOBALS['TL_LANG']['tl_module']['orderBy'] = ['Sortierung auswählen.', 'Wählen Sie ein oder mehrere Felder nach denen die Ausgabe sortiert werden soll.'];
+$GLOBALS['TL_LANG']['tl_module']['column'] = ['Spalte.', ''];
+$GLOBALS['TL_LANG']['tl_module']['addSorting'] = ['Elemente sortieren', ''];
+$GLOBALS['TL_LANG']['tl_module']['sortDirection'] = ['Sortierrichtung.', ''];

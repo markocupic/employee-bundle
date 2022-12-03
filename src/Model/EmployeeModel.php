@@ -84,7 +84,7 @@ class EmployeeModel extends Model
     /**
      * @return Model|array<Model>|Collection|EmployeeModel|null
      */
-    public static function findAllPublished(): ?Collection
+    public static function findAllPublished(array $arrOptions=[]): ?Collection
     {
         $values = [];
         $columns = [];
@@ -92,6 +92,6 @@ class EmployeeModel extends Model
         $columns[] = "$t.published=?";
         $values[] = 1;
 
-        return static::findBy($columns, $values);
+        return static::findBy($columns, $values, $arrOptions);
     }
 }

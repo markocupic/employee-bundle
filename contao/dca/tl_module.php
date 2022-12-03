@@ -13,6 +13,7 @@ declare(strict_types=1);
  */
 
 use Contao\BackendUser;
+use Contao\Controller;
 use Contao\System;
 use Markocupic\EmployeeBundle\Controller\FrontendModule\EmployeeListController;
 use Markocupic\EmployeeBundle\Controller\FrontendModule\EmployeeReaderController;
@@ -20,7 +21,7 @@ use Markocupic\EmployeeBundle\Controller\FrontendModule\EmployeeReaderController
 // Palettes
 $GLOBALS['TL_DCA']['tl_module']['palettes'][EmployeeListController::TYPE] = '
     {title_legend},name,type;
-    {employee_legend},showAllPublishedEmployees,selectEmployee;
+    {employee_legend},showAllPublishedEmployees,selectEmployee,addSorting;
     {employee_image_legend},addEmployeeImage;
     {employee_gallery_legend},addEmployeeGallery;
     {redirect_legend},jumpTo;
@@ -43,10 +44,12 @@ $GLOBALS['TL_DCA']['tl_module']['palettes'][EmployeeReaderController::TYPE] = '
 // Selectors
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'addEmployeeImage';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'addEmployeeGallery';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'addSorting';
 
 // Subpalettes
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['addEmployeeImage'] = 'imgSize,imgFullsize';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['addEmployeeGallery'] = 'galSize,galFullsize';
+$GLOBALS['TL_DCA']['tl_module']['subpalettes']['addSorting'] = 'orderBy';
 
 // Fields
 $GLOBALS['TL_DCA']['tl_module']['fields']['addEmployeeImage'] = [
@@ -74,6 +77,40 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['selectEmployee'] = [
     'exclude'   => true,
     'inputType' => 'checkboxWizard',
     'eval'      => ['mandatory' => true, 'multiple' => true],
+    'sql'       => 'blob NULL',
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['addSorting'] = [
+    'exclude'   => true,
+    'inputType' => 'checkbox',
+    'eval'      => ['submitOnChange' => true],
+    'sql'       => "char(1) COLLATE ascii_bin NOT NULL default ''",
+];
+
+Controller::loadDataContainer('tl_employee');
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['orderBy'] = [
+    'exclude'   => true,
+    'inputType' => 'multiColumnWizard',
+    'eval'      => [
+        'tl_class'     => 'clr w50',
+        'columnFields' => [
+            'column'        => [
+                'label'     => &$GLOBALS['TL_LANG']['tl_employee']['column'],
+                'exclude'   => true,
+                'inputType' => 'select',
+                'options'   => array_keys($GLOBALS['TL_DCA']['tl_employee']['fields']),
+                'eval'      => ['style' => 'width:140px'],
+            ],
+            'sortDirection' => [
+                'label'     => &$GLOBALS['TL_LANG']['tl_employee']['sortDirection'],
+                'exclude'   => true,
+                'inputType' => 'select',
+                'options'   => ['ASC', 'DESC'],
+                'eval'      => ['style' => 'width:80px', 'rte' => null],
+            ],
+        ],
+    ],
     'sql'       => 'blob NULL',
 ];
 

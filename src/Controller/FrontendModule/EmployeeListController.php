@@ -61,6 +61,50 @@ class EmployeeListController extends AbstractFrontendModuleController
         return parent::__invoke($request, $model, $section, $classes);
     }
 
+    protected function getEmployees(ModuleModel $model): ?Collection
+    {
+        $arrOptions = [
+            'order' => 'id ASC', // default order
+        ];
+
+        $blnOrderBy = false;
+
+        // Override default order
+        if ($model->addSorting) {
+            $orderByItems = StringUtil::deserialize($model->orderBy, true);
+            $arrOrderBy = [];
+
+            foreach ($orderByItems as $orderBy) {
+                $blnOrderBy = true;
+                $arrOrderBy[] = trim($orderBy['column'].' '.$orderBy['sortDirection']);
+            }
+
+            if ($blnOrderBy) {
+                $arrOptions['order'] = implode(', ', $arrOrderBy);
+            }
+        }
+
+        if ($model->showAllPublishedEmployees) {
+            return EmployeeModel::findAllPublished($arrOptions);
+        }
+
+        $arrModels = [];
+        $arrIds = StringUtil::deserialize($model->selectEmployee, true);
+
+        if ($blnOrderBy) {
+            return EmployeeModel::findMultipleAndPublishedByIds($arrIds, $arrOptions);
+        }
+
+        // Take the order from the tl_module checkboxWizard if no order is set.
+        foreach ($arrIds as $id) {
+            if (null !== ($objModel = EmployeeModel::findPublishedById($id, $arrOptions))) {
+                $arrModels[] = $objModel;
+            }
+        }
+
+        return new Collection($arrModels, 'tl_employee');
+    }
+
     /**
      * @throws LoaderError
      * @throws RuntimeError
@@ -79,24 +123,5 @@ class EmployeeListController extends AbstractFrontendModuleController
         $template->employees = $arrItems;
 
         return $template->getResponse();
-    }
-
-    protected function getEmployees(ModuleModel $model): ?Collection
-    {
-        if ($model->showAllPublishedEmployees) {
-            return EmployeeModel::findAllPublished();
-        }
-        $arrModels = [];
-        $arrIds = StringUtil::deserialize($model->selectEmployee, true);
-
-        foreach ($arrIds as $id) {
-            if (null !== ($objModel = EmployeeModel::findPublishedById($id))) {
-                $arrModels[] = $objModel;
-            }
-        }
-
-        return new Collection($arrModels, 'tl_employee');
-
-        return $arrIds;
     }
 }
