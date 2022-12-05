@@ -84,7 +84,7 @@ class EmployeeModel extends Model
     /**
      * @return Model|array<Model>|Collection|EmployeeModel|null
      */
-    public static function findAllPublished(array $arrOptions=[]): ?Collection
+    public static function findAllPublished(array $arrOptions = []): ?Collection
     {
         $values = [];
         $columns = [];

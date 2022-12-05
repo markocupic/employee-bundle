@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/employee-bundle
  */
 
-namespace Markocupic\EmployeeBundle\EventListener\ContaoHooks;
+namespace Markocupic\EmployeeBundle\EventListener\ContaoHooks\GeneratePage;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 use Contao\LayoutModel;
