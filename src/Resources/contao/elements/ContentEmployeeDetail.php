@@ -16,7 +16,6 @@ use Contao\BackendTemplate;
 use Contao\ContentElement;
 use Contao\StringUtil;
 use Contao\Validator;
-use Patchwork\Utf8;
 
 /**
  * Class ContentEmployeeDetail
@@ -45,7 +44,7 @@ class ContentEmployeeDetail extends ContentElement
 		if (TL_MODE == 'BE')
 		{
 			$objTemplate = new BackendTemplate('be_wildcard');
-			$objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['employeeDetail'][0]) . ' ###';
+			$objTemplate->wildcard = '### ' . strtoupper($GLOBALS['TL_LANG']['CTE']['employeeDetail'][0] ?? 'employeeDetail') . ' ###';
 
 			return $objTemplate->parse();
 		}

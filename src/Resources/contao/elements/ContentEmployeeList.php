@@ -16,7 +16,6 @@ use Contao\BackendTemplate;
 use Contao\ContentElement;
 use Contao\StringUtil;
 use Contao\Validator;
-use Patchwork\Utf8;
 
 /**
  * Class ContentEmployeeList
@@ -39,7 +38,7 @@ class ContentEmployeeList extends ContentElement
 		if (TL_MODE == 'BE')
 		{
 			$objTemplate = new BackendTemplate('be_wildcard');
-			$objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['employeeList'][0]) . ' ###';
+			$objTemplate->wildcard = '### ' . strtoupper($GLOBALS['TL_LANG']['CTE']['employeeList'][0] ?? 'employeeList') . ' ###';
 
 			return $objTemplate->parse();
 		}
