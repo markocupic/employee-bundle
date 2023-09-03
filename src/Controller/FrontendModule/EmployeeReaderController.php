@@ -29,7 +29,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment as TwigEnvironment;
 
-#[AsFrontendModule(EmployeeReaderController::TYPE, category: 'employee_modules')]
+#[AsFrontendModule(EmployeeReaderController::TYPE, category: 'employee_modules', template: 'mod_employee_reader')]
 class EmployeeReaderController extends AbstractFrontendModuleController
 {
     use FrontendModuleTrait;

@@ -31,7 +31,7 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-#[AsFrontendModule(EmployeeListController::TYPE, category: 'employee_modules')]
+#[AsFrontendModule(EmployeeListController::TYPE, category: 'employee_modules', template: 'mod_employee_list')]
 class EmployeeListController extends AbstractFrontendModuleController
 {
     use FrontendModuleTrait;
