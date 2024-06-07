@@ -141,7 +141,9 @@ class RenameColumnsMigration extends AbstractMigration
             if (isset($columns['interview'])) {
                 $result = $this->connection->executeQuery("SELECT id,interview FROM tl_employee WHERE interview LIKE '%\"interview_question\";%' OR interview LIKE '%\"interview_answer\";%'");
 
-                while (false !== ($row = $result->fetchAssociative())) {
+                $rows = $row = $result->fetchAllAssociative();
+
+                foreach($rows as $row) {
                     $arrInterview = StringUtil::deserialize($row['interview']);
                     $arrNew = [];
 
@@ -163,7 +165,9 @@ class RenameColumnsMigration extends AbstractMigration
             if (isset($columns['businesshours'])) {
                 $result = $this->connection->executeQuery("SELECT id,businessHours FROM tl_employee WHERE businessHours LIKE '%\"businessHoursWeekday\";%' OR businessHours LIKE '%\"businessHoursTime\";%'");
 
-                while (false !== ($row = $result->fetchAssociative())) {
+                $rows = $row = $result->fetchAllAssociative();
+
+                foreach($rows as $row) {
                     $arrInterview = StringUtil::deserialize($row['businessHours']);
                     $arrNew = [];
 
