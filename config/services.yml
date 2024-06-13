@@ -6,7 +6,6 @@ services:
         bind:
             $studio: '@contao.image.studio'
             $slug: '@contao.slug'
-            $projectDir: '%kernel.project_dir%'
 
     Markocupic\EmployeeBundle\:
         resource: ../src/

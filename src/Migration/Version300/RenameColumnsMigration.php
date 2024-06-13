@@ -5,8 +5,8 @@ declare(strict_types=1);
 /*
  * This file is part of Employee Bundle.
  *
- * (c) Marko Cupic 2022 <m.cupic@gmx.ch>
- * @license LGPL-3.0+
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
+ * @license GPL-3.0-or-later
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
  * @link https://github.com/markocupic/employee-bundle
@@ -25,23 +25,15 @@ class RenameColumnsMigration extends AbstractMigration
 {
     private const ALTERATION_TYPE_RENAME_COLUMN = 'alteration_type_rename_column';
 
-    private ContaoFramework $framework;
-    private Connection $connection;
-
-    public function __construct(ContaoFramework $framework, Connection $connection)
-    {
-        $this->connection = $connection;
-        $this->framework = $framework;
+    public function __construct(
+        private readonly ContaoFramework $framework,
+        private readonly Connection $connection,
+    ) {
     }
 
     public function getName(): string
     {
-        return 'Employee Bundle version 3.0.0 update: Rename columns
-
-
-
-
-           ';
+        return 'Employee Bundle version 3.0.0 update: Rename columns';
     }
 
     public function shouldRun(): bool
@@ -49,7 +41,7 @@ class RenameColumnsMigration extends AbstractMigration
         $this->framework->initialize();
 
         $doMigration = false;
-        $schemaManager = $this->connection->getSchemaManager();
+        $schemaManager = $this->connection->createSchemaManager();
         $arrAlterations = $this->getAlterationData();
 
         foreach ($arrAlterations as $arrAlteration) {
@@ -98,7 +90,7 @@ class RenameColumnsMigration extends AbstractMigration
 
         $resultMessages = [];
 
-        $schemaManager = $this->connection->getSchemaManager();
+        $schemaManager = $this->connection->createSchemaManager();
         $arrAlterations = $this->getAlterationData();
 
         foreach ($arrAlterations as $arrAlteration) {
@@ -141,7 +133,9 @@ class RenameColumnsMigration extends AbstractMigration
             if (isset($columns['interview'])) {
                 $result = $this->connection->executeQuery("SELECT id,interview FROM tl_employee WHERE interview LIKE '%\"interview_question\";%' OR interview LIKE '%\"interview_answer\";%'");
 
-                while (false !== ($row = $result->fetchAssociative())) {
+                $rows = $row = $result->fetchAllAssociative();
+
+                foreach ($rows as $row) {
                     $arrInterview = StringUtil::deserialize($row['interview']);
                     $arrNew = [];
 
@@ -163,7 +157,9 @@ class RenameColumnsMigration extends AbstractMigration
             if (isset($columns['businesshours'])) {
                 $result = $this->connection->executeQuery("SELECT id,businessHours FROM tl_employee WHERE businessHours LIKE '%\"businessHoursWeekday\";%' OR businessHours LIKE '%\"businessHoursTime\";%'");
 
-                while (false !== ($row = $result->fetchAssociative())) {
+                $rows = $row = $result->fetchAllAssociative();
+
+                foreach ($rows as $row) {
                     $arrInterview = StringUtil::deserialize($row['businessHours']);
                     $arrNew = [];
 

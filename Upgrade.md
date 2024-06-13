@@ -1,4 +1,4 @@
-# Upgrade 2.* to 3.*
+# Upgrade 3.* to 4.*
 Die Erweiterung wurde komplett überarbeitet und ist nicht mehr kompatibel zur 2.* Version.
 Mehrere Felder wurden umbenannt, andere sind dazugekommen und auch die Templates wurden komplett überarbeitet.
 Beide Inhaltselemente wurden durch Frontendmodule ersetzt.
@@ -25,16 +25,16 @@ Bei der Datenbankmigration werden die Daten automatisch in die neuen Felder migr
 - tl_module.imgFullsize
 - tl_module.galFullsize
 - tl_module.addEmployeeImage
-- tl_module.addEmployeeImage
-- tl_module.addEmployeeImage
 
 ## Frontend Module anstatt Inhaltselemente
-Die beiden Inhaltselemente **Mitglieder-Auflistung** und **Mitglieder-Reader** wurden in Frontend Module umgewandelt.
-!Achtung: Es werden diesbezüglich keine Daten migriert. Die Frontend Module müssen von Hand angelegt werden.
+Das Inhaltselement **Mitglieder-Auflistung** und **Mitglieder-Reader** sind in Frontend-Module umgewandelt worden.
+!Achtung: Es werden diesbezüglich keine Daten migriert. Die Frontend-Module müssen von Hand angelegt werden.
+
+Das Inhaltselement **Mitarbeiter Einzelelement** wurde beibehalten.
 
 ## Totale Überarbeitung der Templates
 Die alten Templates können nicht mehr benötigt werden und wurden komplett überarbeitet.
-Anstelle von HTML5 sind die beiden Templates in **TWIG** geschrieben.
+Anstelle von HTML5 sind alle Templates in **TWIG** geschrieben.
 
 ## Ein Einzelbild und eine Galerie pro Mitarbeiter
 Pro Mitarbeiter können neben dem Einzelbild auch eine Galerie verwendet werden.

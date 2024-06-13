@@ -1,0 +1,3 @@
+markocupic_employee_bundle:
+    resource: ../src/Controller
+    type: annotation

@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Employee Bundle.
  *
- * (c) Marko Cupic 2022 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
  * @license LGPL-3.0+
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -295,12 +295,8 @@ $GLOBALS['TL_DCA']['tl_employee'] = [
         'multiSRC'      => [
             'exclude'   => true,
             'inputType' => 'fileTree',
-            'eval'      => ['isGallery' => true, 'extensions' => System::getContainer()->getParameter('contao.image.valid_extensions'), 'multiple' => true, 'fieldType' => 'checkbox', 'orderField' => 'orderSRC', 'files' => true, 'mandatory' => true],
+            'eval'      => ['isGallery' => true, 'extensions' => System::getContainer()->getParameter('contao.image.valid_extensions'), 'multiple' => true, 'fieldType' => 'checkbox', 'files' => true, 'mandatory' => true],
             'sql'       => "blob NULL",
-        ],
-        'orderSRC'      => [
-            'label' => &$GLOBALS['TL_LANG']['MSC']['sortOrder'],
-            'sql'   => "blob NULL",
         ],
         'interview'     => [
             'exclude'   => true,

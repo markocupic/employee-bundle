@@ -5,19 +5,25 @@ declare(strict_types=1);
 /*
  * This file is part of Employee Bundle.
  *
- * (c) Marko Cupic 2022 <m.cupic@gmx.ch>
- * @license LGPL-3.0+
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
+ * @license GPL-3.0-or-later
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
  * @link https://github.com/markocupic/employee-bundle
  */
 
+use Markocupic\EmployeeBundle\Controller\ContentElement\EmployeeDetailContentElementController;
+
+// Content elements
+$GLOBALS['TL_LANG']['CTE']['employee'] = 'Employee';
+$GLOBALS['TL_LANG']['CTE'][EmployeeDetailContentElementController::TYPE] = ['Employee details', 'Add details of the selected employee to the article.'];
+
 /*
  * Miscellaneous
  */
-$GLOBALS['TL_LANG']['MSC']['eb_contact'] = 'Kontakt';
-$GLOBALS['TL_LANG']['MSC']['eb_contactInfo'] = 'Bitte kontaktieren Sie';
-$GLOBALS['TL_LANG']['MSC']['eb_emplyeeInfo'] = 'Infos zur Person';
-$GLOBALS['TL_LANG']['MSC']['eb_officeHours'] = 'Bürozeiten';
-$GLOBALS['TL_LANG']['MSC']['eb_publications'] = 'Publikationen';
-$GLOBALS['TL_LANG']['MSC']['eb_close'] = 'Schliessen';
+$GLOBALS['TL_LANG']['MSC']['eb_contact'] = 'Contact';
+$GLOBALS['TL_LANG']['MSC']['eb_contactInfo'] = 'Please contact';
+$GLOBALS['TL_LANG']['MSC']['eb_emplyeeInfo'] = 'About';
+$GLOBALS['TL_LANG']['MSC']['eb_officeHours'] = 'Office hours';
+$GLOBALS['TL_LANG']['MSC']['eb_publications'] = 'Publications';
+$GLOBALS['TL_LANG']['MSC']['eb_close'] = 'Close';

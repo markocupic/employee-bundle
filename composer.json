@@ -1,41 +1,44 @@
 {
-  "name": "markocupic/employee-bundle",
-  "type": "contao-bundle",
-  "roleDetail": "Contao 4 employee bundle",
-  "license": "LGPL-3.0+",
-  "authors": [
-    {
-      "name": "Marko Cupic",
-      "homepage": "https://github.com/markocupic/employee-bundle"
+    "name": "markocupic/employee-bundle",
+    "type": "contao-bundle",
+    "dscription": "Contao Employee Bundle for Contao CMS",
+    "license": "LGPL-3.0+",
+    "authors": [
+        {
+            "name": "Marko Cupic",
+            "homepage": "https://github.com/markocupic/employee-bundle"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "contao/core-bundle": "^5.3",
+        "menatwork/contao-multicolumnwizard-bundle": "^3.5"
+    },
+    "require-dev": {
+        "contao/manager-plugin": "^2.3.1",
+        "contao/test-case": "^4.5",
+        "phpunit/phpunit": "^9.3",
+        "symfony/http-client": "5.4.*",
+        "symfony/phpunit-bridge": "^5.4",
+        "contao/easy-coding-standard": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Markocupic\\EmployeeBundle\\": "src/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "contao-components/installer": true,
+            "contao/manager-plugin": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "contao-community-alliance/composer-plugin": true
+        }
+    },
+    "extra": {
+        "contao-manager-plugin": "Markocupic\\EmployeeBundle\\ContaoManager\\Plugin"
+    },
+    "scripts": {
+        "cs-fixer": "@php tools/ecs/vendor/bin/ecs check config/ contao/ src/ tests/ --config tools/ecs/config.php --fix --ansi"
     }
-  ],
-  "require": {
-    "php": "^8.0",
-    "contao/core-bundle": "^4.13 || ^5.0",
-    "menatwork/contao-multicolumnwizard-bundle": "^3.5"
-  },
-  "require-dev": {
-    "contao/manager-plugin": "^2.3.1",
-    "contao/test-case": "^4.5",
-    "phpunit/phpunit": "^9.3",
-    "symfony/http-client": "5.4.*",
-    "symfony/phpunit-bridge": "^5.4",
-    "contao/easy-coding-standard": "^3.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Markocupic\\EmployeeBundle\\": "src/"
-    }
-  },
-  "config": {
-    "allow-plugins": {
-      "contao-components/installer": true,
-      "contao/manager-plugin": true,
-      "dealerdirect/phpcodesniffer-composer-installer": true,
-      "contao-community-alliance/composer-plugin": true
-    }
-  },
-  "extra": {
-    "contao-manager-plugin": "Markocupic\\EmployeeBundle\\ContaoManager\\Plugin"
-  }
 }

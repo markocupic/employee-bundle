@@ -5,8 +5,8 @@ declare(strict_types=1);
 /*
  * This file is part of Employee Bundle.
  *
- * (c) Marko Cupic 2022 <m.cupic@gmx.ch>
- * @license LGPL-3.0+
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
+ * @license GPL-3.0-or-later
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
  * @link https://github.com/markocupic/employee-bundle
@@ -14,25 +14,20 @@ declare(strict_types=1);
 
 namespace Markocupic\EmployeeBundle\DataContainer;
 
-use Contao\CoreBundle\ServiceAnnotation\Callback;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\CoreBundle\Slug\Slug;
 use Contao\DataContainer;
 use Doctrine\DBAL\Connection;
 
 class Employee
 {
-    private Connection $connection;
-    private Slug $slug;
-
-    public function __construct(Connection $connection, Slug $slug)
-    {
-        $this->connection = $connection;
-        $this->slug = $slug;
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly Slug $slug,
+    ) {
     }
 
-    /**
-     * @Callback(table="tl_employee", target="fields.alias.save")
-     */
+    #[AsCallback(table: 'tl_employee', target: 'fields.alias.save')]
     public function generateAlias($varValue, DataContainer $dc)
     {
         $aliasExists = fn (string $alias): bool => false !== $this->connection->fetchOne('SELECT id FROM tl_employee WHERE alias = ? AND id != ?', [$alias, $dc->id]);

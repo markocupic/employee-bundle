@@ -1,20 +1,20 @@
 BEGIN:VCARD
 VERSION:3.0
-N:{{ lastname }};{{ firstname }};;{{ title }};
+N:{{ lastname|default('') }};{{ firstname|default('') }};;{{ title|default('') }};
 FN:{{ file_name }}
 
-ORG:{{ company }}
+ORG:{{ company|default('') }}
 
-ROLE:{{ role }}
+ROLE:{{ role|default('') }}
 
-TEL;TYPE=WORK,VOICE:{{ phone }}
+TEL;TYPE=WORK,VOICE:{{ phone|default('') }}
 
-TEL;TYPE=HOME,VOICE:{{ phoneHome }}
+TEL;TYPE=CELL,WORK,VOICE:{{ mobile|default('') }}
 
-ADR;TYPE=WORK:;;{{ street }};{{ city }};;{{ postal }};{{ country }}
+ADR;TYPE=WORK:;;{{ street|default('') }};{{ city|default('') }};;{{ postal|default('') }};{{ country|default('') }}
 
-EMAIL;TYPE=PREF,INTERNET:{{ email }}
+EMAIL;TYPE=PREF,INTERNET:{{ email|default('') }}
 
-URL:{{ website }}
+URL:{{ website|default('') }}
 
 END:VCARD

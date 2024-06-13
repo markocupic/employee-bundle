@@ -1,0 +1,6 @@
+{% extends "@Contao/frontend_module/_base.html.twig" %}
+{% use "@Contao_MarkocupicEmployeeBundle/component/_employee.html.twig" %}
+
+{% block content %}
+    {% with {employee: employee} %}{{ block('employee_component') }}{% endwith %}
+{% endblock %}

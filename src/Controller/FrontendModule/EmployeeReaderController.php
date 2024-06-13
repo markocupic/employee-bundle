@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Employee Bundle.
  *
- * (c) Marko Cupic 2022 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
  * @license LGPL-3.0+
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -14,71 +14,49 @@ declare(strict_types=1);
 
 namespace Markocupic\EmployeeBundle\Controller\FrontendModule;
 
-use Contao\Config;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsFrontendModule;
-use Contao\CoreBundle\Image\Studio\Studio;
-use Contao\CoreBundle\InsertTag\InsertTagParser;
 use Contao\CoreBundle\Routing\ScopeMatcher;
+use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\Input;
 use Contao\ModuleModel;
-use Contao\Template;
+use Markocupic\EmployeeBundle\Event\GetEmployeeDataEvent;
 use Markocupic\EmployeeBundle\Model\EmployeeModel;
-use Markocupic\EmployeeBundle\Traits\FrontendModuleTrait;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Twig\Environment as TwigEnvironment;
 
-#[AsFrontendModule(EmployeeReaderController::TYPE, category: 'employee_modules', template: 'mod_employee_reader')]
+#[AsFrontendModule(EmployeeReaderController::TYPE, category: 'employee_modules')]
 class EmployeeReaderController extends AbstractFrontendModuleController
 {
-    use FrontendModuleTrait;
-
     public const TYPE = 'employee_reader';
+    public EmployeeModel|null $employee = null;
 
-    public Studio $studio;
-    public InsertTagParser $insertTagParser;
-    public TwigEnvironment $twig;
-    public string $projectDir;
-    private ScopeMatcher $scopeMatcher;
-
-    public function __construct(InsertTagParser $insertTagParser, Studio $studio, TwigEnvironment $twig, ScopeMatcher $scopeMatcher, string $projectDir)
-    {
-        $this->insertTagParser = $insertTagParser;
-        $this->studio = $studio;
-        $this->twig = $twig;
-        $this->scopeMatcher = $scopeMatcher;
-        $this->projectDir = $projectDir;
+    public function __construct(
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly ScopeMatcher $scopeMatcher,
+    ) {
     }
 
-    public function __invoke(Request $request, ModuleModel $model, string $section, array $classes = null): Response
+    protected function getResponse(FragmentTemplate $template, ModuleModel $model, Request $request): Response
     {
-        if ($this->scopeMatcher->isFrontendRequest($request)) {
-            // Set the item from the auto_item parameter
-            if (!isset($_GET['items']) && isset($_GET['auto_item']) && Config::get('useAutoItem')) {
-                Input::setGet('items', Input::get('auto_item'));
-            }
+        $this->initializeContaoFramework();
 
-            // Return an empty string if "items" is not set (to combine list and reader on same page)
-            $alias = Input::get('items');
+        $alias = !empty(Input::get('items')) ? Input::get('items', null) : Input::get('auto_item', null);
 
-            if (!$alias) {
-                return new Response('', Response::HTTP_NO_CONTENT);
-            }
-
-            if (null === ($this->employee = EmployeeModel::findPublishedByIdOrAlias($alias))) {
-                return new Response('', Response::HTTP_NO_CONTENT);
-            }
+        if (empty($alias)) {
+            return new Response('', Response::HTTP_NO_CONTENT);
         }
 
-        return parent::__invoke($request, $model, $section, $classes);
-    }
+        if (null === ($this->employee = EmployeeModel::findPublishedByIdOrAlias($alias))) {
+            return new Response('', Response::HTTP_NO_CONTENT);
+        }
 
-    protected function getResponse(Template $template, ModuleModel $model, Request $request): Response
-    {
-        $arrData = $this->getEmployeeDetails($this->employee->current(), $model, $this);
+        $event = new GetEmployeeDataEvent($request, $this->employee->current(), [], $model);
 
-        $template->employee = $arrData;
+        $this->eventDispatcher->dispatch($event);
+
+        $template->set('employee', $event->getTemplateData());
 
         return $template->getResponse();
     }

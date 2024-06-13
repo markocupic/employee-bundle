@@ -1,0 +1,28 @@
+{% extends "@Contao/content_element/_base.html.twig" %}
+{% use "@Contao/component/_figure.html.twig" %}
+
+{% block content %}
+    <div class="row">
+        {% for employee in employees %}
+            <div class="employee-list-item col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="card">
+                    {% if employee.href|default and employee.hasImage|default %}
+                        <a href="{{ employee.href }}">
+                            <div class="employee-image">
+                                {% with {figure: employee.image} %}{{ block('figure_component') }}{% endwith %}
+                            </div>
+                        </a>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ employee.firstname }} {{ employee.lastname }}</h5>
+                        <p class="card-text">{{ employee.email }}</p>
+                        <p class="card-text">{{ employee.phone }}</p>
+                        {% if employee.href|default %}
+                            <p class="card-text"><a href="{{ employee.href }}">{{ 'MSC.more'|trans({}, 'contao_default') }}</a></p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

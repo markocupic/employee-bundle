@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Employee Bundle.
  *
- * (c) Marko Cupic 2022 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
  * @license LGPL-3.0+
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -15,25 +15,23 @@ declare(strict_types=1);
 namespace Markocupic\EmployeeBundle\EventListener\ContaoHooks\ReplaceInsertTags;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Markocupic\EmployeeBundle\Controller\DownloadVCardController;
+use Symfony\Component\Routing\RouterInterface;
 
 #[AsHook(ReplaceVcardDownloadListener::HOOK, priority: 100)]
-class ReplaceVcardDownloadListener
+class ReplaceVCardDownloadListener
 {
     public const HOOK = 'replaceInsertTags';
-    private RequestStack $requestStack;
 
-    public function __construct(RequestStack $requestStack)
-    {
-        $this->requestStack = $requestStack;
+    public function __construct(
+        private readonly RouterInterface $router,
+    ) {
     }
 
-    public function __invoke(string $strTag): false|string
+    public function __invoke(string $strTag): string|false
     {
-        if (preg_match('/^vcard_download_url::([\d]+)$/', $strTag, $match)) {
-            $request = $this->requestStack->getCurrentRequest();
-
-            return sprintf('%s?downloadVCard=true&amp;id=%s', $request->getUri(), $match[1]);
+        if (preg_match('/^employee_vcard_download_url::(.*)$/', $strTag, $match)) {
+            return $this->router->generate(DownloadVCardController::class, ['identifier' => $match[1]]);
         }
 
         return false;

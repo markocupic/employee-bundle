@@ -6,42 +6,33 @@ Diese Erweiterung für **Contao CMS** ermöglicht die Abbildung von **Mitarbeite
 Über das **Backendmodul** können Mitarbeiter erfasst werden. Zur Ausgabe im Frontend bietet die Extension ein **Listenmodul** sowie ein **Reader-/Detailmodul**.
 
 ## Backend
+
 ![Alt text](docs/tl_employee.png?raw=true "Backend")
 
-
 ## Insert Tags
-Es besteht die Möglichkeit Angaben oder das Einzelbild eines bestimmten Mitarbeiters via **Contao InsertTag** im **TWIG** oder **HTML5 Template** abzurufen.
 
-`{{employee::##emloyeeIdOrAlias##::##strField##}}`
+Es besteht die Möglichkeit Angaben oder das Einzelbild eines bestimmten Mitarbeiters via **Contao InsertTag** im **TWIG** abzurufen.
 
-Insert Tags in **TWIG** templates:
+`<div>Firstname: {{ insert_tags('employee::##alias##::##feldname##') }}</div>`
+
+### Beispiele
 
 ```
 {# templates/rsce_employee_detail.html.twig #}
 
-<div>Firstname: {{ '{{employee::adam-riese::firstname}}' }}</div>
-<div>Lastname: {{ '{{employee::adam-riese::firstname}}' }}</div>
-<div>Image: {{ '{{employee::adam-riese::image::mode=proportional&width=200}}' }}</div>
-<div>Picture: {{ '{{employee::adam-riese::picture::size=2}}' }}</div>
-<div>Figure: {{ '{{employee::adam-riese::figure::size=2}}' }}</div>
+<div>Firstname: {{ insert_tag('employee::adam-riese::firstname') }}</div>
+<div>Lastname: {{ insert_tag('employee::adam-riese::lastname') }}</div>
+<div>Image: {{ insert_tag('employee::adam-riese::image::mode=proportional&width=200')|raw }}</div>
+<div>Picture: {{ insert_tag('employee::adam-riese::picture::size=2')|raw }}</div>
+<div>Figure: {{ insert_tag('employee::adam-riese::figure::size=2')|raw }}</div>
+
+{# VCard Link mit Alias#}
+<div><a href="{{ insert_tag('employee_vcard_download_url::adam-riese') }}" title="vcard">VCard herunterladen</a></div>
+
+{# VCard Link mit ID#}
+<div><a href="{{ insert_tag('employee_vcard_download_url::1') }}" title="vcard">VCard herunterladen</a></div>
 
 {# Dynamisch #}
-<div>Firstname:   {{ '{{employee::'~alias~'::firstname}}' }}</div>
-<div>Figure:   {{ '{{employee::'~alias~'::figure::size='~picture_size~'}}' }}</div>
-```
-
-Insert Tags in **HTML5** templates:
-
-```
-<!-- templates/rsce_employee_detail.html5 -->
-
-<div>Firstname: {{employee::adam-riese::firstname}}</div>
-<div>Lastname: {{employee::adam-riese::firstname}}</div>
-<div>Image: {{employee::adam-riese::image::mode=proportional&width=200}}</div>
-<div>Picture: {{employee::adam-riese::picture::size=2}}</div>
-<div>Figure: {{employee::adam-riese::figure::size=2}}</div>
-
-<!-- Dynamisch -->
-<div>Firstname: {{employee::<?= $this->alias ?>::firstname}}</div>
-<div>Figure: {{employee::<?= $this->alias ?>::figure::size=<?= $this->picture_size ?>}}</div>
+<div>Firstname:   {{ insert_tag('employee::'~alias~'::firstname') }}</div>
+<div>Figure:   {{ insert_tag('employee::'~alias~'::figure::size='~picture_size) }}</div>
 ```

@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Employee Bundle.
  *
- * (c) Marko Cupic 2022 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
  * @license LGPL-3.0+
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -20,7 +20,7 @@ use Markocupic\EmployeeBundle\Controller\FrontendModule\EmployeeReaderController
 
 // Palettes
 $GLOBALS['TL_DCA']['tl_module']['palettes'][EmployeeListController::TYPE] = '
-    {title_legend},name,type;
+    {type_legend},name,type;
     {employee_legend},showAllPublishedEmployees,selectEmployee,addSorting;
     {employee_image_legend},addEmployeeImage;
     {employee_gallery_legend},addEmployeeGallery;
@@ -32,7 +32,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes'][EmployeeListController::TYPE] = '
 ';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes'][EmployeeReaderController::TYPE] = '
-    {title_legend},name,type;
+    {title_legend},name,headline,type;
     {employee_image_legend},addEmployeeImage;
     {employee_gallery_legend},addEmployeeGallery;
     {template_legend:hide},customTpl;
