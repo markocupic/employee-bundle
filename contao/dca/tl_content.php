@@ -53,10 +53,10 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['addEmployeeGallery'] = [
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['selectEmployee'] = [
     'exclude'    => true,
-    'inputType'  => 'checkbox',
-    'eval'       => ['mandatory' => true, 'multiple' => false],
+    'inputType'  => 'radio',
+    'eval'       => ['mandatory' => true, 'multiple' => false, 'tl_class' => 'clr'],
     'foreignKey' => "tl_employee.CONCAT(firstname,' ',lastname)",
-    'sql'        => "int(10) unsigned NOT NULL default 0",
+    'sql'        => 'int(10) unsigned NOT NULL default 0',
     'relation'   => ['type' => 'hasOne', 'load' => 'lazy'],
 ];
 
@@ -68,31 +68,32 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['galSize'] = [
     'options_callback' => static function () {
         return System::getContainer()->get('contao.image.sizes')->getOptionsForUser(BackendUser::getInstance());
     },
-    'eval'             => ['rgxp' => 'natural', 'includeBlankOption' => true, 'nospace' => true, 'helpwizard' => true, 'tl_class' => 'w50'],
+    'eval'             => ['rgxp' => 'natural', 'includeBlankOption' => true, 'nospace' => true, 'helpwizard' => true, 'tl_class' => 'clr'],
     'sql'              => "varchar(128) COLLATE ascii_bin NOT NULL default ''",
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['imgSize'] = [
+    'label'            => &$GLOBALS['TL_LANG']['MSC']['imgSize'],
     'exclude'          => true,
     'inputType'        => 'imageSize',
     'reference'        => &$GLOBALS['TL_LANG']['MSC'],
     'options_callback' => static function () {
         return System::getContainer()->get('contao.image.sizes')->getOptionsForUser(BackendUser::getInstance());
     },
-    'eval'             => ['rgxp' => 'natural', 'includeBlankOption' => true, 'nospace' => true, 'helpwizard' => true, 'tl_class' => 'w50'],
+    'eval'             => ['rgxp' => 'natural', 'includeBlankOption' => true, 'nospace' => true, 'helpwizard' => true, 'tl_class' => 'clr'],
     'sql'              => "varchar(128) COLLATE ascii_bin NOT NULL default ''",
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['imgFullsize'] = [
     'exclude'   => true,
     'inputType' => 'checkbox',
-    'eval'      => ['tl_class' => 'w50 m12'],
+    'eval'      => ['tl_class' => 'clr m12'],
     'sql'       => "char(1) COLLATE ascii_bin NOT NULL default ''",
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['galFullsize'] = [
     'exclude'   => true,
     'inputType' => 'checkbox',
-    'eval'      => ['tl_class' => 'w50 m12'],
+    'eval'      => ['tl_class' => 'clr m12'],
     'sql'       => "char(1) COLLATE ascii_bin NOT NULL default ''",
 ];

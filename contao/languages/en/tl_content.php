@@ -24,6 +24,6 @@ $GLOBALS['TL_LANG']['tl_content']['employee_gallery_legend'] = 'Employee gallery
  */
 $GLOBALS['TL_LANG']['tl_content']['addEmployeeImage'] = ['Show employee image.'];
 $GLOBALS['TL_LANG']['tl_content']['addEmployeeGallery'] = ['Show employee gallery.'];
-$GLOBALS['TL_LANG']['tl_content']['imgFullsize'] = ['Open large view/new window', 'Open large view of the image in a lightbox or the link in a new browser window'];
-$GLOBALS['TL_LANG']['tl_content']['galFullsize'] = ['Large view/New window', 'Open large view of the image in a lightbox or the link in a new browser window'];
-$GLOBALS['TL_LANG']['tl_content']['selectEmployee'] = ['Select employee & order', 'Select one or more employees and specify the order of output in the frontend'];
+$GLOBALS['TL_LANG']['tl_content']['imgFullsize'] = ['Open large view/new window', 'Open large view of the image in a lightbox or the link in a new browser window.'];
+$GLOBALS['TL_LANG']['tl_content']['galFullsize'] = ['Large view/New window', 'Open large view of the image in a lightbox or the link in a new browser window.'];
+$GLOBALS['TL_LANG']['tl_content']['selectEmployee'] = ['Employee', 'Select an employee.'];
