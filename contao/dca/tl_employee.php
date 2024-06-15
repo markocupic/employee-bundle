@@ -261,7 +261,7 @@ $GLOBALS['TL_DCA']['tl_employee'] = [
             'exclude'     => true,
             'search'      => true,
             'inputType'   => 'textarea',
-            'eval'        => ['rte' => 'tinyMCE', 'helpwizard' => true, 'tl_class' => 'clr x50'],
+            'eval'        => ['rte' => 'tinyMCE', 'helpwizard' => true, 'tl_class' => 'clr w50'],
             'explanation' => 'insertTags',
             'sql'         => 'mediumtext NULL',
         ],
