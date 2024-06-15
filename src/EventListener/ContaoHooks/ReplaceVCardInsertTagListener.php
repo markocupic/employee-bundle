@@ -12,14 +12,14 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/employee-bundle
  */
 
-namespace Markocupic\EmployeeBundle\EventListener\ContaoHooks\ReplaceInsertTags;
+namespace Markocupic\EmployeeBundle\EventListener\ContaoHooks;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 use Markocupic\EmployeeBundle\Controller\DownloadVCardController;
 use Symfony\Component\Routing\RouterInterface;
 
-#[AsHook(ReplaceVCardDownloadListener::HOOK, priority: 100)]
-class ReplaceVCardDownloadListener
+#[AsHook(self::HOOK, priority: 100)]
+class ReplaceVCardInsertTagListener
 {
     public const HOOK = 'replaceInsertTags';
 

@@ -12,15 +12,15 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/employee-bundle
  */
 
-namespace Markocupic\EmployeeBundle\EventListener\ContaoHooks\ReplaceInsertTags;
+namespace Markocupic\EmployeeBundle\EventListener\ContaoHooks;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 use Contao\CoreBundle\InsertTag\InsertTagParser;
 use Contao\StringUtil;
 use Markocupic\EmployeeBundle\Model\EmployeeModel;
 
-#[AsHook(ReplaceEmployeeListener::HOOK, priority: 100)]
-class ReplaceEmployeeListener
+#[AsHook(self::HOOK, priority: 100)]
+class ReplaceEmployeeInsertTagListener
 {
     public const HOOK = 'replaceInsertTags';
 
@@ -32,7 +32,6 @@ class ReplaceEmployeeListener
     public function __invoke(string $insertTag, bool $useCache, string $cachedValue, array $flags, array $tags, array $cache, int $_rit, int $_cnt)
     {
         if (str_starts_with($insertTag, 'employee')) {
-
             $parts = StringUtil::trimsplit('::', $insertTag);
 
             if (1 === \count($parts)) {
