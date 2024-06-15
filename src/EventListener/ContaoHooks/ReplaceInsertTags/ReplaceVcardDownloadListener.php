@@ -18,7 +18,7 @@ use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 use Markocupic\EmployeeBundle\Controller\DownloadVCardController;
 use Symfony\Component\Routing\RouterInterface;
 
-#[AsHook(ReplaceVcardDownloadListener::HOOK, priority: 100)]
+#[AsHook(ReplaceVCardDownloadListener::HOOK, priority: 100)]
 class ReplaceVCardDownloadListener
 {
     public const HOOK = 'replaceInsertTags';

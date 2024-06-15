@@ -18,11 +18,13 @@ use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\CoreBundle\Slug\Slug;
 use Contao\DataContainer;
 use Doctrine\DBAL\Connection;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class Employee
 {
     public function __construct(
         private readonly Connection $connection,
+        #[Autowire('@contao.slug')]
         private readonly Slug $slug,
     ) {
     }
@@ -34,7 +36,7 @@ class Employee
 
         // Generate alias if there is none
         if (!$varValue) {
-            $varValue = $this->slug->generate($dc->activeRecord->firstname.' '.$dc->activeRecord->lastname, [], $aliasExists);
+            $varValue = $this->slug->generate(implode('-',array_filter([$dc->activeRecord->firstname,$dc->activeRecord->lastname])), [], $aliasExists);
         } elseif (preg_match('/^[1-9]\d*$/', $varValue)) {
             throw new \Exception(sprintf($GLOBALS['TL_LANG']['ERR']['aliasNumeric'], $varValue));
         } elseif ($aliasExists($varValue)) {

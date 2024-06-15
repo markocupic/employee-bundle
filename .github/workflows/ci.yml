@@ -6,9 +6,9 @@ name: CI
 # events but only for the main branch
 on:
     push:
-        branches: [ main ]
+        branches: [ 4.x-dev ]
     pull_request:
-        branches: [ main ]
+        branches: [ 4.x-dev ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -17,7 +17,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                php: [ 8.0, 8.1 ]
+                php: [ 8.1, 8.2, 8.3 ]
 
         steps:
             -   name: Setup PHP
@@ -36,5 +36,3 @@ jobs:
 
             -   name: Run the unit tests
                 run: vendor/bin/phpunit --colors=always
-
-

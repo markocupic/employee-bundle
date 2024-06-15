@@ -26,11 +26,17 @@ class MarkocupicEmployeeExtension extends Extension
      */
     public function load(array $mergedConfig, ContainerBuilder $container): void
     {
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $mergedConfig);
+
         $loader = new YamlFileLoader(
             $container,
             new FileLocator(__DIR__.'/../../config')
         );
 
-        $loader->load('services.yml');
+        $loader->load('services.yaml');
+
+        // Configuration
+        $container->setParameter('markocupic_employee.vcard_template', $config['vcard_template']);
     }
 }

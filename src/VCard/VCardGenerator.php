@@ -14,35 +14,56 @@ declare(strict_types=1);
 
 namespace Markocupic\EmployeeBundle\VCard;
 
-use Contao\File;
+use Contao\CoreBundle\Framework\Adapter;
+use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\StringUtil;
+use Markocupic\EmployeeBundle\Event\GenerateVCardEvent;
 use Markocupic\EmployeeBundle\Model\EmployeeModel;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Path;
+use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
 
 class VCardGenerator
 {
     public const VCARD_TEMPLATE = 'partial_employee_vcard';
 
+    private readonly Adapter $stringUtilAdapter;
+
     public function __construct(
+        private readonly ContaoFramework $framework,
         private readonly Environment $twig,
+        private readonly EventDispatcherInterface $eventDispatcher,
         #[Autowire('%kernel.project_dir%')]
         private readonly string $projectDir,
+        #[Autowire('%markocupic_employee.vcard_template%')]
+        private readonly string $vcardTemplate,
     ) {
+        $this->stringUtilAdapter = $this->framework->getAdapter(StringUtil::class);
     }
 
-    public function getVCard(EmployeeModel $objEmployee): \SplFileObject
+    public function getVCard(EmployeeModel $objEmployee, Request $request): \SplFileObject
     {
         $arrData = array_map(static fn ($value) => trim(utf8_decode(html_entity_decode((string) $value))), $objEmployee->row());
 
-        // Add the file name
-        $arrData['file_name'] = sprintf('%s %s %s', $arrData['title'], $arrData['firstname'], $arrData['lastname']);
+        // Specify the formatted text corresponding to the name of the object the vCard represents.
+        $arrData['fn'] = implode(' ', array_filter([$arrData['title'], $arrData['firstname'], $arrData['lastname']]));
 
-        // Create temp file
-        $objFile = new File('system/tmp/'.time().'.vcf');
-        $objFile->append($this->twig->render('@MarkocupicEmployee/vcard/vcard.twig', $arrData));
-        $objFile->close();
+        $fileName = sprintf('%s.vcf', implode('_', array_filter([$arrData['title'], $arrData['firstname'], $arrData['lastname']])));
+        $fileName = $this->stringUtilAdapter->sanitizeFilename($fileName);
 
-        return new \SplFileObject(Path::makeAbsolute($objFile->path, $this->projectDir));
+        // Create and dispatch GenerateVCardEvent
+        $event = new GenerateVCardEvent($request, $arrData, $objEmployee, $fileName, $this->vcardTemplate);
+        $this->eventDispatcher->dispatch($event);
+
+        $fileName = $event->getFileName();
+        $filePath = Path::makeAbsolute(sprintf('system/tmp/%s', $fileName), $this->projectDir);
+
+        $splFile = new \SplFileObject($filePath, 'w');
+        $splFile->fwrite($this->twig->render($event->getTemplateName(), $arrData));
+        $splFile->rewind(); // Delete file after send.
+
+        return new \SplFileObject($filePath);
     }
 }

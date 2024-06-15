@@ -19,7 +19,7 @@ use Contao\ModuleModel;
 use Markocupic\EmployeeBundle\Model\EmployeeModel;
 use Symfony\Component\HttpFoundation\Request;
 
-class GetEmployeeDataEvent
+class PrepareEmployeeDataEvent
 {
     public function __construct(
         private readonly Request $request,

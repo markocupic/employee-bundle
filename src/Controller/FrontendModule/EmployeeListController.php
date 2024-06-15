@@ -20,7 +20,7 @@ use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\Model\Collection;
 use Contao\ModuleModel;
 use Contao\StringUtil;
-use Markocupic\EmployeeBundle\Event\GetEmployeeDataEvent;
+use Markocupic\EmployeeBundle\Event\PrepareEmployeeDataEvent;
 use Markocupic\EmployeeBundle\Model\EmployeeModel;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,7 +46,7 @@ class EmployeeListController extends AbstractFrontendModuleController
         $arrItems = [];
 
         while ($this->employees->next()) {
-            $event = new GetEmployeeDataEvent($request, $this->employees->current(), [], $model);
+            $event = new PrepareEmployeeDataEvent($request, $this->employees->current(), [], $model);
 
             $this->eventDispatcher->dispatch($event);
 

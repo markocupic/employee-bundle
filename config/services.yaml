@@ -3,9 +3,6 @@ services:
         autowire: true
         autoconfigure: true
         public: false
-        bind:
-            $studio: '@contao.image.studio'
-            $slug: '@contao.slug'
 
     Markocupic\EmployeeBundle\:
         resource: ../src/

@@ -20,7 +20,7 @@ use Contao\CoreBundle\Routing\ScopeMatcher;
 use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\Input;
 use Contao\ModuleModel;
-use Markocupic\EmployeeBundle\Event\GetEmployeeDataEvent;
+use Markocupic\EmployeeBundle\Event\PrepareEmployeeDataEvent;
 use Markocupic\EmployeeBundle\Model\EmployeeModel;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,7 +52,7 @@ class EmployeeReaderController extends AbstractFrontendModuleController
             return new Response('', Response::HTTP_NO_CONTENT);
         }
 
-        $event = new GetEmployeeDataEvent($request, $this->employee->current(), [], $model);
+        $event = new PrepareEmployeeDataEvent($request, $this->employee->current(), [], $model);
 
         $this->eventDispatcher->dispatch($event);
 

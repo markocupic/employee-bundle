@@ -18,7 +18,7 @@ use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\CoreBundle\Twig\FragmentTemplate;
-use Markocupic\EmployeeBundle\Event\GetEmployeeDataEvent;
+use Markocupic\EmployeeBundle\Event\PrepareEmployeeDataEvent;
 use Markocupic\EmployeeBundle\Model\EmployeeModel;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,7 +48,7 @@ class EmployeeDetailContentElementController extends AbstractContentElementContr
 
         $templateData = [];
 
-        $event = new GetEmployeeDataEvent($request, $this->employee, $templateData, $model);
+        $event = new PrepareEmployeeDataEvent($request, $this->employee, $templateData, $model);
 
         $this->eventDispatcher->dispatch($event);
 

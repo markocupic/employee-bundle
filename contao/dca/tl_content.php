@@ -73,7 +73,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['galSize'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['imgSize'] = [
-    'label'            => &$GLOBALS['TL_LANG']['MSC']['imgSize'],
     'exclude'          => true,
     'inputType'        => 'imageSize',
     'reference'        => &$GLOBALS['TL_LANG']['MSC'],

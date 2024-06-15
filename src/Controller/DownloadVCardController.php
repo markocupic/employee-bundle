@@ -37,7 +37,7 @@ class DownloadVCardController extends AbstractController
         }
 
         if (null !== ($objEmployee = EmployeeModel::findPublishedByIdOrAlias($identifier))) {
-            $splFileObject = $this->VCardGenerator->getVCard($objEmployee);
+            $splFileObject = $this->VCardGenerator->getVCard($objEmployee, $request);
 
             return $this->file($splFileObject->getFileInfo());
         }

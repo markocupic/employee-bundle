@@ -32,17 +32,18 @@ class ReplaceEmployeeListener
     public function __invoke(string $insertTag, bool $useCache, string $cachedValue, array $flags, array $tags, array $cache, int $_rit, int $_cnt)
     {
         if (str_starts_with($insertTag, 'employee')) {
+
             $parts = StringUtil::trimsplit('::', $insertTag);
 
             if (1 === \count($parts)) {
                 return false;
             }
 
-            $id = $parts[1] ?? null;
+            $identifier = $parts[1] ?? null;
             $strField = $parts[2] ?? null;
 
-            if (!empty($id) && !empty($strField)) {
-                if (null === ($model = EmployeeModel::findByIdOrAlias($id))) {
+            if (!empty($identifier) && !empty($strField)) {
+                if (null === ($model = EmployeeModel::findPublishedByIdOrAlias($identifier))) {
                     return false;
                 }
 

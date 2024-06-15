@@ -14,7 +14,9 @@ declare(strict_types=1);
 
 namespace Markocupic\EmployeeBundle\EventListener;
 
+use Contao\Config;
 use Contao\ContentModel;
+use Contao\Controller;
 use Contao\CoreBundle\Filesystem\FilesystemItem;
 use Contao\CoreBundle\Filesystem\FilesystemUtil;
 use Contao\CoreBundle\Filesystem\VirtualFilesystem;
@@ -22,33 +24,42 @@ use Contao\CoreBundle\Image\Studio\Figure;
 use Contao\CoreBundle\Image\Studio\FigureBuilder;
 use Contao\CoreBundle\Image\Studio\Studio;
 use Contao\CoreBundle\InsertTag\InsertTagParser;
+use Contao\CoreBundle\Intl\Countries;
+use Contao\Date;
 use Contao\FilesModel;
 use Contao\ModuleModel;
 use Contao\PageModel;
 use Contao\StringUtil;
-use Markocupic\EmployeeBundle\Event\GetEmployeeDataEvent;
+use Markocupic\EmployeeBundle\Event\PrepareEmployeeDataEvent;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
-#[AsEventListener(event: GetEmployeeDataEvent::class, priority: 1000)]
+#[AsEventListener(event: PrepareEmployeeDataEvent::class, priority: 1000)]
 final class GetEmployeeDataListener
 {
     public function __construct(
         private readonly InsertTagParser $insertTagParser,
+        #[Autowire('@contao.image.studio')]
         private readonly Studio $studio,
         #[Autowire('@contao.filesystem.virtual.files')]
         private readonly VirtualFilesystem $filesStorage,
+        #[Autowire('@contao.intl.countries')]
+        private readonly Countries $countries,
         #[Autowire('%contao.image.valid_extensions%')]
         private readonly array $validExtensions,
     ) {
     }
 
-    public function __invoke(GetEmployeeDataEvent $event): void
+    public function __invoke(PrepareEmployeeDataEvent $event): void
     {
+        // Load language file
+        Controller::loadLanguageFile('tl_employee');
+
         $model = $event->getModel();
         $employee = $event->getEmployee();
         $dataEmployee = null !== $employee ? $employee->row() : [];
-
+        $dataEmployee['countrycode_translation'] = $this->getCountryCodeTranslation($dataEmployee['country'] ?? '');
+        $dataEmployee['dateOfBirth_formatted'] = Date::parse(Config::get('dateFormat'), $dataEmployee['dateOfBirth']);
         $dataEmployee['publications'] = $this->insertTagParser->replaceInline((string) $dataEmployee['publications']);
         $dataEmployee['interview'] = StringUtil::deserialize($dataEmployee['interview'] ?? null, true);
         $dataEmployee['businessHours'] = StringUtil::deserialize($dataEmployee['businessHours'] ?? null, true);
@@ -154,5 +165,20 @@ final class GetEmployeeDataListener
         }
 
         return null;
+    }
+
+    private function getCountryCodeTranslation(string $countryCode = ''): string
+    {
+        if (empty($countryCode)) {
+            return '';
+        }
+
+        $arrTranslations = $this->countries->getCountries();
+
+        if (empty($arrTranslations[$countryCode])) {
+            return '';
+        }
+
+        return $arrTranslations[$countryCode];
     }
 }

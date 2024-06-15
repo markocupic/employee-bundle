@@ -6,4 +6,4 @@ cd..
 cd..
 cd..
 cd..
-php -d memory_limit=-1 vendor/bin/phpstan analyse vendor/markocupic/employee-bundle/src vendor/markocupic/employee-bundle/tests
+php -d memory_limit=-1 vendor/bin/phpstan analyse vendor/markocupic/employee-bundle/src

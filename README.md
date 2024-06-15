@@ -2,8 +2,8 @@
 
 # Employee Bundle
 
-Diese Erweiterung für **Contao CMS** ermöglicht die Abbildung von **Mitarbeitern** auf einer **Firmenwebseite**.
-Über das **Backendmodul** können Mitarbeiter erfasst werden. Zur Ausgabe im Frontend bietet die Extension ein **Listenmodul** sowie ein **Reader-/Detailmodul**.
+This extension for **Contao CMS** enables the presentation of **employees** on a **company website**.
+Employees can be entered via the **backend module**. The extension offers a **list module** and a **reader/detail module** for output in the frontend.
 
 ## Backend
 
@@ -11,13 +11,13 @@ Diese Erweiterung für **Contao CMS** ermöglicht die Abbildung von **Mitarbeite
 
 ## Insert Tags
 
-Es besteht die Möglichkeit Angaben oder das Einzelbild eines bestimmten Mitarbeiters via **Contao InsertTag** im **TWIG** abzurufen.
+It is possible to retrieve details or the individual picture of a specific employee via **Contao InsertTag** in **TWIG**.
 
-`<div>Firstname: {{ insert_tags('employee::##alias##::##feldname##') }}</div>`
-
-### Beispiele
-
+```html
+<div>Title: {{ insert_tags('employee::##alias##::##fieldname##') }}</div>
 ```
+### Examples
+```html
 {# templates/rsce_employee_detail.html.twig #}
 
 <div>Firstname: {{ insert_tag('employee::adam-riese::firstname') }}</div>
@@ -26,13 +26,14 @@ Es besteht die Möglichkeit Angaben oder das Einzelbild eines bestimmten Mitarbe
 <div>Picture: {{ insert_tag('employee::adam-riese::picture::size=2')|raw }}</div>
 <div>Figure: {{ insert_tag('employee::adam-riese::figure::size=2')|raw }}</div>
 
-{# VCard Link mit Alias#}
-<div><a href="{{ insert_tag('employee_vcard_download_url::adam-riese') }}" title="vcard">VCard herunterladen</a></div>
-
-{# VCard Link mit ID#}
-<div><a href="{{ insert_tag('employee_vcard_download_url::1') }}" title="vcard">VCard herunterladen</a></div>
-
-{# Dynamisch #}
+{# dynamic #}
 <div>Firstname:   {{ insert_tag('employee::'~alias~'::firstname') }}</div>
 <div>Figure:   {{ insert_tag('employee::'~alias~'::figure::size='~picture_size) }}</div>
+
+{# VCard download link using the alias or ID #}
+<div><a href="{{ insert_tag('employee_vcard_download_url::adam-riese') }}" title="vcard">download VCard</a></div>
+<div><a href="{{ insert_tag('employee_vcard_download_url::1') }}" title="vcard">download VCard</a></div>
 ```
+
+## Events for developers
+The two events `GenerateVCardEvent` and `PrepareEmployeeDataEvent` give you control over the output before the templates are rendered.

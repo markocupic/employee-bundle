@@ -1,20 +1,28 @@
 BEGIN:VCARD
-VERSION:3.0
+VERSION:4.0
 N:{{ lastname|default('') }};{{ firstname|default('') }};;{{ title|default('') }};
-FN:{{ file_name }}
-
+FN:{{ fn }}
 ORG:{{ company|default('') }}
-
 ROLE:{{ role|default('') }}
-
 TEL;TYPE=WORK,VOICE:{{ phone|default('') }}
-
-TEL;TYPE=CELL,WORK,VOICE:{{ mobile|default('') }}
-
+TEL;TYPE=WORK,CELL:{{ mobile|default('') }}
+TEL;TYPE=WORK,FAX:{{ fax|default('') }}
 ADR;TYPE=WORK:;;{{ street|default('') }};{{ city|default('') }};;{{ postal|default('') }};{{ country|default('') }}
-
 EMAIL;TYPE=PREF,INTERNET:{{ email|default('') }}
-
 URL:{{ website|default('') }}
+TITLE:{{ role|default('') }}
+END:VCARD
 
+BEGIN:VCARD
+VERSION:3.0
+N:Muster;HAns ;;Dr.;
+FN:Dr. HAns  Muster
+BDAY:1976-05-25
+TEL;TYPE=WORK,CELL:079 620 03 91
+TEL;TYPE=WORK,VOICE:041 444 444 44
+TEL;TYPE=WORK,FAX:042 444 444 44
+EMAIL;TYPE=WORK:m.cupic@gmx.ch
+ADR;TYPE=WORK:;;Surenweidstrasse 2; Oberkirch;;6208;Schweiz
+ORG:Entenhausen AG
+TITLE:Chef
 END:VCARD

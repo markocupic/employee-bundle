@@ -6,36 +6,43 @@
     <div class="employee-introducing">
         {% if employee.gender|default %}
             <div class="employee-gender">
-                {{ employee.gender }}
+                {{ 'tl_employee.gender.0'|trans({}, 'contao_default') }}: {{ employee.gender }}
             </div>
         {% endif %}
 
         {% if employee.title|default %}
             <div class="employee-title">
-                {{ employee.title }}
+                {{ 'tl_employee.title.0'|trans({}, 'contao_default') }}: {{ employee.title }}
             </div>
         {% endif %}
 
         {% if employee.firstname|default %}
             <div class="employee-firstname">
-                {{ employee.firstname }}
+                {{ 'tl_employee.firstname.0'|trans({}, 'contao_default') }}: {{ employee.firstname }}
             </div>
         {% endif %}
 
         {% if employee.lastname|default %}
             <div class="employee-lastname">
-                {{ employee.lastname }}
+                {{ 'tl_employee.lastname.0'|trans({}, 'contao_default') }}: {{ employee.lastname }}
+            </div>
+        {% endif %}
+
+        {% if employee.dateOfBirth_formatted|default %}
+            <div class="employee-date-of-birth-formatted">
+                {{ 'tl_employee.dateOfBirth.0'|trans({}, 'contao_default') }}: {{ employee.dateOfBirth_formatted }}
             </div>
         {% endif %}
 
         {% if employee.alias|default %}
             <div class="employee-alias">
-                {{ employee.alias }}
+                {{ 'tl_employee.alias.0'|trans({}, 'contao_default') }}: {{ employee.alias }}
             </div>
         {% endif %}
 
         {% if employee.businessHours|default %}
             <div class="employee-businessHours">
+                {{ 'tl_employee.businessHours.0'|trans({}, 'contao_default') }}:<br>
                 <ul>
                     {% for item in employee.businessHours %}
                         <li>
@@ -49,102 +56,115 @@
 
         {% if employee.phone|default %}
             <div class="employee-phone">
-                {{ employee.phone }}
+                {{ 'tl_employee.phone.0'|trans({}, 'contao_default') }}: {{ employee.phone }}
             </div>
         {% endif %}
 
         {% if employee.mobile|default %}
             <div class="employee-mobile">
-                {{ employee.mobile }}
+                {{ 'tl_employee.mobile.0'|trans({}, 'contao_default') }}: {{ employee.mobile }}
             </div>
         {% endif %}
 
         {% if employee.email|default %}
             <div class="employee-email">
-                {{ employee.email }}
+                {{ 'tl_employee.email.0'|trans({}, 'contao_default') }}: {{ employee.email }}
             </div>
         {% endif %}
 
         {% if employee.fax|default %}
             <div class="employee-fax">
-                {{ employee.fax }}
+                {{ 'tl_employee.fax.0'|trans({}, 'contao_default') }}: {{ employee.fax }}
             </div>
         {% endif %}
 
         {% if employee.skype|default %}
             <div class="employee-skype">
-                {{ employee.skype }}
+                {{ 'tl_employee.skype.0'|trans({}, 'contao_default') }}: {{ employee.skype }}
             </div>
         {% endif %}
 
         {% if employee.linkedIn|default %}
             <div class="employee-linkedIn">
-                {{ employee.linkedIn }}
+                {{ 'tl_employee.linkedIn.0'|trans({}, 'contao_default') }}: {{ employee.linkedIn }}
             </div>
         {% endif %}
 
         {% if employee.xing|default %}
             <div class="employee-xing">
-                {{ employee.xing }}
+                {{ 'tl_employee.xing.0'|trans({}, 'contao_default') }}: {{ employee.xing }}
             </div>
         {% endif %}
 
         {% if employee.website|default %}
             <div class="employee-website">
-                {{ employee.website }}
+                {{ 'tl_employee.website.0'|trans({}, 'contao_default') }}: {{ employee.website }}
             </div>
         {% endif %}
 
         {% if employee.street|default %}
             <div class="employee-street">
-                {{ employee.street }}
+                {{ 'tl_employee.street.0'|trans({}, 'contao_default') }}: {{ employee.street }}
             </div>
         {% endif %}
 
         {% if employee.postal|default %}
             <div class="employee-postal">
-                {{ employee.postal }}
+                {{ 'tl_employee.postal.0'|trans({}, 'contao_default') }}: {{ employee.postal }}
             </div>
         {% endif %}
 
         {% if employee.city|default %}
             <div class="employee-city">
-                {{ employee.city }}
+                {{ 'tl_employee.city.0'|trans({}, 'contao_default') }}: {{ employee.city }}
+            </div>
+        {% endif %}
+
+        {% if employee.state|default %}
+            <div class="employee-state">
+                {{ 'tl_employee.state.0'|trans({}, 'contao_default') }}: {{ employee.state }}
             </div>
         {% endif %}
 
         {% if employee.country|default %}
             <div class="employee-country">
-                {{ employee.country }}
+                {{ 'tl_employee.country.0'|trans({}, 'contao_default') }}: {{ employee.country }}
+            </div>
+        {% endif %}
+
+        {% if employee.countrycode_translation|default %}
+            <div class="employee-countrycode_translation">
+                {{ employee.countrycode_translation }}
             </div>
         {% endif %}
 
         {% if employee.company|default %}
             <div class="employee-company">
-                {{ employee.company }}
+                {{ 'tl_employee.company.0'|trans({}, 'contao_default') }}: {{ employee.company }}
             </div>
         {% endif %}
 
         {% if employee.role|default %}
             <div class="employee-role">
-                {{ employee.role }}
+                {{ 'tl_employee.role.0'|trans({}, 'contao_default') }}: {{ employee.role }}
             </div>
         {% endif %}
 
         {% if employee.roleDetail|default %}
             <div class="employee-roleDetail">
-                {{ employee.roleDetail|raw }}
+                {{ 'tl_employee.roleDetail.0'|trans({}, 'contao_default') }}: {{ employee.roleDetail|raw }}
             </div>
         {% endif %}
 
         {% if employee.publications|default %}
             <div class="employee-publications">
-                {{ employee.publications|raw }}
+                {{ 'tl_employee.publications.0'|trans({}, 'contao_default') }}: {{ employee.publications|raw }}
             </div>
         {% endif %}
 
         {% if employee.interview|default %}
             <div class="employee-interview">
+                {{ 'tl_employee.interview.0'|trans({}, 'contao_default') }}:<br>
                 <ul>
                     {% for item in employee.interview %}
                         <li>
