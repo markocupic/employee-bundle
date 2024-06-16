@@ -38,32 +38,31 @@ class VCardGenerator
         #[Autowire('%kernel.project_dir%')]
         private readonly string $projectDir,
         #[Autowire('%markocupic_employee.vcard_template%')]
-        private readonly string $vcardTemplate,
+        private readonly string $vCardTemplate,
     ) {
         $this->stringUtilAdapter = $this->framework->getAdapter(StringUtil::class);
     }
 
-    public function getVCard(EmployeeModel $objEmployee, Request $request): \SplFileObject
+    public function getVCard(EmployeeModel $objEmployee, Request $request): \SplFileInfo
     {
         $arrData = array_map(static fn ($value) => trim(utf8_decode(html_entity_decode((string) $value))), $objEmployee->row());
 
         // Specify the formatted text corresponding to the name of the object the vCard represents.
         $arrData['fn'] = implode(' ', array_filter([$arrData['title'], $arrData['firstname'], $arrData['lastname']]));
 
-        $fileName = sprintf('%s.vcf', implode('_', array_filter([$arrData['title'], $arrData['firstname'], $arrData['lastname']])));
-        $fileName = $this->stringUtilAdapter->sanitizeFilename($fileName);
+        $vCardFileName = sprintf('%s.vcf', implode('_', array_filter([$arrData['title'], $arrData['firstname'], $arrData['lastname']])));
+        $vCardFileName = $this->stringUtilAdapter->sanitizeFilename($vCardFileName);
 
         // Create and dispatch GenerateVCardEvent
-        $event = new GenerateVCardEvent($request, $arrData, $objEmployee, $fileName, $this->vcardTemplate);
+        $event = new GenerateVCardEvent($request, $arrData, $objEmployee, $vCardFileName, $this->vCardTemplate);
         $this->eventDispatcher->dispatch($event);
 
-        $fileName = $event->getFileName();
-        $filePath = Path::makeAbsolute(sprintf('system/tmp/%s', $fileName), $this->projectDir);
+        $vCardFilePath = Path::join($this->projectDir, 'system/tmp', $event->getFileName());
 
-        $splFile = new \SplFileObject($filePath, 'w');
-        $splFile->fwrite($this->twig->render($event->getTemplateName(), $arrData));
-        $splFile->rewind(); // Delete file after send.
+        $objSplFile = new \SplFileObject($vCardFilePath, 'w');
+        $objSplFile->fwrite($this->twig->render($event->getTemplateName(), $arrData));
+        $objSplFile->rewind();
 
-        return new \SplFileObject($filePath);
+        return new \SplFileInfo($vCardFilePath);
     }
 }

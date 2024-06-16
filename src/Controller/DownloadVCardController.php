@@ -20,6 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DownloadVCardController extends AbstractController
@@ -33,13 +34,17 @@ class DownloadVCardController extends AbstractController
     public function __invoke(Request $request, int|string $identifier = 0): BinaryFileResponse|Response
     {
         if (!$identifier) {
-            return new Response('No id/alias defined!');
+            return new Response('No employee identifier defined!');
         }
 
         if (null !== ($objEmployee = EmployeeModel::findPublishedByIdOrAlias($identifier))) {
-            $splFileObject = $this->VCardGenerator->getVCard($objEmployee, $request);
+            $objSplFileInfo = $this->VCardGenerator->getVCard($objEmployee, $request);
 
-            return $this->file($splFileObject->getFileInfo());
+            $response = new BinaryFileResponse($objSplFileInfo);
+            $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $response->getFile()->getFilename());
+            $response->deleteFileAfterSend();
+
+            return $response;
         }
 
         return new Response(sprintf('Employee with identifier %s not found!', $identifier));
