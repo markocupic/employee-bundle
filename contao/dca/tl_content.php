@@ -69,7 +69,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['addEmployeeGallery'] = [
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['selectEmployee'] = [
     'exclude'   => true,
-    'inputType' => 'checkboxWizard', // The inout type depends on the content element type.
+    'inputType' => 'checkboxWizard', // The input type depends on the content element type.
     'eval'      => ['mandatory' => true, 'multiple' => true, 'tl_class' => 'clr'],
     'sql'       => "blob NULL",
 ];
