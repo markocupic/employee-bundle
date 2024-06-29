@@ -21,6 +21,7 @@ $GLOBALS['TL_DCA']['tl_employee'] = [
     'config'      => [
         'dataContainer'    => DC_Table::class,
         'enableVersioning' => true,
+        'markAsCopy'       => 'lastname',
         'sql'              => [
             'keys' => [
                 'id' => 'primary',
@@ -29,13 +30,13 @@ $GLOBALS['TL_DCA']['tl_employee'] = [
     ],
     'list'        => [
         'sorting'    => [
-            'mode'   => DataContainer::MODE_SORTED,
-            'fields' => ['lastname'],
-            'flag'   => DataContainer::SORT_INITIAL_LETTER_ASC,
+            'mode'        => DataContainer::MODE_SORTABLE,
+            'fields'      => ['lastname'],
+            'panelLayout' => 'filter;sort,search,limit',
         ],
         'label'      => [
-            'fields' => ['lastname', 'firstname'],
-            'format' => '%s %s',
+            'fields' => ['title', 'lastname', 'firstname'],
+            'format' => '%s %s %s',
         ],
         'operations' => [
             'edit',
