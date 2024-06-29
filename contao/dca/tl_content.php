@@ -13,10 +13,25 @@ declare(strict_types=1);
  */
 
 use Contao\BackendUser;
+use Contao\Controller;
 use Contao\System;
-use Markocupic\EmployeeBundle\Controller\ContentElement\EmployeeDetailContentElementController;
+use Markocupic\EmployeeBundle\Controller\ContentElement\EmployeeDetailController;
+use Markocupic\EmployeeBundle\Controller\ContentElement\EmployeeListController;
 
-$GLOBALS['TL_DCA']['tl_content']['palettes'][EmployeeDetailContentElementController::TYPE] = '
+// Palettes
+$GLOBALS['TL_DCA']['tl_content']['palettes'][EmployeeListController::TYPE] = '
+    {type_legend},type,headline;
+    {employee_legend},showAllPublishedEmployees,selectEmployee,addSorting;
+    {employee_image_legend},addEmployeeImage;
+    {employee_gallery_legend},addEmployeeGallery;
+    {redirect_legend},jumpTo;
+    {template_legend:hide},customTpl;
+    {protected_legend:hide},protected;
+    {expert_legend:hide},guests,cssID,space;
+    {invisible_legend:hide},invisible,start,stop
+';
+
+$GLOBALS['TL_DCA']['tl_content']['palettes'][EmployeeDetailController::TYPE] = '
     {type_legend},type,headline;
     {employee_legend},selectEmployee,
     {employee_image_legend},addEmployeeImage;
@@ -35,6 +50,7 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'addSorting';
 // Subpalettes
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['addEmployeeImage'] = 'imgSize,imgFullsize';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['addEmployeeGallery'] = 'galSize,galFullsize';
+$GLOBALS['TL_DCA']['tl_content']['subpalettes']['addSorting'] = 'orderBy';
 
 // Fields
 $GLOBALS['TL_DCA']['tl_content']['fields']['addEmployeeImage'] = [
@@ -52,12 +68,51 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['addEmployeeGallery'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['selectEmployee'] = [
-    'exclude'    => true,
-    'inputType'  => 'radio',
-    'eval'       => ['mandatory' => true, 'multiple' => false, 'tl_class' => 'clr'],
-    'foreignKey' => "tl_employee.CONCAT(firstname,' ',lastname)",
-    'sql'        => 'int(10) unsigned NOT NULL default 0',
-    'relation'   => ['type' => 'hasOne', 'load' => 'lazy'],
+    'exclude'   => true,
+    'inputType' => 'checkboxWizard', // The inout type depends on the content element type.
+    'eval'      => ['mandatory' => true, 'multiple' => true, 'tl_class' => 'clr'],
+    'sql'       => "blob NULL",
+];
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['showAllPublishedEmployees'] = [
+    'exclude'   => true,
+    'inputType' => 'checkbox',
+    'eval'      => ['submitOnChange' => true],
+    'sql'       => "char(1) NOT NULL default ''",
+];
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['addSorting'] = [
+    'exclude'   => true,
+    'inputType' => 'checkbox',
+    'eval'      => ['submitOnChange' => true],
+    'sql'       => "char(1) COLLATE ascii_bin NOT NULL default ''",
+];
+
+Controller::loadDataContainer('tl_employee');
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['orderBy'] = [
+    'exclude'   => true,
+    'inputType' => 'multiColumnWizard',
+    'eval'      => [
+        'tl_class'     => 'clr w50',
+        'columnFields' => [
+            'column'        => [
+                'label'     => &$GLOBALS['TL_LANG']['tl_employee']['column'],
+                'exclude'   => true,
+                'inputType' => 'select',
+                'options'   => array_keys($GLOBALS['TL_DCA']['tl_employee']['fields']),
+                'eval'      => ['style' => 'width:140px'],
+            ],
+            'sortDirection' => [
+                'label'     => &$GLOBALS['TL_LANG']['tl_employee']['sortDirection'],
+                'exclude'   => true,
+                'inputType' => 'select',
+                'options'   => ['ASC', 'DESC'],
+                'eval'      => ['style' => 'width:80px', 'rte' => null],
+            ],
+        ],
+    ],
+    'sql'       => 'blob NULL',
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['galSize'] = [
@@ -96,4 +151,12 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['galFullsize'] = [
     'inputType' => 'checkbox',
     'eval'      => ['tl_class' => 'clr m12'],
     'sql'       => "char(1) COLLATE ascii_bin NOT NULL default ''",
+];
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['jumpTo'] = [
+    'inputType'  => 'pageTree',
+    'foreignKey' => 'tl_page.title',
+    'eval'       => ['fieldType' => 'radio'],
+    'sql'        => "int(10) unsigned NOT NULL default 0",
+    'relation'   => ['type' => 'hasOne', 'load' => 'lazy'],
 ];

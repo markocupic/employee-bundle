@@ -150,10 +150,6 @@ final class GetEmployeeDataListener
 
     private function getJumpToPage(ContentModel|ModuleModel $model): PageModel|null
     {
-        if (!$model instanceof ModuleModel) {
-            return null;
-        }
-
         if (empty($model->jumpTo)) {
             return null;
         }

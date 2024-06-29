@@ -12,11 +12,13 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/employee-bundle
  */
 
-use Markocupic\EmployeeBundle\Controller\ContentElement\EmployeeDetailContentElementController;
+use Markocupic\EmployeeBundle\Controller\ContentElement\EmployeeDetailController;
+use Markocupic\EmployeeBundle\Controller\ContentElement\EmployeeListController;
 
 // Content elements
-$GLOBALS['TL_LANG']['CTE']['employee'] = 'Employee';
-$GLOBALS['TL_LANG']['CTE'][EmployeeDetailContentElementController::TYPE] = ['Employee details', 'Add details of the selected employee to the article.'];
+$GLOBALS['TL_LANG']['CTE']['employee_content_elements'] = 'Employee';
+$GLOBALS['TL_LANG']['CTE'][EmployeeListController::TYPE] = ['Employee list', 'Add an employee list content element to the article.'];
+$GLOBALS['TL_LANG']['CTE'][EmployeeDetailController::TYPE] = ['Employee details', 'Add details of the selected employee to the article.'];
 
 /*
  * Miscellaneous

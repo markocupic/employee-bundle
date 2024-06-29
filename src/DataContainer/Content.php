@@ -14,32 +14,34 @@ declare(strict_types=1);
 
 namespace Markocupic\EmployeeBundle\DataContainer;
 
+use Contao\ContentModel;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
+use Contao\DataContainer;
 use Contao\Input;
-use Contao\ModuleModel;
 use Doctrine\DBAL\Connection;
-use Markocupic\EmployeeBundle\Controller\FrontendModule\EmployeeListController;
+use Markocupic\EmployeeBundle\Controller\ContentElement\EmployeeDetailController;
+use Markocupic\EmployeeBundle\Controller\ContentElement\EmployeeListController;
 
-class Module
+class Content
 {
     public function __construct(
         private readonly Connection $connection,
     ) {
     }
 
-    #[AsCallback(table: 'tl_module', target: 'config.onload')]
-    public function setPalette(): void
+    #[AsCallback(table: 'tl_content', target: 'config.onload')]
+    public function setPalette(DataContainer $dc): void
     {
         if ('edit' === Input::get('act') && '' !== Input::get('id')) {
-            $model = ModuleModel::findByPk(Input::get('id'));
+            $model = ContentModel::findByPk(Input::get('id'));
 
             if (null !== $model) {
                 if (EmployeeListController::TYPE === $model->type) {
                     if ($model->showAllPublishedEmployees) {
                         PaletteManipulator::create()
                             ->removeField('selectEmployee', 'employee_legend')
-                            ->applyToPalette(EmployeeListController::TYPE, 'tl_module')
+                            ->applyToPalette(EmployeeListController::TYPE, 'tl_content')
                         ;
                     }
                 }
@@ -47,7 +49,23 @@ class Module
         }
     }
 
-    #[AsCallback(table: 'tl_module', target: 'fields.selectEmployee.options')]
+    #[AsCallback(table: 'tl_content', target: 'config.onload')]
+    public function setInputType(DataContainer $dc): void
+    {
+        if ('edit' === Input::get('act') && '' !== Input::get('id')) {
+            $model = ContentModel::findByPk(Input::get('id'));
+
+            if (null !== $model) {
+                if (EmployeeListController::TYPE === $model->type) {
+                    $GLOBALS['TL_DCA']['tl_content']['fields']['selectEmployee']['inputType'] = 'checkboxWizard';
+                } elseif (EmployeeDetailController::TYPE === $model->type) {
+                    $GLOBALS['TL_DCA']['tl_content']['fields']['selectEmployee']['inputType'] = 'radio';
+                }
+            }
+        }
+    }
+
+    #[AsCallback(table: 'tl_content', target: 'fields.selectEmployee.options')]
     public function getPublishedEmployees(): array
     {
         $return = [];
