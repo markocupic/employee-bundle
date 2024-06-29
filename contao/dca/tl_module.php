@@ -20,7 +20,7 @@ use Markocupic\EmployeeBundle\Controller\FrontendModule\EmployeeReaderController
 
 // Palettes
 $GLOBALS['TL_DCA']['tl_module']['palettes'][EmployeeListController::TYPE] = '
-    {type_legend},name,type;
+    {type_legend},name,headline,type;
     {employee_legend},showAllPublishedEmployees,selectEmployee,addSorting;
     {employee_image_legend},addEmployeeImage;
     {employee_gallery_legend},addEmployeeGallery;
