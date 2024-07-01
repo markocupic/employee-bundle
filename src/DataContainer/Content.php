@@ -25,6 +25,8 @@ use Markocupic\EmployeeBundle\Controller\ContentElement\EmployeeListController;
 
 class Content
 {
+    use EmployeeTrait;
+
     public function __construct(
         private readonly Connection $connection,
     ) {
@@ -33,8 +35,8 @@ class Content
     #[AsCallback(table: 'tl_content', target: 'config.onload')]
     public function setPalette(DataContainer $dc): void
     {
-        if ('edit' === Input::get('act') && '' !== Input::get('id')) {
-            $model = ContentModel::findByPk(Input::get('id'));
+        if ('edit' === Input::get('act')) {
+            $model = ContentModel::findByPk($dc->id);
 
             if (null !== $model) {
                 if (EmployeeListController::TYPE === $model->type) {
@@ -52,8 +54,8 @@ class Content
     #[AsCallback(table: 'tl_content', target: 'config.onload')]
     public function setInputType(DataContainer $dc): void
     {
-        if ('edit' === Input::get('act') && '' !== Input::get('id')) {
-            $model = ContentModel::findByPk(Input::get('id'));
+        if ('edit' === Input::get('act')) {
+            $model = ContentModel::findByPk($dc->id);
 
             if (null !== $model) {
                 if (EmployeeListController::TYPE === $model->type) {
@@ -66,16 +68,8 @@ class Content
     }
 
     #[AsCallback(table: 'tl_content', target: 'fields.selectEmployee.options')]
-    public function getPublishedEmployees(): array
+    public function getEmployees(): array
     {
-        $return = [];
-        $result = $this->connection->executeQuery('SELECT * FROM tl_employee WHERE published = ?', [1]);
-
-        while (false !== ($row = $result->fetchAssociative())) {
-            $function = '' !== $row['role'] ? ' ('.$row['role'].')' : '';
-            $return[$row['id']] = $row['firstname'].' '.$row['lastname'].$function;
-        }
-
-        return $return;
+        return $this->getPublishedEmployees($this->connection);
     }
 }

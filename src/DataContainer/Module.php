@@ -16,6 +16,7 @@ namespace Markocupic\EmployeeBundle\DataContainer;
 
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
+use Contao\DataContainer;
 use Contao\Input;
 use Contao\ModuleModel;
 use Doctrine\DBAL\Connection;
@@ -23,16 +24,18 @@ use Markocupic\EmployeeBundle\Controller\FrontendModule\EmployeeListController;
 
 class Module
 {
+    use EmployeeTrait;
+
     public function __construct(
         private readonly Connection $connection,
     ) {
     }
 
     #[AsCallback(table: 'tl_module', target: 'config.onload')]
-    public function setPalette(): void
+    public function adjustPalette(DataContainer $dc): void
     {
-        if ('edit' === Input::get('act') && '' !== Input::get('id')) {
-            $model = ModuleModel::findByPk(Input::get('id'));
+        if ('edit' === Input::get('act')) {
+            $model = ModuleModel::findByPk($dc->id);
 
             if (null !== $model) {
                 if (EmployeeListController::TYPE === $model->type) {
@@ -48,16 +51,8 @@ class Module
     }
 
     #[AsCallback(table: 'tl_module', target: 'fields.selectEmployee.options')]
-    public function getPublishedEmployees(): array
+    public function getEmployees(): array
     {
-        $return = [];
-        $result = $this->connection->executeQuery('SELECT * FROM tl_employee WHERE published = ?', [1]);
-
-        while (false !== ($row = $result->fetchAssociative())) {
-            $function = '' !== $row['role'] ? ' ('.$row['role'].')' : '';
-            $return[$row['id']] = $row['firstname'].' '.$row['lastname'].$function;
-        }
-
-        return $return;
+        return $this->getPublishedEmployees($this->connection);
     }
 }

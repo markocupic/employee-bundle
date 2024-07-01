@@ -16,7 +16,7 @@ use Markocupic\EmployeeBundle\Controller\ContentElement\EmployeeDetailController
 use Markocupic\EmployeeBundle\Controller\ContentElement\EmployeeListController;
 
 // Content elements
-$GLOBALS['TL_LANG']['CTE']['employee_content_elements'] = 'Employee';
+$GLOBALS['TL_LANG']['CTE']['employee_content_element'] = 'Employee';
 $GLOBALS['TL_LANG']['CTE'][EmployeeListController::TYPE] = ['Employee list', 'Add an employee list content element to the article.'];
 $GLOBALS['TL_LANG']['CTE'][EmployeeDetailController::TYPE] = ['Employee details', 'Add details of the selected employee to the article.'];
 

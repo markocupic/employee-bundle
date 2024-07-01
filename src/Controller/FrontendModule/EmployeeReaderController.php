@@ -26,7 +26,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-#[AsFrontendModule(EmployeeReaderController::TYPE, category: 'employee_modules')]
+#[AsFrontendModule(EmployeeReaderController::TYPE, category: 'employee_frontend_module')]
 class EmployeeReaderController extends AbstractFrontendModuleController
 {
     public const TYPE = 'employee_reader';

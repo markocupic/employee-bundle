@@ -24,7 +24,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-#[AsContentElement(EmployeeDetailController::TYPE, category: 'employee_content_elements')]
+#[AsContentElement(EmployeeDetailController::TYPE, category: 'employee_content_element')]
 class EmployeeDetailController extends AbstractContentElementController
 {
     public const TYPE = 'employee_detail';

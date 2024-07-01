@@ -23,6 +23,6 @@ $GLOBALS['TL_LANG']['MOD']['employee'] = ['Mitarbeiter', 'Mitarbeiter erfassen.'
 /*
  * Frontend modules
  */
-$GLOBALS['TL_LANG']['FMD']['employee_modules'] = 'Employee';
+$GLOBALS['TL_LANG']['FMD']['employee_frontend_module'] = 'Employee';
 $GLOBALS['TL_LANG']['FMD'][EmployeeListController::TYPE] = ['Employee list', 'Add an employee list module to the layout.'];
 $GLOBALS['TL_LANG']['FMD'][EmployeeReaderController::TYPE] = ['Employee reader', 'Add an employee reader module to the layout.'];
