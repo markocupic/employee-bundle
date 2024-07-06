@@ -63,6 +63,7 @@ final class GetEmployeeDataListener
         $dataEmployee['publications'] = $this->insertTagParser->replaceInline((string) $dataEmployee['publications']);
         $dataEmployee['interview'] = StringUtil::deserialize($dataEmployee['interview'] ?? null, true);
         $dataEmployee['businessHours'] = StringUtil::deserialize($dataEmployee['businessHours'] ?? null, true);
+        $dataEmployee['singleSRC'] = !empty($dataEmployee['singleSRC']) ? StringUtil::binToUuid($dataEmployee['singleSRC']) : '';
         $dataEmployee['href'] = false;
 
         $objJumpToPage = !empty($model->jumpTo) ? $this->getJumpToPage($model) : null;
@@ -85,7 +86,7 @@ final class GetEmployeeDataListener
             $figure = $figureBuilder
                 ->fromStorage($this->filesStorage, $filesystemItem->first()->getPath())
                 ->buildIfResourceExists()
-                ;
+            ;
 
             if (null !== $figure) {
                 $dataEmployee['hasImage'] = true;
