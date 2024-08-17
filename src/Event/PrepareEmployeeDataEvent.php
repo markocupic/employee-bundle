@@ -23,8 +23,8 @@ class PrepareEmployeeDataEvent
 {
     public function __construct(
         private readonly Request $request,
-        private readonly EmployeeModel|null $employee = null,
         private array $arrData,
+        private readonly EmployeeModel|null $employee = null,
         private readonly ContentModel|ModuleModel|null $model,
     ) {
     }

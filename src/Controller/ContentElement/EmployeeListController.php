@@ -45,7 +45,7 @@ class EmployeeListController extends AbstractContentElementController
         $arrItems = [];
 
         while ($employees->next()) {
-            $event = new PrepareEmployeeDataEvent($request, $employees->current(), [], $model);
+            $event = new PrepareEmployeeDataEvent($request, [], $employees->current(), $model);
 
             $this->eventDispatcher->dispatch($event);
 
