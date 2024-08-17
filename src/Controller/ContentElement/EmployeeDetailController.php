@@ -48,7 +48,7 @@ class EmployeeDetailController extends AbstractContentElementController
 
         $templateData = [];
 
-        $event = new PrepareEmployeeDataEvent($request, $templateData, $this->employee, $model);
+        $event = new PrepareEmployeeDataEvent($request, $model, $templateData, $this->employee);
 
         $this->eventDispatcher->dispatch($event);
 

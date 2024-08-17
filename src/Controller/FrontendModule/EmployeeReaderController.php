@@ -52,7 +52,7 @@ class EmployeeReaderController extends AbstractFrontendModuleController
             return new Response('', Response::HTTP_NO_CONTENT);
         }
 
-        $event = new PrepareEmployeeDataEvent($request, [], $this->employee->current(), $model);
+        $event = new PrepareEmployeeDataEvent($request, $model, [], $this->employee->current());
 
         $this->eventDispatcher->dispatch($event);
 

@@ -45,7 +45,7 @@ class EmployeeListController extends AbstractFrontendModuleController
         $arrItems = [];
 
         while ($employees->next()) {
-            $event = new PrepareEmployeeDataEvent($request, [], $employees->current(), $model);
+            $event = new PrepareEmployeeDataEvent($request, $model, [], $employees->current());
 
             $this->eventDispatcher->dispatch($event);
 

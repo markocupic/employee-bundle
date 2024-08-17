@@ -23,9 +23,9 @@ class PrepareEmployeeDataEvent
 {
     public function __construct(
         private readonly Request $request,
+        private readonly ContentModel|ModuleModel $model,
         private array $arrData,
         private readonly EmployeeModel|null $employee = null,
-        private readonly ContentModel|ModuleModel|null $model,
     ) {
     }
 
@@ -44,7 +44,7 @@ class PrepareEmployeeDataEvent
         return $this->arrData;
     }
 
-    public function getModel(): ContentModel|ModuleModel|null
+    public function getModel(): ContentModel|ModuleModel
     {
         return $this->model;
     }
