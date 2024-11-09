@@ -51,7 +51,7 @@ class EmployeeReaderController extends AbstractFrontendModuleController
         $this->projectDir = $projectDir;
     }
 
-    public function __invoke(Request $request, ModuleModel $model, string $section, array $classes = null): Response
+    public function __invoke(Request $request, ModuleModel $model, string $section, ?array $classes = null): Response
     {
         if ($this->scopeMatcher->isFrontendRequest($request)) {
             // Set the item from the auto_item parameter

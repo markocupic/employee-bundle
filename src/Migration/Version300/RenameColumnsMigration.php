@@ -143,7 +143,7 @@ class RenameColumnsMigration extends AbstractMigration
 
                 $rows = $row = $result->fetchAllAssociative();
 
-                foreach($rows as $row) {
+                foreach ($rows as $row) {
                     $arrInterview = StringUtil::deserialize($row['interview']);
                     $arrNew = [];
 
@@ -167,7 +167,7 @@ class RenameColumnsMigration extends AbstractMigration
 
                 $rows = $row = $result->fetchAllAssociative();
 
-                foreach($rows as $row) {
+                foreach ($rows as $row) {
                     $arrInterview = StringUtil::deserialize($row['businessHours']);
                     $arrNew = [];
 

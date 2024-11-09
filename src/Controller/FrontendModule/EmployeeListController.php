@@ -52,7 +52,7 @@ class EmployeeListController extends AbstractFrontendModuleController
         $this->projectDir = $projectDir;
     }
 
-    public function __invoke(Request $request, ModuleModel $model, string $section, array $classes = null): Response
+    public function __invoke(Request $request, ModuleModel $model, string $section, ?array $classes = null): Response
     {
         if (null === ($this->employees = $this->getEmployees($model))) {
             return new Response('', Response::HTTP_NO_CONTENT);
