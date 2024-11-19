@@ -1,40 +1,39 @@
 {% extends '@Contao/block_searchable' %}
 
 {% block content %}
-
     <div class="employee-introducing">
 
-        {% if employee.gender %}
+        {% if employee.gender|default %}
             <div class="employee-gender">
                 {{ employee.gender }}
             </div>
         {% endif %}
 
-        {% if employee.title %}
+        {% if employee.title|default %}
             <div class="employee-title">
                 {{ employee.title }}
             </div>
         {% endif %}
 
-        {% if employee.firstname %}
+        {% if employee.firstname|default %}
             <div class="employee-firstname">
                 {{ employee.firstname }}
             </div>
         {% endif %}
 
-        {% if employee.lastname %}
+        {% if employee.lastname|default %}
             <div class="employee-lastname">
                 {{ employee.lastname }}
             </div>
         {% endif %}
 
-        {% if employee.alias %}
+        {% if employee.alias|default %}
             <div class="employee-alias">
                 {{ employee.alias }}
             </div>
         {% endif %}
 
-        {% if employee.businessHours %}
+        {% if employee.businessHours|default %}
             <div class="employee-businessHours">
                 <ul>
                     {% for item in employee.businessHours %}
@@ -47,103 +46,103 @@
             </div>
         {% endif %}
 
-        {% if employee.phone %}
+        {% if employee.phone|default %}
             <div class="employee-phone">
                 {{ employee.phone }}
             </div>
         {% endif %}
 
-        {% if employee.mobile %}
+        {% if employee.mobile|default %}
             <div class="employee-mobile">
                 {{ employee.mobile }}
             </div>
         {% endif %}
 
-        {% if employee.email %}
+        {% if employee.email|default %}
             <div class="employee-email">
                 {{ employee.email }}
             </div>
         {% endif %}
 
-        {% if employee.fax %}
+        {% if employee.fax|default %}
             <div class="employee-fax">
                 {{ employee.fax }}
             </div>
         {% endif %}
 
-        {% if employee.skype %}
+        {% if employee.skype|default %}
             <div class="employee-skype">
                 {{ employee.skype }}
             </div>
         {% endif %}
 
-        {% if employee.linkedIn %}
+        {% if employee.linkedIn|default %}
             <div class="employee-linkedIn">
                 {{ employee.linkedIn }}
             </div>
         {% endif %}
 
-        {% if employee.xing %}
+        {% if employee.xing|default %}
             <div class="employee-xing">
                 {{ employee.xing }}
             </div>
         {% endif %}
 
-        {% if employee.website %}
+        {% if employee.website|default %}
             <div class="employee-website">
                 {{ employee.website }}
             </div>
         {% endif %}
 
-        {% if employee.street %}
+        {% if employee.street|default %}
             <div class="employee-street">
                 {{ employee.street }}
             </div>
         {% endif %}
 
-        {% if employee.postal %}
+        {% if employee.postal|default %}
             <div class="employee-postal">
                 {{ employee.postal }}
             </div>
         {% endif %}
 
-        {% if employee.city %}
+        {% if employee.city|default %}
             <div class="employee-city">
                 {{ employee.city }}
             </div>
         {% endif %}
 
-        {% if employee.country %}
+        {% if employee.country|default %}
             <div class="employee-country">
                 {{ employee.country }}
             </div>
         {% endif %}
 
-        {% if employee.company %}
+        {% if employee.company|default %}
             <div class="employee-company">
                 {{ employee.company }}
             </div>
         {% endif %}
 
-        {% if employee.role %}
+        {% if employee.role|default %}
             <div class="employee-role">
                 {{ employee.role }}
             </div>
         {% endif %}
 
-        {% if employee.roleDetail %}
+        {% if employee.roleDetail|default %}
             <div class="employee-roleDetail">
                 {{ employee.roleDetail|raw }}
             </div>
         {% endif %}
 
-        {% if employee.publications %}
+        {% if employee.publications|default %}
             <div class="employee-publications">
                 {{ employee.publications|raw }}
             </div>
         {% endif %}
 
-        {% if employee.interview %}
+        {% if employee.interview|default %}
             <div class="employee-interview">
                 <ul>
                     {% for item in employee.interview %}
@@ -156,13 +155,13 @@
             </div>
         {% endif %}
 
-        {% if employee.hasImage %}
+        {% if employee.hasImage|default(false) %}
             <div class="employee-image">
                 {{ employee.figure|raw }}
             </div>
         {% endif %}
 
-        {% if employee.hasGallery %}
+        {% if employee.hasGallery|default(false) %}
             <div class="employee-gallery">
                 <ul>
                     {% for image in employee.gallery %}
@@ -176,4 +175,3 @@
 
     {{ parent() }}
 {% endblock %}
-

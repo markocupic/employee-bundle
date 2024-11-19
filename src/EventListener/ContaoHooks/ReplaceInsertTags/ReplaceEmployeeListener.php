@@ -32,44 +32,60 @@ class ReplaceEmployeeListener
 
     public function __invoke(string $insertTag, bool $useCache, string $cachedValue, array $flags, array $tags, array $cache, int $_rit, int $_cnt)
     {
-        if (0 === strpos($insertTag, 'employee')) {
-            $parts = StringUtil::trimsplit('::', $insertTag);
+        if (!str_starts_with($insertTag, 'employee')) {
+            return false;
+        }
 
-            if (1 === \count($parts)) {
-                return false;
-            }
+        $parts = StringUtil::trimsplit('::', $insertTag);
 
-            $id = $parts[1] ?? null;
-            $strField = $parts[2] ?? null;
+        if (\count($parts) < 2) {
+            return false;
+        }
 
-            if (!empty($id) && !empty($strField)) {
-                if (null === ($model = EmployeeModel::findByIdOrAlias($id))) {
-                    return false;
+        $identifier = $parts[1] ?? null;
+        $strField = $parts[2] ?? null;
+
+        if (empty($identifier) || empty($strField)) {
+            return false;
+        }
+
+        if (null === ($model = EmployeeModel::findByIdOrAlias($identifier))) {
+            return false;
+        }
+
+        $row = $model->row();
+
+        switch ($strField) {
+            // Get the image/picture/figure html markup:
+            case 'picture':
+            case 'image':
+            case 'figure':
+                // Usage: {{employee::##emloyee_alias##::picture::size=2&alt=portrait}}
+                $strPictureAttr = !empty($parts[3]) ? ltrim($parts[3], '?') : '';
+
+                return $this->getPictureHtml($model, $strField, $strPictureAttr);
+
+            // Get the field value:
+            default:
+
+                if (isset($row[$strField])) {
+                    // Usage: {{employee::##emloyee_alias##firstname}} or {{employee::##emloyee_alias##role}}, etc.
+                    return $row[$strField];
                 }
-
-                $arrEmployee = $model->row();
-
-                // {{employee::#emloyee_alias##::picture::size=2&alt=portrait}}
-                if ('picture' === $strField || 'image' === $strField || 'figure' === $strField) {
-                    $pictureParams = isset($parts[3]) && !empty($parts[3]) ? ltrim($parts[3], '?') : '';
-
-                    return $this->insertTagParser->replaceInline(
-                        sprintf(
-                            '{{%s::%s?%s}}',
-                            $strField,
-                            StringUtil::binToUuid($model->singleSRC),
-                            $pictureParams
-                        )
-                    );
-                }
-
-                if (isset($arrEmployee[$strField])) {
-                    // {{employee::#emloyee_alias##firstname}} or {{employee::#emloyee_alias##role}}, etc.
-                    return $arrEmployee[$strField];
-                }
-            }
         }
 
         return false;
+    }
+
+    private function getPictureHtml(EmployeeModel $model, string $strField, $strPictureAttr): string
+    {
+        return $this->insertTagParser->replaceInline(
+            sprintf(
+                '{{%s::%s?%s}}',
+                $strField,
+                StringUtil::binToUuid($model->singleSRC),
+                $strPictureAttr,
+            )
+        );
     }
 }

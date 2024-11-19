@@ -24,10 +24,11 @@ use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\Validator;
 use Markocupic\EmployeeBundle\Model\EmployeeModel;
+use Symfony\Component\Filesystem\Path;
 
 trait FrontendModuleTrait
 {
-    protected ?FigureBuilder $figureBuilder = null;
+    protected null|FigureBuilder $figureBuilder = null;
 
     public function getEmployeeDetails(EmployeeModel $employeeModel, ModuleModel $moduleModel, AbstractFrontendModuleController $frontendModuleInstance): array
     {
@@ -51,7 +52,7 @@ trait FrontendModuleTrait
         if ($moduleModel->addEmployeeImage && $arrData['addImage'] && Validator::isUuid($arrData['singleSRC'] ?? '')) {
             $objFile = FilesModel::findByUuid($arrData['singleSRC']);
 
-            if (null !== $objFile && is_file($frontendModuleInstance->projectDir.'/'.$objFile->path)) {
+            if (null !== $objFile && is_file(Path::makeAbsolute($objFile->path, $frontendModuleInstance->projectDir))) {
                 $arrData['hasImage'] = true;
                 $arrData['singleSRC'] = StringUtil::binToUuid($objFile->uuid);
 
@@ -79,7 +80,7 @@ trait FrontendModuleTrait
                     if (Validator::isBinaryUuid($uuid)) {
                         $objFile = FilesModel::findByUuid($uuid);
 
-                        if (null !== $objFile && is_file($frontendModuleInstance->projectDir.'/'.$objFile->path)) {
+                        if (null !== $objFile && is_file(Path::makeAbsolute($objFile->path, $frontendModuleInstance->projectDir))) {
                             $arrData['hasImage'] = true;
                             $arrData['singleSRC'] = StringUtil::binToUuid($objFile->uuid);
 
@@ -120,12 +121,14 @@ trait FrontendModuleTrait
         return $figureBuilder;
     }
 
-    protected function getJumpToPage(ModuleModel $moduleModel): ?PageModel
+    protected function getJumpToPage(ModuleModel $moduleModel): PageModel|null
     {
-        if (($objTarget = $moduleModel->getRelated('jumpTo')) instanceof PageModel) {
-            return $objTarget;
+        $objTarget = $moduleModel->getRelated('jumpTo');
+
+        if (!$objTarget instanceof PageModel) {
+            return null;
         }
 
-        return null;
+        return $objTarget;
     }
 }

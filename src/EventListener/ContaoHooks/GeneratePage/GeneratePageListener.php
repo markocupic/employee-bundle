@@ -49,11 +49,19 @@ class GeneratePageListener
 
         $id = $request->query->get('id');
 
-        // Trigger VCard download
-        if ($id && 'true' === $request->query->get('downloadVCard')) {
-            if (null !== ($objEmployee = EmployeeModel::findByPk($id))) {
-                $this->VCardGenerator->sendToBrowser($objEmployee);
-            }
+        if (empty($id)) {
+            return;
         }
+
+        if ('true' !== $request->query->get('downloadVCard')) {
+            return;
+        }
+
+        if (null === ($model = EmployeeModel::findByPk($id))) {
+            return;
+        }
+
+        // Trigger VCard download
+        $this->VCardGenerator->sendToBrowser($model);
     }
 }

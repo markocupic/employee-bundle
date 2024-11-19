@@ -1,17 +1,16 @@
 <?php
 
-/*
- * This file is part of Contao Test Case Playground.
- *
- * (c) Marko Cupic 2022 <m.cupic@gmx.ch>
- * @license MIT
- * For the full copyright and license information,
- * please view the LICENSE file that was distributed with this source code.
- * @link https://github.com/markocupic/contao-test-case-playground
- */
 declare(strict_types=1);
 
-namespace Markocupic\EmployeeBundle\Tests\ContaoManager;
+/*
+ * This file is part of Employee Bundle.
+ *
+ * (c) Marko Cupic <m.cupic@gmx.ch>
+ * @license LGPL-3.0+
+ * For the full copyright and license information,
+ * please view the LICENSE file that was distributed with this source code.
+ * @link https://github.com/markocupic/employee-bundle
+ */
 
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
@@ -23,15 +22,11 @@ use Markocupic\EmployeeBundle\MarkocupicEmployeeBundle;
 
 class PluginTest extends ContaoTestCase
 {
-
     public function testInstantiation(): void
     {
         $this->assertInstanceOf(Plugin::class, new Plugin());
     }
 
-    /**
-     * Test returns the bundles
-     */
     public function testGetBundles(): void
     {
         $plugin = new Plugin();

@@ -1,20 +1,19 @@
 {% extends '@Contao/block_searchable' %}
 
 {% block content %}
-
     <div class="row">
         {% for employee in employees %}
             <div class="employee-list-item col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card">
-                    {% if employee.href %}<a href="{{ employee.href }}">{% endif %}
-                        {% if employee.hasImage %}
+                    {% if employee.href|default %}<a href="{{ employee.href }}">{% endif %}
+                        {% if employee.hasImage|default(false) %}
                             {{ employee.figure|raw }}
                         {% endif %}
-                    {% if employee.href %}</a>{% endif %}
+                        {% if employee.href|default %}</a>{% endif %}
                     <div class="card-body">
-                        <h5 class="card-title">{{ employee.firstname }} {{ employee.lastname }}</h5>
-                        <p class="card-text">{{ employee.email }}</p>
-                        <p class="card-text">{{ employee.phone }}</p>
+                        <h5 class="card-title">{{ employee.firstname|default('') }} {{ employee.lastname|default('') }}</h5>
+                        <p class="card-text">{{ employee.email|default('') }}</p>
+                        <p class="card-text">{{ employee.phone|default('') }}</p>
                         {% if employee.href %}
                             <p class="card-text"><a href="{{ employee.href }}">Mehr</a></p>
                         {% endif %}
